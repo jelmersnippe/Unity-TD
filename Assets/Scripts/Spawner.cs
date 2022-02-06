@@ -41,7 +41,7 @@ public class Spawner : MonoBehaviour
     {
         yield return new WaitForSeconds(monsterSet.initialDelay);
 
-        for (int j = 0; j < monsterSet.count; j++)
+        for (int i = 0; i < monsterSet.count; i++)
         {
             SpawnMonster(monsterSet.monsterType);
             yield return new WaitForSeconds(monsterSet.delayBetweenSpawns);
