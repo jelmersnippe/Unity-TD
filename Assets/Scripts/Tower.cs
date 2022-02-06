@@ -34,13 +34,37 @@ public class Tower : MonoBehaviour
     LayerMask[] monsterLayerMasks;
     LayerMask monsterLayerMask;
 
-    private float timeToFire = 0;
+    float timeToFire;
+    [SerializeField]
+    private float currentTimeToFire = 0;
 
     protected Transform currentTarget;
     protected State currentState = State.Seeking;
 
+    [SerializeField]
+    int firingAnimationFrames;
+
+    [SerializeField]
+    float firingAnimationTime;
+
+    [SerializeField]
+    bool willFire = false;
+
+    Animator animator;
+
     private void Start()
     {
+        animator = GetComponent<Animator>();
+        firingAnimationTime = (float)firingAnimationFrames / (float)30;
+
+        timeToFire = (float)60 / (float)roundsPerMinute;
+        currentTimeToFire = timeToFire;
+
+        if (timeToFire <= firingAnimationTime)
+        {
+            Debug.LogError(gameObject.name + " has higher fire rate than it's animation can handle");
+        }
+
         EnterSeekingState();
 
         if (monsterLayerMasks.Length > 0)
@@ -56,6 +80,8 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
+        currentTimeToFire -= Time.deltaTime;
+
         switch (currentState)
         {
             case State.Seeking:
@@ -74,14 +100,14 @@ public class Tower : MonoBehaviour
 
     void FiringBehaviour()
     {
-        if (currentTarget == null || isTargetOutOfRange())
+        if (currentTarget == null || (!willFire && isTargetOutOfRange() && !willFire))
         {
             EnterSeekingState();
             return;
         }
 
         RotateToTarget();
-        FireProjectile();
+        AttemptToFireProjectile();
     }
 
     protected virtual void EnterSeekingState()
@@ -95,6 +121,10 @@ public class Tower : MonoBehaviour
     {
         CancelInvoke();
         currentTarget = newTarget;
+        if (currentTimeToFire < firingAnimationTime)
+        {
+            currentTimeToFire = firingAnimationTime;
+        }
         currentState = State.Firing;
     }
 
@@ -120,17 +150,23 @@ public class Tower : MonoBehaviour
         towerGun.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
+    void AttemptToFireProjectile()
+    {
+        if (currentTarget != null && !willFire && currentTimeToFire < firingAnimationTime)
+        {
+            willFire = true;
+            animator.SetBool("WillFire", true);
+        }
+    }
+
     void FireProjectile()
     {
-        if (timeToFire > 0)
-        {
-            timeToFire -= Time.deltaTime;
-            return;
-        }
+        willFire = false;
+        animator.SetBool("WillFire", false);
+        currentTimeToFire = (float)60 / (float)roundsPerMinute;
 
         Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, towerGun.rotation, transform);
         spawnedProjectile.setValues(damage, projectileSpeed, currentTarget.transform);
-        timeToFire = (float)60 / (float)roundsPerMinute;
     }
 
     void OnDrawGizmosSelected()
