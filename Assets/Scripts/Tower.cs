@@ -30,16 +30,28 @@ public class Tower : MonoBehaviour
     [SerializeField]
     private Projectile projectile;
 
+    [SerializeField]
+    LayerMask[] monsterLayerMasks;
+    LayerMask monsterLayerMask;
+
     private float timeToFire = 0;
 
     protected Transform currentTarget;
     protected State currentState = State.Seeking;
 
-    public int projectilesFired = 0;
-
     private void Start()
     {
         EnterSeekingState();
+
+        if (monsterLayerMasks.Length > 0)
+        {
+            monsterLayerMask = monsterLayerMasks[0];
+
+            for (int i = 1; i < monsterLayerMasks.Length; i++)
+            {
+                monsterLayerMask |= monsterLayerMasks[i];
+            }
+        }
     }
 
     void Update()
@@ -88,7 +100,7 @@ public class Tower : MonoBehaviour
 
     protected virtual void CheckRange()
     {
-        Collider2D hit = Physics2D.OverlapCircle(transform.position, range);
+        Collider2D hit = Physics2D.OverlapCircle(transform.position, range, monsterLayerMask);
 
         if (hit)
         {
@@ -118,8 +130,7 @@ public class Tower : MonoBehaviour
 
         Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, towerGun.rotation, transform);
         spawnedProjectile.setValues(damage, projectileSpeed, currentTarget.transform);
-        timeToFire = ((float)60 / (float)roundsPerMinute);
-        projectilesFired++;
+        timeToFire = (float)60 / (float)roundsPerMinute;
     }
 
     void OnDrawGizmosSelected()
