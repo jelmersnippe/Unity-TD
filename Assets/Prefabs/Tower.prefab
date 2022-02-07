@@ -49,10 +49,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerGun: {fileID: 7865072308831243787}
   firePoint: {fileID: 7865072309213478940}
-  damage: 1
+  damage: 2
   roundsPerMinute: 30
   range: 10
-  projectileSpeed: 20
+  projectileSpeed: 30
   projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
   monsterLayerMask:
     serializedVersion: 2

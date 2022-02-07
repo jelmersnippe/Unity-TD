@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 115164310d18b70418512c964619772a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 3
+  startingHealth: 4
   health: 0
   healthBar: {fileID: 9154944995485845216, guid: ca058f3153110214e93b2613016020cd, type: 3}
   currencyToDrop: 2
@@ -136,4 +136,5 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   speed: 5
+  damage: 1
   currentWaypointIndex: -1

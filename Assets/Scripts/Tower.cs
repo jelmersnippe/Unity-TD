@@ -43,7 +43,6 @@ public class Tower : MonoBehaviour
     private void Start()
     {
         timeToFire = (float)60 / (float)roundsPerMinute;
-        currentTimeToFire = timeToFire;
 
         EnterSeekingState();
     }

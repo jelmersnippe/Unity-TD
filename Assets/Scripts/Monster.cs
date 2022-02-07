@@ -12,6 +12,9 @@ public class Monster : MonoBehaviour
     int speed = 2;
 
     [SerializeField]
+    int damage = 1;
+
+    [SerializeField]
     int currentWaypointIndex = -1;
 
     void Update()
@@ -47,6 +50,7 @@ public class Monster : MonoBehaviour
 
         if (currentWaypointIndex >= waypoints.Length)
         {
+            BuildingManager.instance.takeDamage(damage);
             Destroy(this.gameObject);
         }
     }
