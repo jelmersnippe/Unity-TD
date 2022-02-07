@@ -64,4 +64,13 @@ public class BuildingManager : MonoBehaviour
         Instantiate(towerToPlace, activePlaceholder.transform.position, towerToPlace.transform.rotation);
         Destroy(activePlaceholder.gameObject);
     }
+
+    public void addPurchaseCurrency(int currency)
+    {
+        if (currency < 0)
+        {
+            return;
+        }
+        purchaseCurrency += currency;
+    }
 }

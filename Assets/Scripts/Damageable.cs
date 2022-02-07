@@ -14,6 +14,9 @@ public class Damageable : MonoBehaviour
     [SerializeField]
     HealthBar healthBar;
 
+    [SerializeField]
+    int currencyToDrop;
+
     void Start()
     {
         health = startingHealth;
@@ -36,6 +39,7 @@ public class Damageable : MonoBehaviour
 
     void Die()
     {
+        BuildingManager.instance.addPurchaseCurrency(currencyToDrop);
         Destroy(this.gameObject);
     }
 }

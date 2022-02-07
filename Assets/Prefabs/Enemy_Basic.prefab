@@ -115,9 +115,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 115164310d18b70418512c964619772a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 3
+  startingHealth: 10
   health: 0
   healthBar: {fileID: 9154944995485845216, guid: ca058f3153110214e93b2613016020cd, type: 3}
+  currencyToDrop: 5
 --- !u!114 &7583179868431459592
 MonoBehaviour:
   m_ObjectHideFlags: 0
