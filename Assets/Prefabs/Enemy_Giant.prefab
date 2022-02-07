@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7583179868431459594}
   - component: {fileID: 7583179868431459597}
   - component: {fileID: 7583179868431459596}
-  - component: {fileID: 7144071182086307208}
+  - component: {fileID: -485635684644297525}
   - component: {fileID: 7583179868431459592}
   m_Layer: 9
-  m_Name: Monster
+  m_Name: Enemy_Giant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.7264151, g: 0.20901564, b: 0.20901564, a: 1}
+  m_Color: {r: 0.53831804, g: 0.18115878, b: 0.5566038, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,7 +103,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &7144071182086307208
+--- !u!114 &-485635684644297525
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 115164310d18b70418512c964619772a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 3
+  startingHealth: 10
   health: 0
   healthBar: {fileID: 9154944995485845216, guid: ca058f3153110214e93b2613016020cd, type: 3}
 --- !u!114 &7583179868431459592
@@ -134,5 +134,5 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  speed: 2
+  speed: 1
   currentWaypointIndex: -1
