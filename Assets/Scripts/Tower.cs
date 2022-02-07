@@ -16,7 +16,7 @@ public class Tower : MonoBehaviour
     private int damage = 2;
 
     [SerializeField]
-    [Range(20, 3000)]
+    [Range(20, 300)]
     private int roundsPerMinute = 20;
 
     [SerializeField]
@@ -26,6 +26,9 @@ public class Tower : MonoBehaviour
     [SerializeField]
     [Range(1, 100)]
     private int projectileSpeed = 1;
+
+    [Min(0)]
+    public int cost = 10;
 
     [SerializeField]
     private Projectile projectile;

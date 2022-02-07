@@ -16,8 +16,6 @@ public class BuildingManager : MonoBehaviour
     Tower[] towers;
 
     public Tower towerToPlace;
-    [SerializeField]
-    int cost = 0;
 
     [SerializeField]
     Placeholder placeholder;
@@ -52,14 +50,13 @@ public class BuildingManager : MonoBehaviour
             return;
         }
 
-        if (activePlaceholder != null && cost > purchaseCurrency)
+        if (activePlaceholder != null && towerToPlace.cost > purchaseCurrency)
         {
-            towerToPlace = null;
-            Destroy(activePlaceholder.gameObject);
+            UnsetTowerToPlace();
             return;
         }
 
-        if (towerToPlace != null && activePlaceholder == null && purchaseCurrency >= cost)
+        if (activePlaceholder == null && towerToPlace != null && purchaseCurrency >= towerToPlace.cost)
         {
             activePlaceholder = Instantiate(placeholder, transform);
             activePlaceholder.setBlockedLayers(blockedLayers);
@@ -76,8 +73,7 @@ public class BuildingManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            towerToPlace = null;
-            Destroy(activePlaceholder.gameObject);
+            UnsetTowerToPlace();
             return;
         }
 
@@ -88,14 +84,23 @@ public class BuildingManager : MonoBehaviour
 
     }
 
+    void UnsetTowerToPlace()
+    {
+        towerToPlace = null;
+        if (activePlaceholder != null)
+        {
+            Destroy(activePlaceholder.gameObject);
+        }
+    }
+
     void PlaceTower()
     {
-        if (cost > purchaseCurrency || activePlaceholder == null)
+        if (towerToPlace.cost > purchaseCurrency || activePlaceholder == null)
         {
             return;
         }
 
-        purchaseCurrency -= cost;
+        purchaseCurrency -= towerToPlace.cost;
 
         Instantiate(towerToPlace, activePlaceholder.transform.position, towerToPlace.transform.rotation, transform);
     }
