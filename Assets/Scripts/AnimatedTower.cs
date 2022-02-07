@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public class AnimatedTower : MonoBehaviour
 {
     public enum State { Seeking, Firing }
 
@@ -12,7 +12,7 @@ public class Tower : MonoBehaviour
     private Transform firePoint;
 
     [SerializeField]
-    [Range(1,10)]
+    [Range(1, 10)]
     private int damage = 2;
 
     [SerializeField]
@@ -31,6 +31,7 @@ public class Tower : MonoBehaviour
     private Projectile projectile;
 
     [SerializeField]
+    LayerMask[] monsterLayerMasks;
     LayerMask monsterLayerMask;
 
     float timeToFire;
@@ -40,12 +41,41 @@ public class Tower : MonoBehaviour
     protected Transform currentTarget;
     protected State currentState = State.Seeking;
 
+    [SerializeField]
+    int firingAnimationFrames;
+
+    [SerializeField]
+    float firingAnimationTime;
+
+    [SerializeField]
+    bool willFire = false;
+
+    Animator animator;
+
     private void Start()
     {
+        animator = GetComponent<Animator>();
+        firingAnimationTime = (float)firingAnimationFrames / (float)30;
+
         timeToFire = (float)60 / (float)roundsPerMinute;
         currentTimeToFire = timeToFire;
 
+        if (timeToFire <= firingAnimationTime)
+        {
+            Debug.LogError(gameObject.name + " has higher fire rate than it's animation can handle");
+        }
+
         EnterSeekingState();
+
+        if (monsterLayerMasks.Length > 0)
+        {
+            monsterLayerMask = monsterLayerMasks[0];
+
+            for (int i = 1; i < monsterLayerMasks.Length; i++)
+            {
+                monsterLayerMask |= monsterLayerMasks[i];
+            }
+        }
     }
 
     void Update()
@@ -70,14 +100,14 @@ public class Tower : MonoBehaviour
 
     void FiringBehaviour()
     {
-        if (currentTarget == null || isTargetOutOfRange())
+        if (currentTarget == null || (!willFire && isTargetOutOfRange() && !willFire))
         {
             EnterSeekingState();
             return;
         }
 
         RotateToTarget();
-        FireProjectile();
+        AttemptToFireProjectile();
     }
 
     protected virtual void EnterSeekingState()
@@ -91,6 +121,10 @@ public class Tower : MonoBehaviour
     {
         CancelInvoke();
         currentTarget = newTarget;
+        if (currentTimeToFire < firingAnimationTime)
+        {
+            currentTimeToFire = firingAnimationTime;
+        }
         currentState = State.Firing;
     }
 
@@ -113,21 +147,26 @@ public class Tower : MonoBehaviour
     {
         Vector3 targetDirection = currentTarget.position - transform.position;
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        Quaternion desiredRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        towerGun.rotation = desiredRotation;
+        towerGun.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    }
+
+    void AttemptToFireProjectile()
+    {
+        if (currentTarget != null && !willFire && currentTimeToFire < firingAnimationTime)
+        {
+            willFire = true;
+            animator.SetBool("WillFire", true);
+        }
     }
 
     void FireProjectile()
     {
-        if (currentTimeToFire > 0)
-        {
-            return;
-        }
+        willFire = false;
+        animator.SetBool("WillFire", false);
+        currentTimeToFire = (float)60 / (float)roundsPerMinute;
 
         Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, towerGun.rotation, transform);
         spawnedProjectile.setValues(damage, projectileSpeed, currentTarget.transform);
-
-        currentTimeToFire = (float)60 / (float)roundsPerMinute;
     }
 
     void OnDrawGizmosSelected()

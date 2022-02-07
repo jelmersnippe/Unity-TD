@@ -23,8 +23,10 @@ public class Projectile : MonoBehaviour
 
     void RotateTowardsTarget()
     {
-        float angle = Mathf.Atan2(target.position.y, target.position.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        Vector3 targetDirection = target.position - transform.position;
+        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+        Quaternion desiredRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = desiredRotation;
     }
 
     void TravelTowardsTarget()

@@ -6,19 +6,27 @@ public class Damageable : MonoBehaviour
 {
     [SerializeField]
     [Min(1)]
-    private int startingHealth = 1;
+    int startingHealth = 1;
 
     [SerializeField]
-    private int health;
+    int health;
+
+    [SerializeField]
+    HealthBar healthBar;
 
     void Start()
     {
         health = startingHealth;
+        healthBar = Instantiate(healthBar, transform);
     }
 
     public void TakeDamage(int damage)
     {
         health -= damage;
+        if (healthBar)
+        {
+            healthBar.setHealthPercentage((float)health / (float)startingHealth);
+        }
 
         if (health <= 0)
         {

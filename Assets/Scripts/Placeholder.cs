@@ -11,6 +11,12 @@ public class Placeholder : MonoBehaviour
     bool hasPlaced = false;
     bool canPlace = true;
 
+    [SerializeField]
+    LayerMask blockedLayers;
+
+    [SerializeField]
+    BoxCollider2D boxCollider;
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -28,7 +34,7 @@ public class Placeholder : MonoBehaviour
         float yPosition = Mathf.Round(mousePosition.y * 2) / 2;
         transform.position = new Vector2(xPosition, yPosition);
 
-        if (canPlace && Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !Physics2D.IsTouchingLayers(boxCollider, blockedLayers))
         {
             Instantiate(towerToPlace, transform.position, towerToPlace.transform.rotation);
 
@@ -44,13 +50,14 @@ public class Placeholder : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        canPlace = false;
-        spriteRenderer.color = Color.red;
+        if(((1 << collision.gameObject.layer) & blockedLayers) != 0)
+        {
+            spriteRenderer.color = Color.red;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        canPlace = true;
         spriteRenderer.color = initialColor;
     }
 }
