@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class BuildingManager : MonoBehaviour
 {
@@ -28,6 +30,14 @@ public class BuildingManager : MonoBehaviour
     [SerializeField]
     LayerMask blockedLayers;
 
+    bool gameOver = false;
+
+    [SerializeField]
+    Canvas gameOverUI;
+
+    [SerializeField]
+    TextMeshProUGUI currencyUI;
+
     void Awake()
     {
         if (instance == null)
@@ -39,10 +49,22 @@ public class BuildingManager : MonoBehaviour
     private void Start()
     {
         health = startingHealth;
+        currencyUI.text = "Currency: " + purchaseCurrency.ToString();
     }
 
     void Update()
     {
+        if (gameOver)
+        {
+            if (Input.anyKey)
+            {
+                gameOverUI.gameObject.SetActive(false);
+                Time.timeScale = 1;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            return;
+        }
+
         TowerSelection();
 
         if (towerToPlace == null)
@@ -101,6 +123,7 @@ public class BuildingManager : MonoBehaviour
         }
 
         purchaseCurrency -= towerToPlace.cost;
+        currencyUI.text = "Currency: " + purchaseCurrency.ToString();
 
         Instantiate(towerToPlace, activePlaceholder.transform.position, towerToPlace.transform.rotation, transform);
     }
@@ -112,10 +135,18 @@ public class BuildingManager : MonoBehaviour
             return;
         }
         purchaseCurrency += currency;
+        currencyUI.text = "Currency: " + purchaseCurrency.ToString();
     }
 
     public void takeDamage(int damage)
     {
         health = Mathf.Max(health -= damage, 0);
+
+        if (health <= 0)
+        {
+            gameOver = true;
+            gameOverUI.gameObject.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
 }

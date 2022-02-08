@@ -43,6 +43,15 @@ public class Tower : MonoBehaviour
     protected Transform currentTarget;
     protected State currentState = State.Seeking;
 
+    [SerializeField]
+    bool hasGattlingUnlocked = false;
+
+    [SerializeField]
+    int consecutiveShots = 0;
+
+    [SerializeField]
+    float lowestTimeToFire = 0.1f;
+
     private void Start()
     {
         timeToFire = (float)60 / (float)roundsPerMinute;
@@ -84,6 +93,7 @@ public class Tower : MonoBehaviour
 
     protected virtual void EnterSeekingState()
     {
+        consecutiveShots = 0;
         currentTarget = null;
         InvokeRepeating("CheckRange", 0, 0.5f);
         currentState = State.Seeking;
@@ -128,8 +138,24 @@ public class Tower : MonoBehaviour
 
         Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, towerGun.rotation, transform);
         spawnedProjectile.setValues(damage, projectileSpeed, currentTarget.transform);
+        consecutiveShots++;
 
-        currentTimeToFire = (float)60 / (float)roundsPerMinute;
+        if (hasGattlingUnlocked)
+        {
+            // Base fire rate * 1.5 to start slower
+            // Then the fire rate exponentially decays, by 0.2f based on the amount of shots fired
+            // Capping out at a certain amoun
+            // This makes it seem like the gattling gun spins up and builds to full power over the course of x seconds
+            // This should probably be thrown into a formula where we define the base time to fire, lowest time to fire and the amount of shots it should take to spin up: resulting in a decay factor
+            float reducedBaseTimeToFire = timeToFire * 1.5f;
+            float decayFactor = 0.35f;
+            float reduction = Mathf.Pow(1f - decayFactor, consecutiveShots);
+            currentTimeToFire = Mathf.Max(lowestTimeToFire, reducedBaseTimeToFire * reduction);
+        } 
+        else
+        {
+            currentTimeToFire = timeToFire;
+        }
     }
 
     void OnDrawGizmosSelected()

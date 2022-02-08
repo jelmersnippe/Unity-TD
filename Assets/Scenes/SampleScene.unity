@@ -12729,8 +12729,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a742d5c3fe8614390822ff67da39f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingHealth: 10
+  health: 0
+  towers:
+  - {fileID: 7865072308819311276, guid: f7c93466cf0fa604a9a1d13490b012a3, type: 3}
   towerToPlace: {fileID: 7865072308819311276, guid: f7c93466cf0fa604a9a1d13490b012a3, type: 3}
-  cost: 20
   placeholder: {fileID: 271249534137600551, guid: aed82416fd582444584e01edfcba5c97, type: 3}
   purchaseCurrency: 100
   blockedLayers:

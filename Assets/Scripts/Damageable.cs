@@ -15,6 +15,9 @@ public class Damageable : MonoBehaviour
     HealthBar healthBar;
 
     [SerializeField]
+    DamagePopup damagePopup;
+
+    [SerializeField]
     int currencyToDrop;
 
     void Start()
@@ -29,6 +32,8 @@ public class Damageable : MonoBehaviour
         if (healthBar)
         {
             healthBar.setHealthPercentage((float)health / (float)startingHealth);
+            DamagePopup createdDamagePopup = Instantiate(damagePopup, healthBar.transform.position + new Vector3(Random.Range(-0.5f, 0.5f), 1), Quaternion.identity, healthBar.transform);
+            createdDamagePopup.setDamage(damage);
         }
 
         if (health <= 0)
