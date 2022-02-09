@@ -32,7 +32,7 @@ public class Damageable : MonoBehaviour
         if (healthBar)
         {
             healthBar.setHealthPercentage((float)health / (float)startingHealth);
-            DamagePopup createdDamagePopup = Instantiate(damagePopup, healthBar.transform.position + new Vector3(Random.Range(-0.5f, 0.5f), 1), Quaternion.identity, healthBar.transform);
+            DamagePopup createdDamagePopup = Instantiate(damagePopup, healthBar.transform.position + new Vector3(Random.Range(-0.5f, 0.5f), 1), Quaternion.identity);
             createdDamagePopup.setDamage(damage);
         }
 

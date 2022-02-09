@@ -38,6 +38,9 @@ public class BuildingManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI currencyUI;
 
+    [SerializeField]
+    TextMeshProUGUI healthUI;
+
     void Awake()
     {
         if (instance == null)
@@ -50,6 +53,7 @@ public class BuildingManager : MonoBehaviour
     {
         health = startingHealth;
         currencyUI.text = "Currency: " + purchaseCurrency.ToString();
+        healthUI.text = "Health: " + health.ToString();
     }
 
     void Update()
@@ -141,6 +145,7 @@ public class BuildingManager : MonoBehaviour
     public void takeDamage(int damage)
     {
         health = Mathf.Max(health -= damage, 0);
+        healthUI.text = "Health: " + health.ToString();
 
         if (health <= 0)
         {
