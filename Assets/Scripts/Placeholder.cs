@@ -24,9 +24,7 @@ public class Placeholder : MonoBehaviour
         }
 
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        float xPosition = Mathf.Round(mousePosition.x * 2) / 2;
-        float yPosition = Mathf.Round(mousePosition.y * 2) / 2;
-        transform.position = new Vector2(xPosition, yPosition);
+        transform.position = new Vector2(mousePosition.x, mousePosition.y);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
