@@ -20,6 +20,8 @@ public class Damageable : MonoBehaviour
     [SerializeField]
     int currencyToDrop;
 
+    bool hasDied = false;
+
     void Start()
     {
         health = startingHealth;
@@ -44,7 +46,14 @@ public class Damageable : MonoBehaviour
 
     void Die()
     {
+        if (hasDied)
+        {
+            return;
+        }
+
         BuildingManager.instance.addPurchaseCurrency(currencyToDrop);
         Destroy(this.gameObject);
+        Spawner.instance.ReduceCurrentMonstersAlive();
+        hasDied = true;
     }
 }

@@ -6,11 +6,13 @@ public class Spawner : MonoBehaviour
 {
     public static Spawner instance;
 
-    [SerializeField]
     Transform[] waypoints;
 
     [SerializeField]
     Wave[] waves;
+
+    int currentWaveIndex = 0;
+    int currentWaveEnemiesAlive = 0;
 
     void Awake()
     {
@@ -18,29 +20,40 @@ public class Spawner : MonoBehaviour
         {
             instance = this;
         }
-    }
 
-    void Start()
-    {
-        if (waves.Length > 0)
+        waypoints = new Transform[transform.childCount];
+        for (int i = 0; i < waypoints.Length; i++)
         {
-            StartSpawning(waves[0]);
+            waypoints[i] = transform.GetChild(i);
         }
     }
 
-    void StartSpawning(Wave waveToSpawn)
+    private void Update()
     {
-        for (int i = 0; i < waveToSpawn.monsters.Count; i++)
+        if (currentWaveEnemiesAlive > 0)
         {
-            MonsterSet monsterSet = waveToSpawn.monsters[i];
+            return;
+        }
+
+        if (currentWaveIndex < waves.Length)
+        {
+            SpawnWave(waves[currentWaveIndex]);
+        }
+    }
+
+    void SpawnWave(Wave wave)
+    {
+        for (int i = 0; i < wave.monsters.Count; i++)
+        {
+            MonsterSet monsterSet = wave.monsters[i];
+            currentWaveEnemiesAlive += monsterSet.count;
             StartCoroutine(SpawnMonsterSet(monsterSet));
+            currentWaveIndex++;
         }
     }
 
     IEnumerator SpawnMonsterSet(MonsterSet monsterSet)
     {
-        yield return new WaitForSeconds(monsterSet.initialDelay);
-
         for (int i = 0; i < monsterSet.count; i++)
         {
             SpawnMonster(monsterSet.monsterType);
@@ -52,6 +65,11 @@ public class Spawner : MonoBehaviour
     {
         Monster spawnedMonster = Instantiate(monster, transform.position, Quaternion.Euler(0, 0, 0));
         spawnedMonster.setWaypoints(waypoints);
+    }
+
+    public void ReduceCurrentMonstersAlive()
+    {
+        currentWaveEnemiesAlive--;
     }
 }
 
