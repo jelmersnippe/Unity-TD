@@ -69,33 +69,10 @@ public class BuildingManager : MonoBehaviour
             return;
         }
 
-        TowerSelection();
-
         if (towerToPlace == null)
         {
             return;
         }
-
-        if (activePlaceholder != null && towerToPlace.cost > purchaseCurrency)
-        {
-            UnsetTowerToPlace();
-            return;
-        }
-
-        if (activePlaceholder == null && towerToPlace != null && purchaseCurrency >= towerToPlace.cost)
-        {
-            activePlaceholder = Instantiate(placeholder, transform);
-            activePlaceholder.setBlockedLayers(blockedLayers);
-        } 
-
-        if (Input.GetMouseButtonDown(0) && activePlaceholder != null && !Physics2D.IsTouchingLayers(activePlaceholder.GetComponent<BoxCollider2D>(), blockedLayers))
-        {
-            PlaceTower();
-        }
-    }
-
-    void TowerSelection()
-    {
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -103,11 +80,17 @@ public class BuildingManager : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && towers.Length > 0)
+        if (Input.GetMouseButtonDown(0) && activePlaceholder != null && !Physics2D.IsTouchingLayers(activePlaceholder.GetComponent<BoxCollider2D>(), blockedLayers))
         {
-            towerToPlace = towers[0];
+            PlaceTower();
         }
+    }
 
+    public void SelectTower(Tower tower)
+    {
+        towerToPlace = tower;
+        activePlaceholder = Instantiate(placeholder, transform);
+        activePlaceholder.setBlockedLayers(blockedLayers);
     }
 
     void UnsetTowerToPlace()
@@ -130,6 +113,9 @@ public class BuildingManager : MonoBehaviour
         currencyUI.text = "Currency: " + purchaseCurrency.ToString();
 
         Instantiate(towerToPlace, activePlaceholder.transform.position, towerToPlace.transform.rotation, transform);
+
+        UnsetTowerToPlace();
+        InfoPanel.instance.DeselectSelectedTower();
     }
 
     public void addPurchaseCurrency(int currency)

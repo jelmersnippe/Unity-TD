@@ -35,10 +35,13 @@ public class Spawner : MonoBehaviour
             return;
         }
 
-        if (currentWaveIndex < waves.Length)
+        if (currentWaveIndex >= waves.Length)
         {
-            SpawnWave(waves[currentWaveIndex]);
+            // Add win condition here
+            return;
         }
+
+        SpawnWave(waves[currentWaveIndex]);
     }
 
     void SpawnWave(Wave wave)

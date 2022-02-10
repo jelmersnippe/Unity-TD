@@ -12,16 +12,16 @@ public class Tower : MonoBehaviour
     private Transform firePoint;
 
     [SerializeField]
-    [Range(1,10)]
-    private int damage = 2;
+    public Sprite uiSprite;
 
     [SerializeField]
-    [Range(20, 300)]
-    private int roundsPerMinute = 20;
+    public int damage = 2;
 
     [SerializeField]
-    [Range(10, 50)]
-    private int range = 25;
+    public int roundsPerMinute = 20;
+
+    [SerializeField]
+    public int range = 25;
 
     [SerializeField]
     [Range(1, 100)]
