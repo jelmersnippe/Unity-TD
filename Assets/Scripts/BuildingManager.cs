@@ -17,6 +17,8 @@ public class BuildingManager : MonoBehaviour
     [SerializeField]
     Tower[] towers;
 
+    private Tower selectedTower;
+
     public Tower towerToPlace;
 
     [SerializeField]
@@ -69,20 +71,29 @@ public class BuildingManager : MonoBehaviour
             return;
         }
 
-        if (towerToPlace == null)
-        {
-            return;
-        }
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             UnsetTowerToPlace();
-            return;
         }
 
-        if (Input.GetMouseButtonDown(0) && activePlaceholder != null && !Physics2D.IsTouchingLayers(activePlaceholder.GetComponent<BoxCollider2D>(), blockedLayers))
+        if (Input.GetMouseButtonDown(0))
         {
-            PlaceTower();
+            if (activePlaceholder != null && !Physics2D.IsTouchingLayers(activePlaceholder.GetComponent<BoxCollider2D>(), blockedLayers))
+            {
+                PlaceTower();
+            }
+            else if (activePlaceholder == null && towerToPlace == null)
+            {
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+
+                RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+                if (hit.collider != null && hit.collider.gameObject.GetComponent<Tower>() != null)
+                {
+                    selectedTower = hit.collider.gameObject.GetComponent<Tower>();
+                    InfoPanel.instance.SetSelectedTower(selectedTower);
+                }
+            }
         }
     }
 
@@ -96,6 +107,7 @@ public class BuildingManager : MonoBehaviour
     void UnsetTowerToPlace()
     {
         towerToPlace = null;
+        InfoPanel.instance.DeselectSelectedTower();
         if (activePlaceholder != null)
         {
             Destroy(activePlaceholder.gameObject);

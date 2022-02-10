@@ -26,6 +26,9 @@ public class InfoPanel : MonoBehaviour
     [SerializeField]
     GameObject infoSection;
 
+    [SerializeField]
+    GameObject upgradeSection;
+
     void Awake()
     {
         if (instance == null)
@@ -44,12 +47,13 @@ public class InfoPanel : MonoBehaviour
         fireRateText.text = tower.roundsPerMinute.ToString();
 
         infoSection.SetActive(true);
-
+        upgradeSection.SetActive(tower.isActiveAndEnabled);
     }
 
     public void DeselectSelectedTower()
     {
         selectedTower = null;
         infoSection.SetActive(false);
+        upgradeSection.SetActive(false);
     }
 }
