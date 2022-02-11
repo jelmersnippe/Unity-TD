@@ -208,9 +208,8 @@ public class Tower : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
+    public void ShowRange(bool showRange)
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, range);
+        GetComponent<RangeIndicator>().rangeIndicator.gameObject.SetActive(showRange);
     }
 }

@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 115164310d18b70418512c964619772a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 400
+  startingHealth: 4000
   health: 0
   healthBar: {fileID: 9154944995485845216, guid: ca058f3153110214e93b2613016020cd, type: 3}
   damagePopup: {fileID: 2554061730682212963, guid: 51c8665ac6fe79e499be75eb5392eec2, type: 3}

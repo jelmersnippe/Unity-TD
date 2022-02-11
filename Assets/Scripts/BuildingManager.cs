@@ -71,7 +71,14 @@ public class BuildingManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            UnsetTowerToPlace();
+            if (selectedTower != null)
+            {
+                DeselectCurrentTower();
+            }
+            if (towerToPlace != null)
+            {
+                CancelPlacingTower();
+            }
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -88,30 +95,42 @@ public class BuildingManager : MonoBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
                 if (hit.collider != null && hit.collider.gameObject.GetComponent<Tower>() != null)
                 {
-                    SelectTower(hit.collider.gameObject.GetComponent<Tower>());
+                    SetSelectedTower(hit.collider.gameObject.GetComponent<Tower>());
                 }
             }
         }
     }
 
-    public void SelectTower(Tower tower)
+    public void SetSelectedTower(Tower tower)
     {
+        DeselectCurrentTower();
         selectedTower = tower;
+        tower.ShowRange(true);
         InfoPanel.instance.SetSelectedTower(selectedTower);
     }
 
     public void SetTowerToPlace(Tower tower)
     {
+        CancelPlacingTower();
+        DeselectCurrentTower();
         Placeholder placeholder = tower.GetComponent<Placeholder>();
 
         InfoPanel.instance.SetSelectedTower(tower);
 
         towerToPlace = Instantiate(placeholder, transform);
         towerToPlace.setBlockedLayers(blockedLayers);
-
     }
 
-    void UnsetTowerToPlace()
+    void DeselectCurrentTower()
+    {
+        InfoPanel.instance.DeselectSelectedTower();
+        if (selectedTower != null)
+        {
+            selectedTower.ShowRange(false);
+        }
+    }
+
+    void CancelPlacingTower()
     {
         InfoPanel.instance.DeselectSelectedTower();
         if (towerToPlace != null)
@@ -132,7 +151,7 @@ public class BuildingManager : MonoBehaviour
         towerToPlace.ConvertToActiveTower();
         towerToPlace.gameObject.layer = towerLayer;
 
-        SelectTower(towerToPlace.GetComponent<Tower>());
+        SetSelectedTower(towerToPlace.GetComponent<Tower>());
 
         towerToPlace = null;
     }
