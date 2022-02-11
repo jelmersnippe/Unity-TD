@@ -6,12 +6,21 @@ public class Placeholder : MonoBehaviour
 {
     Color initialColor;
     SpriteRenderer spriteRenderer;
-
+    [SerializeField]
     LayerMask blockedLayers;
+
+    [SerializeField]
+    Transform activeObject;
+
+    [SerializeField]
+    Transform placeholderObject;
+
+    [Min(0)]
+    public int cost = 10;
 
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = placeholderObject.GetComponent<SpriteRenderer>();
         initialColor = spriteRenderer.color;
     }
 
@@ -27,15 +36,15 @@ public class Placeholder : MonoBehaviour
         transform.position = new Vector2(mousePosition.x, mousePosition.y);
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collider)
     {
-        if(((1 << collision.gameObject.layer) & blockedLayers) != 0)
+        if (((1 << collider.gameObject.layer) & blockedLayers) != 0)
         {
             spriteRenderer.color = Color.red;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionExit2D(Collision2D collider)
     {
         spriteRenderer.color = initialColor;
     }
@@ -43,5 +52,17 @@ public class Placeholder : MonoBehaviour
     public void setBlockedLayers(LayerMask newBlockedLayers)
     {
         blockedLayers = newBlockedLayers;
+    }
+
+    public void ConvertToActiveTower()
+    {
+        // Enable the tower script and object
+        Tower tower = GetComponent<Tower>();
+        tower.enabled = true;
+        activeObject.gameObject.SetActive(true);
+
+        // Disabled palceholder script and object
+        placeholderObject.gameObject.SetActive(false);
+        enabled = false;
     }
 }

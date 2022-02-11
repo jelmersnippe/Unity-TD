@@ -19,12 +19,7 @@ public class BuildingManager : MonoBehaviour
 
     private Tower selectedTower;
 
-    public Tower towerToPlace;
-
-    [SerializeField]
-    Placeholder placeholder;
-
-    Placeholder activePlaceholder;
+    public Placeholder towerToPlace;
 
     [SerializeField]
     int purchaseCurrency;
@@ -42,6 +37,9 @@ public class BuildingManager : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI healthUI;
+
+    [SerializeField]
+    int towerLayer;
 
     void Awake()
     {
@@ -78,11 +76,11 @@ public class BuildingManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (activePlaceholder != null && !Physics2D.IsTouchingLayers(activePlaceholder.GetComponent<BoxCollider2D>(), blockedLayers))
+            if (towerToPlace != null && !Physics2D.IsTouchingLayers(towerToPlace.GetComponent<Collider2D>(), blockedLayers))
             {
                 PlaceTower();
             }
-            else if (activePlaceholder == null && towerToPlace == null)
+            else if (towerToPlace == null)
             {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
@@ -90,8 +88,7 @@ public class BuildingManager : MonoBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
                 if (hit.collider != null && hit.collider.gameObject.GetComponent<Tower>() != null)
                 {
-                    selectedTower = hit.collider.gameObject.GetComponent<Tower>();
-                    InfoPanel.instance.SetSelectedTower(selectedTower);
+                    SelectTower(hit.collider.gameObject.GetComponent<Tower>());
                 }
             }
         }
@@ -99,35 +96,45 @@ public class BuildingManager : MonoBehaviour
 
     public void SelectTower(Tower tower)
     {
-        towerToPlace = tower;
-        activePlaceholder = Instantiate(placeholder, transform);
-        activePlaceholder.setBlockedLayers(blockedLayers);
+        selectedTower = tower;
+        InfoPanel.instance.SetSelectedTower(selectedTower);
+    }
+
+    public void SetTowerToPlace(Tower tower)
+    {
+        Placeholder placeholder = tower.GetComponent<Placeholder>();
+
+        InfoPanel.instance.SetSelectedTower(tower);
+
+        towerToPlace = Instantiate(placeholder, transform);
+        towerToPlace.setBlockedLayers(blockedLayers);
+
     }
 
     void UnsetTowerToPlace()
     {
-        towerToPlace = null;
         InfoPanel.instance.DeselectSelectedTower();
-        if (activePlaceholder != null)
+        if (towerToPlace != null)
         {
-            Destroy(activePlaceholder.gameObject);
+            Destroy(towerToPlace.gameObject);
         }
     }
 
     void PlaceTower()
     {
-        if (towerToPlace.cost > purchaseCurrency || activePlaceholder == null)
+        if (towerToPlace != null && towerToPlace.cost > purchaseCurrency)
         {
             return;
         }
 
         purchaseCurrency -= towerToPlace.cost;
         currencyUI.text = "Currency: " + purchaseCurrency.ToString();
+        towerToPlace.ConvertToActiveTower();
+        towerToPlace.gameObject.layer = towerLayer;
 
-        Instantiate(towerToPlace, activePlaceholder.transform.position, towerToPlace.transform.rotation, transform);
+        SelectTower(towerToPlace.GetComponent<Tower>());
 
-        UnsetTowerToPlace();
-        InfoPanel.instance.DeselectSelectedTower();
+        towerToPlace = null;
     }
 
     public void addPurchaseCurrency(int currency)

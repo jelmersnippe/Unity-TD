@@ -27,9 +27,6 @@ public class Tower : MonoBehaviour
     [Range(1, 100)]
     private int projectileSpeed = 1;
 
-    [Min(0)]
-    public int cost = 10;
-
     [SerializeField]
     private Projectile projectile;
 
