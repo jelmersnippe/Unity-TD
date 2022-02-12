@@ -3,7 +3,15 @@ guid: 283124ed0d40d9c4a9b8668960f6223a
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - selectedTower: {instanceID: 0}
+  - image: {instanceID: 0}
+  - damageText: {instanceID: 0}
+  - rangeText: {instanceID: 0}
+  - fireRateText: {instanceID: 0}
+  - infoSection: {instanceID: 0}
+  - upgradeSection: {instanceID: 0}
+  - purchaseButton: {fileID: 4668399005826041042, guid: 2797b2618bfc4fc45b07617e9f520dcc, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

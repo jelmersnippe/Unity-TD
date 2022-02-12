@@ -41,9 +41,15 @@ public class Gattling : Tower
 
         switch (upgradeToActivate.type)
         {
-            case "consecutive_damage":
+            case "gattling_consecutive_damage_up":
                 damagePerConsecutiveShot += 5;
-                return;
+                break;
+            case "gattling_increased_max_firerate":
+                lowestTimeToFire /= 2f;
+                break;
+            case "quicker_windup":
+                shotsToReachLowestTimeToFire /= 2;
+                break;
         }
     }
 }

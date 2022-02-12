@@ -254,7 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeObject: {fileID: 6291663383211102822}
   placeholderObject: {fileID: 3701474632446767301}
-  cost: 100
+  cost: 250
 --- !u!114 &4892974316575252893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,14 +293,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.18462063, y: 0.43797213}
-      - {x: -0.18710148, y: 0.43780363}
-      - {x: -0.4371354, y: 0.18747862}
-      - {x: -0.43742132, y: -0.18778643}
-      - {x: -0.1868275, y: -0.4377585}
-      - {x: 0.18724549, y: -0.43783018}
-      - {x: 0.43837488, y: -0.18665758}
-      - {x: 0.43835774, y: 0.18622011}
+    - - {x: 0.36895442, y: 0.8648501}
+      - {x: -0.3617345, y: 0.8646816}
+      - {x: -0.8640134, y: 0.35240847}
+      - {x: -0.88370275, y: -0.3527163}
+      - {x: -0.34205517, y: -0.864636}
+      - {x: 0.3715793, y: -0.8647082}
+      - {x: 0.86525285, y: -0.3806931}
+      - {x: 0.88463914, y: 0.35115045}
 --- !u!50 &975187778779203633
 Rigidbody2D:
   serializedVersion: 4
@@ -337,9 +337,9 @@ MonoBehaviour:
   towerGun: {fileID: 7865072308831243787}
   firePoint: {fileID: 7865072309213478940}
   uiSprite: {fileID: 21300000, guid: 2c712fe2a3d1c8f48ab2431eb84bf960, type: 3}
-  damage: 100
-  roundsPerMinute: 45
-  range: 5
+  damage: 50
+  roundsPerMinute: 75
+  range: 3
   projectileSpeed: 60
   projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
   monsterLayerMask:
@@ -349,11 +349,14 @@ MonoBehaviour:
   currentState: 0
   isTesting: 0
   upgrades:
-  - {fileID: 11400000, guid: 01d5d23271835b54584fad476950fcb7, type: 2}
+  - {fileID: 11400000, guid: 63ced3a66deef9a42aa49bf47aca6d05, type: 2}
+  - {fileID: 11400000, guid: 3ff74c5c15de59f47b4c24460b80c000, type: 2}
+  - {fileID: 11400000, guid: 9c89ee4a09e1f87428a7fd7e659a1626, type: 2}
+  unlockedUpgrades: []
   consecutiveShots: 0
   damagePerConsecutiveShot: 0
   shotsToReachLowestTimeToFire: 6
-  lowestTimeToFire: 0.1
+  lowestTimeToFire: 0.2
 --- !u!1 &7865072308831243786
 GameObject:
   m_ObjectHideFlags: 0

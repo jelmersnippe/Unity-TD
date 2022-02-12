@@ -27,7 +27,9 @@ public class InfoPanel : MonoBehaviour
     GameObject infoSection;
 
     [SerializeField]
-    UpgradePanel upgradeSection;
+    Transform upgradeSection;
+
+    [SerializeField] UpgradeItem purchaseButton;
 
     void Awake()
     {
@@ -68,7 +70,29 @@ public class InfoPanel : MonoBehaviour
 
         if (selectedTower.isActiveAndEnabled)
         {
-            upgradeSection.setUpgrades(selectedTower.upgrades);
+            ShowUpgrades();
+        }
+    }
+    public void ShowUpgrades()
+    {
+        foreach (Transform child in upgradeSection)
+        {
+            Destroy(child.gameObject);
+        }
+
+        float panelHeight = GetComponent<RectTransform>().sizeDelta.y;
+        List<Upgrade> items = selectedTower.upgrades;
+        float itemHeight = purchaseButton.GetComponent<RectTransform>().sizeDelta.y;
+        for (int i = 0; i < items.Count; i++)
+        {
+            Upgrade item = items[i];
+            if (selectedTower.unlockedUpgrades.Contains(item))
+            {
+                continue;
+            }
+
+            UpgradeItem createdUpgradeItem = Instantiate(purchaseButton, transform.position + new Vector3(0, (panelHeight / 2) - (itemHeight / 2) - (itemHeight * i)), Quaternion.identity, upgradeSection);
+            createdUpgradeItem.SetItem(item);
         }
     }
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField]
     Transform[] waypoints;
+    int currentWaypointIndex = -1;
 
     [SerializeField]
     [Range(1,10)]
@@ -14,8 +14,6 @@ public class Monster : MonoBehaviour
     [SerializeField]
     int damage = 1;
 
-    [SerializeField]
-    int currentWaypointIndex = -1;
 
     void Update()
     {

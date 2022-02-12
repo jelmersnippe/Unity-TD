@@ -23,7 +23,6 @@ public class UpgradeItem : MonoBehaviour
         item = itemToSet;
         cost = itemToSet.cost;
         button.onClick.AddListener(delegate {
-            GameManager.instance.purchaseCurrency -= cost;
             BuildingManager.instance.selectedTower.ActivateUpgrade(itemToSet);
             InfoPanel.instance.UpdateInfo();
         });

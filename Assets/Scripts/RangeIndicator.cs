@@ -11,13 +11,14 @@ public class RangeIndicator : MonoBehaviour
     private void Awake()
     {
         tower = GetComponent<Tower>();
+        SetRange(tower.range);
     }
 
-    private void OnEnable()
+    public void SetRange(float range)
     {
-        int scale = tower.range * 2;
+        float scale = range * 2f;
         rangeIndicator.localScale = new Vector3(scale, scale, 0);
-    }
+    } 
 
     void OnDrawGizmosSelected()
     {

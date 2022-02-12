@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7583179868431459599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 1317059305
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8748f711058afc14ebba797d9f2bac16, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Color: {r: 0.9339623, g: 0.20705767, b: 0.22589898, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -99,11 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 115164310d18b70418512c964619772a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 150
+  startingHealth: 100
   health: 0
   healthBar: {fileID: 9154944995485845216, guid: ca058f3153110214e93b2613016020cd, type: 3}
   damagePopup: {fileID: 2554061730682212963, guid: 51c8665ac6fe79e499be75eb5392eec2, type: 3}
-  currencyToDrop: 10
+  currencyToDrop: 2
   hasDied: 0
 --- !u!114 &7583179868431459592
 MonoBehaviour:
@@ -117,13 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04ad8577742c14a4691634f79654cb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  speed: 2
+  speed: 4
   damage: 1
-  currentWaypointIndex: -1
 --- !u!61 &931267672491295993
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -137,16 +132,16 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.038736075, y: -0.10329628}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.4984517, y: 0.2}
-    oldSize: {x: 1.0555556, y: 1.4444444}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2543979, y: 2.3934073}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0

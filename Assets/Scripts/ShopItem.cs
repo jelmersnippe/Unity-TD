@@ -13,8 +13,6 @@ public class ShopItem : MonoBehaviour
     [SerializeField] Color unpurchaseableColor = new Color(255, 255, 255, 0.6f);
     Button button;
 
-    bool canPurchase;
-
     void Awake()
     {
         button = GetComponent<Button>();
@@ -36,18 +34,16 @@ public class ShopItem : MonoBehaviour
             return;
         }
 
-        if (canPurchase && cost > GameManager.instance.purchaseCurrency)
+        if (cost > GameManager.instance.purchaseCurrency)
         {
-            canPurchase = false;
             costDisplay.color = Color.red;
             spriteDisplay.color = unpurchaseableColor;
             button.enabled = false;
             return;
         }
 
-        if (!canPurchase && cost <= GameManager.instance.purchaseCurrency)
+        if (cost <= GameManager.instance.purchaseCurrency)
         {
-            canPurchase = true;
             costDisplay.color = Color.white;
             spriteDisplay.color = Color.white;
             button.enabled = true;

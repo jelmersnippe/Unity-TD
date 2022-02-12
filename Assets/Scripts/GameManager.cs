@@ -34,6 +34,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [SerializeField] public TextMeshProUGUI roundsUI;
+    private int _currentRound;
+    public int currentRound
+    {
+        get => _currentRound;
+        set
+        {
+            _currentRound = value;
+            roundsUI.text = "Round: " + _currentRound.ToString();
+        }
+    }
+
     bool gameOver = false;
     bool gameWon = false;
 

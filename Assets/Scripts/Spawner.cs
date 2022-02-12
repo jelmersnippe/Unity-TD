@@ -8,10 +8,10 @@ public class Spawner : MonoBehaviour
 
     Transform[] waypoints;
 
-    [SerializeField]
-    Wave[] waves;
+    [SerializeField] Wave[] waves;
 
-    int currentWaveIndex = 0;
+
+    [SerializeField] int currentWaveIndex = 0;
     int currentWaveEnemiesAlive = 0;
 
     void Awake()
@@ -51,12 +51,14 @@ public class Spawner : MonoBehaviour
             MonsterSet monsterSet = wave.monsters[i];
             currentWaveEnemiesAlive += monsterSet.count;
             StartCoroutine(SpawnMonsterSet(monsterSet));
-            currentWaveIndex++;
         }
+        currentWaveIndex++;
+        GameManager.instance.currentRound = currentWaveIndex;
     }
 
     IEnumerator SpawnMonsterSet(MonsterSet monsterSet)
     {
+        yield return new WaitForSeconds(monsterSet.initialDelay);
         for (int i = 0; i < monsterSet.count; i++)
         {
             SpawnMonster(monsterSet.monsterType);

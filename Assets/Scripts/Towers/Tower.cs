@@ -39,21 +39,31 @@ public class Tower : MonoBehaviour
     public bool isTesting = true;
 
     public List<Upgrade> upgrades = new List<Upgrade>();
+    public List<Upgrade> unlockedUpgrades = new List<Upgrade>();
 
     public virtual void ActivateUpgrade(Upgrade upgradeToActivate)
     {
+        if (unlockedUpgrades.Contains(upgradeToActivate))
+        {
+            Debug.Log("Can only upgrade once");
+            return;
+        }
+
         switch (upgradeToActivate.type)
         {
-            case "damage":
+            case "default_damage_up":
                 damage += 10;
-                return;
-            case "range":
-                range += 1;
-                return;
-            case "fire_rate":
+                break;
+            case "default_firerate_up":
                 roundsPerMinute += 30;
-                return;
+                break;
+            case "default_range_up":
+                range += 1;
+                GetComponent<RangeIndicator>().SetRange(range);
+                break;
         }
+        unlockedUpgrades.Add(upgradeToActivate);
+        GameManager.instance.purchaseCurrency -= upgradeToActivate.cost;
     }
 
     private void Start()
