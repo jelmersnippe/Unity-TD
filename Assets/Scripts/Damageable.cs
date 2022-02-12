@@ -20,7 +20,7 @@ public class Damageable : MonoBehaviour
     [SerializeField]
     int currencyToDrop;
 
-    bool hasDied = false;
+    public bool hasDied = false;
 
     void Start()
     {

@@ -7,59 +7,34 @@ public class Tower : MonoBehaviour
     public enum State { Seeking, Firing, Testing }
 
     [SerializeField]
-    private Transform towerGun;
+    protected Transform towerGun;
     [SerializeField]
-    private Transform firePoint;
+    protected Transform firePoint;
 
     [SerializeField]
     public Sprite uiSprite;
 
-    [SerializeField]
-    public int damage = 2;
-
-    [SerializeField]
-    public int roundsPerMinute = 20;
-
-    [SerializeField]
-    public int range = 25;
+    public int damage= 100;
+    public int roundsPerMinute = 30;
+    public int range = 5;
 
     [SerializeField]
     [Range(1, 100)]
-    private int projectileSpeed = 1;
+    protected int projectileSpeed = 60;
 
     [SerializeField]
-    private Projectile projectile;
+    protected Projectile projectile;
 
     [SerializeField]
-    LayerMask monsterLayerMask;
+    protected LayerMask monsterLayerMask;
 
-    float timeToFire;
+    protected float timeToFire;
     [SerializeField]
-    private float currentTimeToFire = 0;
+    protected float currentTimeToFire = 0;
 
     protected Transform currentTarget;
     [SerializeField]
     protected State currentState = State.Seeking;
-
-    [SerializeField]
-    bool hasGattlingUnlocked = false;
-    [SerializeField]
-    int consecutiveShots = 0;
-    [SerializeField]
-    int shotsToReachLowestTimeToFire = 6;
-    [SerializeField]
-    float lowestTimeToFire = 0.1f;
-
-    [SerializeField]
-    bool hasSpreadShotUnlocked = false;
-    [SerializeField]
-    int pelletsToFire = 6;
-    [SerializeField]
-    float spread = 3f;
-    [SerializeField]
-    float lowestSpeed = 0.5f;
-    [SerializeField]
-    float timeToLowestSpeed = 0.5f;
 
     public bool isTesting = true;
 
@@ -127,7 +102,6 @@ public class Tower : MonoBehaviour
 
     protected virtual void EnterSeekingState()
     {
-        consecutiveShots = 0;
         currentTarget = null;
         InvokeRepeating("CheckRange", 0, 0.5f);
         currentState = State.Seeking;
@@ -172,40 +146,26 @@ public class Tower : MonoBehaviour
         towerGun.rotation = desiredRotation;
     }
 
-    void FireProjectile()
+    protected virtual void FireProjectile()
     {
         if (currentTimeToFire > 0)
         {
             return;
         }
 
-        if (hasSpreadShotUnlocked)
-        {
-            for (int i = 0; i < pelletsToFire; i++)
-            {
-                Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, Quaternion.Euler(firePoint.rotation.eulerAngles + (new Vector3(0,0,1) * Random.Range(-spread, spread))), transform);
-                spawnedProjectile.setValues(damage, projectileSpeed * Random.Range(0.8f, 1.2f), currentTarget ? currentTarget.transform : null, monsterLayerMask, lowestSpeed, timeToLowestSpeed);
-            }
-        } 
-        else
-        {
-            Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation, transform);
-            spawnedProjectile.setValues(damage, projectileSpeed, currentTarget ? currentTarget.transform : null, monsterLayerMask, null, null);
-        }
+        SpawnProjectile();
+        ResetTimeToFire();
+    }
 
-        if (hasGattlingUnlocked)
-        {
-            consecutiveShots++;
-            // The fire rate exponentially increases
-            // Speeding up from the first shot to the last shot
-            // Finishing at the lowest timeToFire possible after the required shots
-            float calc = timeToFire - (timeToFire - lowestTimeToFire) * Mathf.Sqrt(Mathf.Min((float)consecutiveShots / (float)shotsToReachLowestTimeToFire, 1));
-            currentTimeToFire = calc;
-        } 
-        else
-        {
-            currentTimeToFire = timeToFire;
-        }
+    protected virtual void SpawnProjectile()
+    {
+        Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation, transform);
+        spawnedProjectile.setValues(damage, projectileSpeed, currentTarget ? currentTarget.transform : null, monsterLayerMask, null, null);
+    }
+
+    protected virtual void ResetTimeToFire()
+    {
+        currentTimeToFire = timeToFire;
     }
 
     public void ShowRange(bool showRange)

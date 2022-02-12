@@ -6,16 +6,11 @@ public class Placeholder : MonoBehaviour
 {
     Color initialColor;
     SpriteRenderer spriteRenderer;
-    [SerializeField]
     LayerMask blockedLayers;
 
-    [SerializeField]
-    Transform activeObject;
+    [SerializeField] Transform activeObject;
+    [SerializeField] Transform placeholderObject;
 
-    [SerializeField]
-    Transform placeholderObject;
-
-    [Min(0)]
     public int cost = 10;
 
     private void Start()

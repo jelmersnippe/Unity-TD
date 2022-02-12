@@ -211,12 +211,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7865072308819311278}
   - component: {fileID: 404057427222198897}
-  - component: {fileID: 1625289657327850247}
   - component: {fileID: 4892974316575252893}
   - component: {fileID: 9147961463677388057}
   - component: {fileID: 975187778779203633}
+  - component: {fileID: -6056612154436583079}
   m_Layer: 0
-  m_Name: Tower
+  m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -252,47 +252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3fd460c0fc43584aa36537909fe6129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockedLayers:
-    serializedVersion: 2
-    m_Bits: 0
   activeObject: {fileID: 6291663383211102822}
   placeholderObject: {fileID: 3701474632446767301}
-  cost: 50
---- !u!114 &1625289657327850247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7865072308819311275}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc569eab57f857d4baf84b8cdd598cdc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  towerGun: {fileID: 7865072308831243787}
-  firePoint: {fileID: 7865072309213478940}
-  uiSprite: {fileID: 21300000, guid: 2c712fe2a3d1c8f48ab2431eb84bf960, type: 3}
-  damage: 100
-  roundsPerMinute: 20
-  range: 5
-  projectileSpeed: 40
-  projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
-  monsterLayerMask:
-    serializedVersion: 2
-    m_Bits: 512
-  currentTimeToFire: 0
-  currentState: 0
-  hasGattlingUnlocked: 1
-  consecutiveShots: 0
-  shotsToReachLowestTimeToFire: 6
-  lowestTimeToFire: 0.1
-  hasSpreadShotUnlocked: 0
-  pelletsToFire: 10
-  spread: 45
-  lowestSpeed: 0.4
-  timeToLowestSpeed: 0.1
-  isTesting: 0
+  cost: 100
 --- !u!114 &4892974316575252893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +322,36 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-6056612154436583079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7865072308819311275}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c259731d432e54cb03faca3f5bca7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerGun: {fileID: 7865072308831243787}
+  firePoint: {fileID: 7865072309213478940}
+  uiSprite: {fileID: 21300000, guid: 2c712fe2a3d1c8f48ab2431eb84bf960, type: 3}
+  damage: 50
+  roundsPerMinute: 60
+  range: 3
+  projectileSpeed: 30
+  projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
+  monsterLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  currentTimeToFire: 0
+  currentState: 0
+  isTesting: 0
+  pelletsToFire: 6
+  spread: 20
+  lowestSpeed: 0.3
+  timeToLowestSpeed: 0.4
 --- !u!1 &7865072308831243786
 GameObject:
   m_ObjectHideFlags: 0

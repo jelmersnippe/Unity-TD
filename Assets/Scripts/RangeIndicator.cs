@@ -21,6 +21,10 @@ public class RangeIndicator : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
+        if (tower == null)
+        {
+            return;
+        }
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, tower.range);
     }

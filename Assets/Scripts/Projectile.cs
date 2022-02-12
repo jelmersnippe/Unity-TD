@@ -63,9 +63,12 @@ public class Projectile : MonoBehaviour
         // Or we don't have a target and we've hit something in our targetmask
         if ((isTargeted && target != null && collider.transform == target) || (!isTargeted && (((1 << collider.gameObject.layer) & targetMask) != 0)))
         {
-            Destroy(gameObject);
-
             Damageable damageable = collider.gameObject.GetComponent<Damageable>();
+
+            if (damageable == null || damageable.hasDied)
+            {
+                Destroy(gameObject);
+            }
 
             if (damageable != null)
             {
