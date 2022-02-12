@@ -23,7 +23,7 @@ public class UpgradeItem : MonoBehaviour
         item = itemToSet;
         cost = itemToSet.cost;
         button.onClick.AddListener(delegate {
-            BuildingManager.instance.purchaseCurrency -= cost;
+            GameManager.instance.purchaseCurrency -= cost;
             BuildingManager.instance.selectedTower.ActivateUpgrade(itemToSet);
             InfoPanel.instance.UpdateInfo();
         });
@@ -38,7 +38,7 @@ public class UpgradeItem : MonoBehaviour
             return;
         }
 
-        if (cost > BuildingManager.instance.purchaseCurrency)
+        if (cost > GameManager.instance.purchaseCurrency)
         {
             costDisplay.color = Color.red;
             nameDisplay.color = unpurchaseableColor;
@@ -46,7 +46,7 @@ public class UpgradeItem : MonoBehaviour
             return;
         }
 
-        if (cost <= BuildingManager.instance.purchaseCurrency)
+        if (cost <= GameManager.instance.purchaseCurrency)
         {
             costDisplay.color = Color.white;
             nameDisplay.color = Color.white;

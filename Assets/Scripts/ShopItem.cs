@@ -36,7 +36,7 @@ public class ShopItem : MonoBehaviour
             return;
         }
 
-        if (canPurchase && cost > BuildingManager.instance.purchaseCurrency)
+        if (canPurchase && cost > GameManager.instance.purchaseCurrency)
         {
             canPurchase = false;
             costDisplay.color = Color.red;
@@ -45,7 +45,7 @@ public class ShopItem : MonoBehaviour
             return;
         }
 
-        if (!canPurchase && cost <= BuildingManager.instance.purchaseCurrency)
+        if (!canPurchase && cost <= GameManager.instance.purchaseCurrency)
         {
             canPurchase = true;
             costDisplay.color = Color.white;
