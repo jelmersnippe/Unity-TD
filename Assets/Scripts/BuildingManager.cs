@@ -8,21 +8,35 @@ public class BuildingManager : MonoBehaviour
 {
     public static BuildingManager instance;
 
-    [SerializeField]
-    int startingHealth;
+    [SerializeField] TextMeshProUGUI healthUI;
+    [SerializeField] int startingHealth = 10;
+    private int _health;
+    public int health
+    {
+        get => _health;
+        set
+        {
+            _health = value;
+            healthUI.text = "Health: " + _health.ToString();
+        }
+    }
 
-    [SerializeField]
-    int health;
-
-    [SerializeField]
-    Tower[] towers;
+    [SerializeField] TextMeshProUGUI currencyUI;
+    [SerializeField] int startingCurrency = 100;
+    private int _purchaseCurrency;
+    public int purchaseCurrency
+    {
+        get => _purchaseCurrency;
+        set
+        {
+            _purchaseCurrency = value;
+            currencyUI.text = "Currency: " + _purchaseCurrency.ToString();
+        }
+    }
 
     private Tower selectedTower;
 
     public Placeholder towerToPlace;
-
-    [SerializeField]
-    int purchaseCurrency;
 
     [SerializeField]
     LayerMask blockedLayers;
@@ -31,12 +45,6 @@ public class BuildingManager : MonoBehaviour
 
     [SerializeField]
     Canvas gameOverUI;
-
-    [SerializeField]
-    TextMeshProUGUI currencyUI;
-
-    [SerializeField]
-    TextMeshProUGUI healthUI;
 
     [SerializeField]
     int towerLayer;
@@ -52,8 +60,7 @@ public class BuildingManager : MonoBehaviour
     private void Start()
     {
         health = startingHealth;
-        currencyUI.text = "Currency: " + purchaseCurrency.ToString();
-        healthUI.text = "Health: " + health.ToString();
+        purchaseCurrency = startingCurrency;
     }
 
     void Update()
@@ -154,16 +161,6 @@ public class BuildingManager : MonoBehaviour
         SetSelectedTower(towerToPlace.GetComponent<Tower>());
 
         towerToPlace = null;
-    }
-
-    public void addPurchaseCurrency(int currency)
-    {
-        if (currency < 0)
-        {
-            return;
-        }
-        purchaseCurrency += currency;
-        currencyUI.text = "Currency: " + purchaseCurrency.ToString();
     }
 
     public void takeDamage(int damage)

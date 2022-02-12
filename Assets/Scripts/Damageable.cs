@@ -51,7 +51,7 @@ public class Damageable : MonoBehaviour
             return;
         }
 
-        BuildingManager.instance.addPurchaseCurrency(currencyToDrop);
+        BuildingManager.instance.purchaseCurrency += currencyToDrop;
         Destroy(this.gameObject);
         Spawner.instance.ReduceCurrentMonstersAlive();
         hasDied = true;

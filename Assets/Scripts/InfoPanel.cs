@@ -40,20 +40,30 @@ public class InfoPanel : MonoBehaviour
     public void SetSelectedTower(Tower tower)
     {
         selectedTower = tower;
-
-        image.sprite = tower.uiSprite;
-        damageText.text = tower.damage.ToString();
-        rangeText.text = tower.range.ToString();
-        fireRateText.text = tower.roundsPerMinute.ToString();
-
-        infoSection.SetActive(true);
-        upgradeSection.SetActive(tower.isActiveAndEnabled);
+        UpdateInfo();
     }
 
     public void DeselectSelectedTower()
     {
         selectedTower = null;
-        infoSection.SetActive(false);
-        upgradeSection.SetActive(false);
+        UpdateInfo();
+    }
+
+    public void UpdateInfo()
+    {
+        if (selectedTower == null)
+        {
+            infoSection.SetActive(false);
+            upgradeSection.SetActive(false);
+            return;
+        }
+
+        image.sprite = selectedTower.uiSprite;
+        damageText.text = selectedTower.damage.ToString();
+        rangeText.text = selectedTower.range.ToString();
+        fireRateText.text = selectedTower.roundsPerMinute.ToString();
+
+        infoSection.SetActive(true);
+        upgradeSection.SetActive(selectedTower.isActiveAndEnabled);
     }
 }
