@@ -42,12 +42,12 @@ public class BuildingManager : MonoBehaviour
     LayerMask blockedLayers;
 
     bool gameOver = false;
+    bool gameWon = false;
 
-    [SerializeField]
-    Canvas gameOverUI;
+    [SerializeField] Canvas gameOverUI;
+    [SerializeField] Canvas gameWonUI;
 
-    [SerializeField]
-    int towerLayer;
+    [SerializeField] int towerLayer;
 
     void Awake()
     {
@@ -55,6 +55,8 @@ public class BuildingManager : MonoBehaviour
         {
             instance = this;
         }
+
+        Time.timeScale = 1;
     }
 
     private void Start()
@@ -65,12 +67,13 @@ public class BuildingManager : MonoBehaviour
 
     void Update()
     {
-        if (gameOver)
+        Debug.Log(Time.timeScale);
+        if (gameOver || gameWon)
         {
             if (Input.anyKey)
             {
                 gameOverUI.gameObject.SetActive(false);
-                Time.timeScale = 1;
+                gameWonUI.gameObject.SetActive(false);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
             return;
@@ -170,9 +173,21 @@ public class BuildingManager : MonoBehaviour
 
         if (health <= 0)
         {
-            gameOver = true;
-            gameOverUI.gameObject.SetActive(true);
-            Time.timeScale = 0;
+            LoseGame();
         }
+    }
+
+    public void LoseGame()
+    {
+        gameOver = true;
+        gameOverUI.gameObject.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void WinGame()
+    {
+        gameWon = true;
+        gameWonUI.gameObject.SetActive(true);
+        Time.timeScale = 0;
     }
 }

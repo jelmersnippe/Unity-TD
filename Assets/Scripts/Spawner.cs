@@ -37,7 +37,7 @@ public class Spawner : MonoBehaviour
 
         if (currentWaveIndex >= waves.Length)
         {
-            // Add win condition here
+            BuildingManager.instance.WinGame();
             return;
         }
 
