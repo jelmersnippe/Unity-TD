@@ -38,6 +38,24 @@ public class Tower : MonoBehaviour
 
     public bool isTesting = true;
 
+    public List<Upgrade> upgrades = new List<Upgrade>();
+
+    public virtual void ActivateUpgrade(Upgrade upgradeToActivate)
+    {
+        switch (upgradeToActivate.type)
+        {
+            case "damage":
+                damage += 10;
+                return;
+            case "range":
+                range += 1;
+                return;
+            case "fire_rate":
+                roundsPerMinute += 30;
+                return;
+        }
+    }
+
     private void Start()
     {
         timeToFire = (float)60 / (float)roundsPerMinute;
@@ -160,7 +178,7 @@ public class Tower : MonoBehaviour
     protected virtual void SpawnProjectile()
     {
         Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation, transform);
-        spawnedProjectile.setValues(damage, projectileSpeed, currentTarget ? currentTarget.transform : null, monsterLayerMask, null, null);
+        spawnedProjectile.setValues(damage, projectileSpeed, currentTarget.transform, monsterLayerMask, null, null);
     }
 
     protected virtual void ResetTimeToFire()

@@ -65,13 +65,9 @@ public class Projectile : MonoBehaviour
         {
             Damageable damageable = collider.gameObject.GetComponent<Damageable>();
 
-            if (damageable == null || damageable.hasDied)
+            if (damageable != null && !damageable.hasDied)
             {
                 Destroy(gameObject);
-            }
-
-            if (damageable != null)
-            {
                 damageable.TakeDamage(damage);
             }
         }

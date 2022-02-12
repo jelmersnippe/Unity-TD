@@ -7,6 +7,8 @@ public class Gattling : Tower
     [SerializeField]
     int consecutiveShots = 0;
     [SerializeField]
+    int damagePerConsecutiveShot = 0;
+    [SerializeField]
     int shotsToReachLowestTimeToFire = 6;
     [SerializeField]
     float lowestTimeToFire = 0.1f;
@@ -25,5 +27,23 @@ public class Gattling : Tower
         // Finishing at the lowest timeToFire possible after the required shots
         float calc = timeToFire - (timeToFire - lowestTimeToFire) * Mathf.Sqrt(Mathf.Min((float)consecutiveShots / (float)shotsToReachLowestTimeToFire, 1));
         currentTimeToFire = calc;
+    }
+
+    protected override void SpawnProjectile()
+    {
+        Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation, transform);
+        spawnedProjectile.setValues(damage + (damagePerConsecutiveShot * consecutiveShots), projectileSpeed, currentTarget.transform, monsterLayerMask, null, null);
+    }
+
+    override public void ActivateUpgrade(Upgrade upgradeToActivate)
+    {
+        base.ActivateUpgrade(upgradeToActivate);
+
+        switch (upgradeToActivate.type)
+        {
+            case "consecutive_damage":
+                damagePerConsecutiveShot += 5;
+                return;
+        }
     }
 }

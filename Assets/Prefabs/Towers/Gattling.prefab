@@ -337,20 +337,21 @@ MonoBehaviour:
   towerGun: {fileID: 7865072308831243787}
   firePoint: {fileID: 7865072309213478940}
   uiSprite: {fileID: 21300000, guid: 2c712fe2a3d1c8f48ab2431eb84bf960, type: 3}
-  projectileSpeed: 40
+  damage: 100
+  roundsPerMinute: 45
+  range: 5
+  projectileSpeed: 60
   projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
   monsterLayerMask:
     serializedVersion: 2
     m_Bits: 512
   currentTimeToFire: 0
   currentState: 0
-  hasSpreadShotUnlocked: 0
-  pelletsToFire: 6
-  spread: 3
-  lowestSpeed: 0.5
-  timeToLowestSpeed: 0.5
   isTesting: 0
+  upgrades:
+  - {fileID: 11400000, guid: 01d5d23271835b54584fad476950fcb7, type: 2}
   consecutiveShots: 0
+  damagePerConsecutiveShot: 0
   shotsToReachLowestTimeToFire: 6
   lowestTimeToFire: 0.1
 --- !u!1 &7865072308831243786

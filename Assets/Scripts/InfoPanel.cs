@@ -27,7 +27,7 @@ public class InfoPanel : MonoBehaviour
     GameObject infoSection;
 
     [SerializeField]
-    GameObject upgradeSection;
+    UpgradePanel upgradeSection;
 
     void Awake()
     {
@@ -54,7 +54,7 @@ public class InfoPanel : MonoBehaviour
         if (selectedTower == null)
         {
             infoSection.SetActive(false);
-            upgradeSection.SetActive(false);
+            upgradeSection.gameObject.SetActive(false);
             return;
         }
 
@@ -64,6 +64,11 @@ public class InfoPanel : MonoBehaviour
         fireRateText.text = selectedTower.roundsPerMinute.ToString();
 
         infoSection.SetActive(true);
-        upgradeSection.SetActive(selectedTower.isActiveAndEnabled);
+        upgradeSection.gameObject.SetActive(selectedTower.isActiveAndEnabled);
+
+        if (selectedTower.isActiveAndEnabled)
+        {
+            upgradeSection.setUpgrades(selectedTower.upgrades);
+        }
     }
 }

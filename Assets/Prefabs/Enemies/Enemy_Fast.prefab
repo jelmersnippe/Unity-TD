@@ -119,7 +119,8 @@ MonoBehaviour:
   health: 0
   healthBar: {fileID: 9154944995485845216, guid: ca058f3153110214e93b2613016020cd, type: 3}
   damagePopup: {fileID: 2554061730682212963, guid: 51c8665ac6fe79e499be75eb5392eec2, type: 3}
-  currencyToDrop: 2
+  currencyToDrop: 5
+  hasDied: 0
 --- !u!114 &7583179868431459592
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -34,7 +34,7 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    private Tower selectedTower;
+    public Tower selectedTower;
 
     public Placeholder towerToPlace;
 

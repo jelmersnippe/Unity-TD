@@ -348,6 +348,12 @@ MonoBehaviour:
   currentTimeToFire: 0
   currentState: 0
   isTesting: 0
+  upgrades:
+  - {fileID: 11400000, guid: 01d5d23271835b54584fad476950fcb7, type: 2}
+  - {fileID: 11400000, guid: 01d5d23271835b54584fad476950fcb7, type: 2}
+  - {fileID: 11400000, guid: 01d5d23271835b54584fad476950fcb7, type: 2}
+  - {fileID: 11400000, guid: 01d5d23271835b54584fad476950fcb7, type: 2}
+  - {fileID: 11400000, guid: 01d5d23271835b54584fad476950fcb7, type: 2}
   pelletsToFire: 6
   spread: 20
   lowestSpeed: 0.3

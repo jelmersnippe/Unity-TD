@@ -51,6 +51,7 @@ public class Monster : MonoBehaviour
         if (currentWaypointIndex >= waypoints.Length)
         {
             BuildingManager.instance.takeDamage(damage);
+            Spawner.instance.ReduceCurrentMonstersAlive();
             Destroy(this.gameObject);
         }
     }
