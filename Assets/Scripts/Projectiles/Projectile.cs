@@ -20,7 +20,8 @@ public class Projectile : MonoBehaviour
         }
 
         RotateTowardsTarget();
-        TravelTowardsTarget();
+        //TravelTowardsTarget();
+        TravelForward();
     }
 
     void RotateTowardsTarget()
@@ -40,6 +41,12 @@ public class Projectile : MonoBehaviour
     {
         float distance = speed * Time.deltaTime;
         transform.position = target ? Vector2.MoveTowards(transform.position, target.position, distance) : transform.position + transform.right * distance;
+    }
+
+    protected virtual void TravelForward()
+    {
+        float distance = speed * Time.deltaTime;
+        transform.position = transform.position + transform.right * distance;
     }
 
     void OnCollisionEnter2D(Collision2D collision)

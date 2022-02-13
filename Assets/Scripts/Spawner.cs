@@ -13,6 +13,7 @@ public class Spawner : MonoBehaviour
     int currentWaveEnemiesAlive = 0;
 
     [SerializeField] Monster monsterPrefab;
+    Transform monsterHolder;
 
     void Awake()
     {
@@ -21,10 +22,21 @@ public class Spawner : MonoBehaviour
             instance = this;
         }
 
-        waypoints = new Transform[transform.childCount];
+        monsterHolder = Instantiate(new GameObject().transform, transform);
+        monsterHolder.name = "Monsters";
+
+        Transform waypointsHolder = transform.Find("Waypoints");
+
+        if (waypointsHolder == null)
+        {
+            Debug.LogError("No Waypoints object inside of Spawner");
+            return;
+        }
+
+        waypoints = new Transform[waypointsHolder.childCount];
         for (int i = 0; i < waypoints.Length; i++)
         {
-            waypoints[i] = transform.GetChild(i);
+            waypoints[i] = waypointsHolder.GetChild(i);
         }
     }
 
@@ -68,7 +80,7 @@ public class Spawner : MonoBehaviour
 
     void SpawnMonster(MonsterBlueprint monster)
     {
-        Monster spawnedMonster = Instantiate(monsterPrefab, transform.position, Quaternion.Euler(0, 0, 0));
+        Monster spawnedMonster = Instantiate(monsterPrefab, transform.position, Quaternion.Euler(0, 0, 0), monsterHolder);
         spawnedMonster.Setup(monster.sprite, monster.health, monster.speed, monster.damage, monster.currencyToDrop, waypoints);
     }
 
