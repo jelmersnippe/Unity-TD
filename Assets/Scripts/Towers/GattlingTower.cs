@@ -47,7 +47,7 @@ public class GattlingTower : Tower
     protected override void SpawnProjectile()
     {
         Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation, transform);
-        spawnedProjectile.setValues(damage + (damagePerConsecutiveShot * consecutiveShots), projectileSpeed, currentTarget.transform, monsterLayerMask, null, null);
+        spawnedProjectile.setValues(damage + (damagePerConsecutiveShot * consecutiveShots), projectileSpeed, currentTarget.transform, monsterLayerMask);
     }
 
     override public void ActivateUpgrade(Upgrade upgradeToActivate)

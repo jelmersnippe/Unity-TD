@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class ShotgunTower : Tower
 {
-    [SerializeField]
-    int pelletsToFire = 6;
-    [SerializeField]
-    float spread = 45f;
-    [SerializeField]
-    float lowestSpeed = 0.5f;
-    [SerializeField]
-    float timeToLowestSpeed = 0.5f;
+    [SerializeField] int pelletsToFire = 6;
+    [SerializeField] float spread = 45f;
+    [SerializeField] float lowestSpeed = 0.5f;
+    [SerializeField] float timeToLowestSpeed = 0.5f;
 
     bool concentratedPellets = false;
 
@@ -22,7 +18,7 @@ public class ShotgunTower : Tower
         for (int i = 0; i < pelletCount; i++)
         {
             // Spawn a new projectile with a rotation based on the spread
-            Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, Quaternion.Euler(firePoint.rotation.eulerAngles + (new Vector3(0, 0, 1) * Random.Range(-spread, spread))), transform);
+            ShotgunProjectile spawnedProjectile = Instantiate(projectile, firePoint.position, Quaternion.Euler(firePoint.rotation.eulerAngles + (new Vector3(0, 0, 1) * Random.Range(-spread, spread))), transform) as ShotgunProjectile;
 
             // Set speed to a random value within a range so the shotgun pellets are spread out a bit
             // And don't provide a target because the shotgun should not be homign

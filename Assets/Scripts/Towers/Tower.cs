@@ -184,7 +184,7 @@ public class Tower : MonoBehaviour
     protected virtual void SpawnProjectile()
     {
         Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation, transform);
-        spawnedProjectile.setValues(damage, projectileSpeed, currentTarget.transform, monsterLayerMask, null, null);
+        spawnedProjectile.setValues(damage, projectileSpeed, currentTarget.transform, monsterLayerMask);
     }
 
     protected virtual void ResetTimeToFire()

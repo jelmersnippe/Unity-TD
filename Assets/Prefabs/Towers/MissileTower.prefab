@@ -190,7 +190,7 @@ SpriteRenderer:
   m_SortingLayerID: 148469433
   m_SortingLayer: 1
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: c280ff43a073cb14d875136549b8c009, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a322c180889e90448a7fb3b31e422565, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -210,13 +210,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7865072308819311278}
-  - component: {fileID: -6056612154436583079}
   - component: {fileID: 404057427222198897}
+  - component: {fileID: 1552874600722992358}
   - component: {fileID: 4892974316575252893}
   - component: {fileID: 975187778779203633}
-  - component: {fileID: 8517965654766837948}
+  - component: {fileID: 984244770244561392}
   m_Layer: 0
-  m_Name: ShotgunTower
+  m_Name: MissileTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,41 +240,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6056612154436583079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7865072308819311275}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9c259731d432e54cb03faca3f5bca7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  towerGun: {fileID: 7865072308831243787}
-  firePoint: {fileID: 7865072309213478940}
-  uiSprite: {fileID: 21300000, guid: c280ff43a073cb14d875136549b8c009, type: 3}
-  damage: 50
-  roundsPerMinute: 60
-  range: 3
-  projectileSpeed: 30
-  projectile: {fileID: 8947625832926436915, guid: 8ed2bca18d0230e4780dfbccf0817adb, type: 3}
-  monsterLayerMask:
-    serializedVersion: 2
-    m_Bits: 512
-  currentTimeToFire: 0
-  currentState: 0
-  isTesting: 0
-  upgrades:
-  - {fileID: 11400000, guid: 4bd3145eecbc3964ca98bc793cf9a3aa, type: 2}
-  - {fileID: 11400000, guid: 9bde31d8a68f230449f6503e1d613639, type: 2}
-  - {fileID: 11400000, guid: 54cfc3e62fba5cf4a8a199906f5fb46d, type: 2}
-  unlockedUpgrades: []
-  pelletsToFire: 6
-  spread: 45
-  lowestSpeed: 0.3
-  timeToLowestSpeed: 0.4
 --- !u!114 &404057427222198897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,7 +254,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeObject: {fileID: 6291663383211102822}
   placeholderObject: {fileID: 3701474632446767301}
-  cost: 200
+  cost: 250
+--- !u!114 &1552874600722992358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7865072308819311275}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cd9c33583a3a2042b11a887fd377357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerGun: {fileID: 7865072308831243787}
+  firePoint: {fileID: 7865072309213478940}
+  uiSprite: {fileID: 21300000, guid: a322c180889e90448a7fb3b31e422565, type: 3}
+  damage: 50
+  roundsPerMinute: 30
+  range: 3
+  projectileSpeed: 15
+  projectile: {fileID: -5528355144540975155, guid: 8a06951b494fad14d86b0a525cf872c4, type: 3}
+  monsterLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  currentTimeToFire: 0
+  currentState: 0
+  isTesting: 0
+  upgrades: []
+  unlockedUpgrades: []
+  splashRadius: 3
+  splashDamage: 50
+  maxSplashTargetCount: 4
 --- !u!114 &4892974316575252893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,7 +320,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &8517965654766837948
+--- !u!58 &984244770244561392
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -414,7 +410,7 @@ SpriteRenderer:
   m_SortingLayerID: 148469433
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 85fbd9370d395a847b1e0115967b2cff, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f62b83d26db771448207e0ebd44ef18, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -449,7 +445,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7865072309213478939}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9, y: 0, z: 0}
+  m_LocalPosition: {x: 0.587, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -529,7 +525,7 @@ SpriteRenderer:
   m_SortingLayerID: 148469433
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 31801c9ea9e85b04e8b4fcb6486c3d7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8ea974a19fff52341816c98cd35b74a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
