@@ -2275,7 +2275,7 @@ MonoBehaviour:
   healthUI: {fileID: 1593727636}
   startingHealth: 10
   currencyUI: {fileID: 232230852}
-  startingCurrency: 200
+  startingCurrency: 1000
   roundsUI: {fileID: 721467028}
   gameOverUI: {fileID: 1234734371}
   gameWonUI: {fileID: 1679144421}
@@ -4593,7 +4593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - {fileID: 1625289657327850247, guid: f7c93466cf0fa604a9a1d13490b012a3, type: 3}
+  - {fileID: -1127645929227694117, guid: f7c93466cf0fa604a9a1d13490b012a3, type: 3}
   - {fileID: 7366449175731820188, guid: 378b928e85108a047b1cac63395c11fb, type: 3}
   - {fileID: -6056612154436583079, guid: b6e8a18287e762d46a452c982bd90b73, type: 3}
   purchaseButton: {fileID: 3333888728346772929, guid: 637a48d4d63f1a448987200d14f5c8f8, type: 3}

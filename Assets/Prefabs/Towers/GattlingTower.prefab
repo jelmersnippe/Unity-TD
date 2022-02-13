@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2534154403077105}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7865072309352129997}
@@ -143,7 +143,7 @@ Transform:
   m_GameObject: {fileID: 7105491353720750806}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7865072308819311278}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 975187778779203633}
   - component: {fileID: 7366449175731820188}
   m_Layer: 0
-  m_Name: Gattling
+  m_Name: GattlingTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,14 +293,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.36895442, y: 0.8648501}
-      - {x: -0.3617345, y: 0.8646816}
-      - {x: -0.8640134, y: 0.35240847}
-      - {x: -0.88370275, y: -0.3527163}
-      - {x: -0.34205517, y: -0.864636}
-      - {x: 0.3715793, y: -0.8647082}
-      - {x: 0.86525285, y: -0.3806931}
-      - {x: 0.88463914, y: 0.35115045}
+    - - {x: 0.37530497, y: 0.88072646}
+      - {x: -0.3680851, y: 0.8837332}
+      - {x: -0.8767145, y: 0.37463546}
+      - {x: -0.8837027, y: -0.36541742}
+      - {x: -0.37698323, y: -0.8773371}
+      - {x: 0.37792984, y: -0.88058454}
+      - {x: 0.88112926, y: -0.37116727}
+      - {x: 0.8687629, y: 0.37337744}
 --- !u!50 &975187778779203633
 Rigidbody2D:
   serializedVersion: 4
@@ -356,7 +356,8 @@ MonoBehaviour:
   consecutiveShots: 0
   damagePerConsecutiveShot: 0
   shotsToReachLowestTimeToFire: 6
-  lowestTimeToFire: 0.2
+  lowestTimeToFire: 0.3
+  unwindTime: 1
 --- !u!1 &7865072308831243786
 GameObject:
   m_ObjectHideFlags: 0

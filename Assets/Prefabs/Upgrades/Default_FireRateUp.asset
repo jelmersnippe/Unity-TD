@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Default_FireRateUp
   m_EditorClassIdentifier: 
   type: default_firerate_up
-  display: +45 rpm
+  display: +30 rpm
   cost: 50

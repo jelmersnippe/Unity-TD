@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gattling : Tower
+public class GattlingTower : Tower
 {
     [SerializeField]
     int consecutiveShots = 0;
@@ -12,11 +12,25 @@ public class Gattling : Tower
     int shotsToReachLowestTimeToFire = 6;
     [SerializeField]
     float lowestTimeToFire = 0.1f;
+    [SerializeField]
+    float unwindTime = 0.5f;
 
-    override protected void EnterSeekingState()
+    float timeWithoutFiring = 0f;
+
+    override protected void SeekingBehaviour()
     {
-        consecutiveShots = 0;
-        base.EnterSeekingState();
+        // Reset consecutiveShots after x amount of not firing
+        if (consecutiveShots > 0)
+        {
+            timeWithoutFiring += Time.deltaTime;
+
+            if (timeWithoutFiring > unwindTime)
+            {
+                consecutiveShots = 0;
+            }
+        }
+
+        base.SeekingBehaviour();
     }
 
     override protected void ResetTimeToFire()

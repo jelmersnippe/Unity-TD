@@ -52,13 +52,11 @@ public class Tower : MonoBehaviour
         switch (upgradeToActivate.type)
         {
             case "default_damage_up":
-                damage += 10;
+                damage += 50;
                 break;
             case "default_firerate_up":
                 roundsPerMinute += 30;
                 break;
-            case "default_range_up":
-                range += 1;
                 GetComponent<RangeIndicator>().SetRange(range);
                 break;
         }
@@ -96,7 +94,7 @@ public class Tower : MonoBehaviour
         }
     }
 
-    void SeekingBehaviour()
+    protected virtual void SeekingBehaviour()
     {
     }
 

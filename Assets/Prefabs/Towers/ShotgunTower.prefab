@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2534154403077105}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7865072309352129997}
@@ -143,7 +143,7 @@ Transform:
   m_GameObject: {fileID: 7105491353720750806}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7865072308819311278}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 975187778779203633}
   - component: {fileID: -6056612154436583079}
   m_Layer: 0
-  m_Name: Shotgun
+  m_Name: ShotgunTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,14 +293,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.36895442, y: 0.8648501}
-      - {x: -0.3617345, y: 0.8646816}
-      - {x: -0.8640134, y: 0.35240847}
-      - {x: -0.88370275, y: -0.3527163}
-      - {x: -0.34205517, y: -0.864636}
-      - {x: 0.3715793, y: -0.8647082}
-      - {x: 0.86525285, y: -0.3806931}
-      - {x: 0.88463914, y: 0.35115045}
+    - - {x: 0.3665895, y: 0.8781713}
+      - {x: -0.35916203, y: 0.88628817}
+      - {x: -0.8737244, y: 0.3775624}
+      - {x: -0.8806606, y: -0.36490962}
+      - {x: -0.36593658, y: -0.87381446}
+      - {x: 0.3756947, y: -0.8738866}
+      - {x: 0.87082106, y: -0.3606922}
+      - {x: 0.88340205, y: 0.37216172}
 --- !u!50 &975187778779203633
 Rigidbody2D:
   serializedVersion: 4
@@ -338,7 +338,7 @@ MonoBehaviour:
   firePoint: {fileID: 7865072309213478940}
   uiSprite: {fileID: 21300000, guid: 2c712fe2a3d1c8f48ab2431eb84bf960, type: 3}
   damage: 50
-  roundsPerMinute: 105
+  roundsPerMinute: 60
   range: 3
   projectileSpeed: 30
   projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}

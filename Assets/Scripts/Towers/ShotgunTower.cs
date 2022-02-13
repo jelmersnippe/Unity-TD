@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shotgun : Tower
+public class ShotgunTower : Tower
 {
     [SerializeField]
     int pelletsToFire = 6;
