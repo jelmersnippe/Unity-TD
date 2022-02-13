@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    public enum State { Seeking, Firing, Testing }
+    public enum State { Seeking, Firing }
 
     [SerializeField]
     protected Transform towerGun;
@@ -14,9 +14,10 @@ public class Tower : MonoBehaviour
     [SerializeField]
     public Sprite uiSprite;
 
-    public int damage= 100;
+    public int damage = 100;
     public int roundsPerMinute = 30;
     public int range = 5;
+    public int cost = 100;
 
     [SerializeField]
     [Range(1, 100)]
@@ -29,14 +30,11 @@ public class Tower : MonoBehaviour
     protected LayerMask monsterLayerMask;
 
     protected float timeToFire;
-    [SerializeField]
     protected float currentTimeToFire = 0;
 
     protected Transform currentTarget;
     [SerializeField]
     protected State currentState = State.Seeking;
-
-    public bool isTesting = true;
 
     public List<Upgrade> upgrades = new List<Upgrade>();
     public List<Upgrade> unlockedUpgrades = new List<Upgrade>();
@@ -67,11 +65,6 @@ public class Tower : MonoBehaviour
         timeToFire = (float)60 / (float)roundsPerMinute;
 
         EnterSeekingState();
-
-        if (isTesting)
-        {
-            EnterTestingState();
-        }
     }
 
     void Update()
@@ -85,9 +78,6 @@ public class Tower : MonoBehaviour
                 break;
             case State.Firing:
                 FiringBehaviour();
-                break;
-            case State.Testing:
-                TestingBehavior();
                 break;
         }
     }
@@ -106,22 +96,6 @@ public class Tower : MonoBehaviour
 
         RotateToTarget();
         FireProjectile();
-    }
-
-    void TestingBehavior()
-    {
-        RotateToMouse();
-        
-        if (Input.GetMouseButton(0))
-        {
-            FireProjectile();
-        }
-    }
-
-    void EnterTestingState()
-    {
-        CancelInvoke();
-        currentState = State.Testing;
     }
 
     protected virtual void EnterSeekingState()
@@ -195,5 +169,17 @@ public class Tower : MonoBehaviour
     public void ShowRange(bool showRange)
     {
         GetComponent<RangeIndicator>().rangeIndicator.gameObject.SetActive(showRange);
+    }
+
+    public void ConvertToActive()
+    {
+        // Disable the placeholder script and object
+        Placeholder placeholder = GetComponent<Placeholder>();
+        placeholder.enabled = false;
+        placeholder.placeholderObject.gameObject.SetActive(false);
+
+        // Enable the tower script and object
+        placeholder.activeObject.gameObject.SetActive(true);
+        enabled = true;
     }
 }

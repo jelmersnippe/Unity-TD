@@ -210,8 +210,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7865072308819311278}
-  - component: {fileID: 404057427222198897}
   - component: {fileID: 1552874600722992358}
+  - component: {fileID: 404057427222198897}
   - component: {fileID: 4892974316575252893}
   - component: {fileID: 975187778779203633}
   - component: {fileID: 984244770244561392}
@@ -240,21 +240,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &404057427222198897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7865072308819311275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3fd460c0fc43584aa36537909fe6129, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeObject: {fileID: 6291663383211102822}
-  placeholderObject: {fileID: 3701474632446767301}
-  cost: 250
 --- !u!114 &1552874600722992358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,21 +256,34 @@ MonoBehaviour:
   firePoint: {fileID: 7865072309213478940}
   uiSprite: {fileID: 21300000, guid: a322c180889e90448a7fb3b31e422565, type: 3}
   damage: 50
-  roundsPerMinute: 30
-  range: 8
+  roundsPerMinute: 45
+  range: 3
+  cost: 300
   projectileSpeed: 5
   projectile: {fileID: -5528355144540975155, guid: 8a06951b494fad14d86b0a525cf872c4, type: 3}
   monsterLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  currentTimeToFire: 0
   currentState: 0
-  isTesting: 0
   upgrades: []
   unlockedUpgrades: []
   splashRadius: 3
   splashDamage: 50
   maxSplashTargetCount: 4
+--- !u!114 &404057427222198897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7865072308819311275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3fd460c0fc43584aa36537909fe6129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeObject: {fileID: 6291663383211102822}
+  placeholderObject: {fileID: 3701474632446767301}
 --- !u!114 &4892974316575252893
 MonoBehaviour:
   m_ObjectHideFlags: 0

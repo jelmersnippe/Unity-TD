@@ -2165,7 +2165,7 @@ MonoBehaviour:
   healthUI: {fileID: 1593727636}
   startingHealth: 10
   currencyUI: {fileID: 232230852}
-  startingCurrency: 1000
+  startingCurrency: 200
   roundsUI: {fileID: 721467028}
   gameOverUI: {fileID: 1234734371}
   gameWonUI: {fileID: 1679144421}
@@ -4940,7 +4940,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004754630}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 22.96, y: -10.92, z: -10.308489}
+  m_LocalPosition: {x: 22.75, y: -11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4985,8 +4985,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 148469433
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 12d7c39adeefc514c88f9af39af3e7fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

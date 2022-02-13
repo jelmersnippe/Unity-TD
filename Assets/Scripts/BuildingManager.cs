@@ -8,7 +8,7 @@ public class BuildingManager : MonoBehaviour
 
     public Tower selectedTower;
 
-    public Placeholder towerToPlace;
+    public Tower towerToPlace;
 
     [SerializeField]
     LayerMask blockedLayers;
@@ -69,12 +69,11 @@ public class BuildingManager : MonoBehaviour
     {
         CancelPlacingTower();
         DeselectCurrentTower();
-        Placeholder placeholder = tower.GetComponent<Placeholder>();
 
         InfoPanel.instance.SetSelectedTower(tower);
 
-        towerToPlace = Instantiate(placeholder, transform);
-        towerToPlace.setBlockedLayers(blockedLayers);
+        towerToPlace = Instantiate(tower, transform);
+        towerToPlace.GetComponent<Placeholder>().setBlockedLayers(blockedLayers);
     }
 
     void DeselectCurrentTower()
@@ -104,7 +103,7 @@ public class BuildingManager : MonoBehaviour
 
         GameManager.instance.purchaseCurrency -= towerToPlace.cost;
         GameManager.instance.currencyUI.text = "Currency: " + GameManager.instance.purchaseCurrency.ToString();
-        towerToPlace.ConvertToActiveTower();
+        towerToPlace.ConvertToActive();
         towerToPlace.gameObject.layer = towerLayer;
 
         SetSelectedTower(towerToPlace.GetComponent<Tower>());

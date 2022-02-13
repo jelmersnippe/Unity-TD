@@ -257,15 +257,14 @@ MonoBehaviour:
   uiSprite: {fileID: 21300000, guid: c280ff43a073cb14d875136549b8c009, type: 3}
   damage: 50
   roundsPerMinute: 60
-  range: 3
+  range: 2
+  cost: 250
   projectileSpeed: 30
   projectile: {fileID: 8947625832926436915, guid: 8ed2bca18d0230e4780dfbccf0817adb, type: 3}
   monsterLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  currentTimeToFire: 0
   currentState: 0
-  isTesting: 0
   upgrades:
   - {fileID: 11400000, guid: 4bd3145eecbc3964ca98bc793cf9a3aa, type: 2}
   - {fileID: 11400000, guid: 9bde31d8a68f230449f6503e1d613639, type: 2}
@@ -289,7 +288,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeObject: {fileID: 6291663383211102822}
   placeholderObject: {fileID: 3701474632446767301}
-  cost: 200
 --- !u!114 &4892974316575252893
 MonoBehaviour:
   m_ObjectHideFlags: 0

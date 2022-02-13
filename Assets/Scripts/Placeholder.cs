@@ -8,10 +8,14 @@ public class Placeholder : MonoBehaviour
     SpriteRenderer spriteRenderer;
     LayerMask blockedLayers;
 
-    [SerializeField] Transform activeObject;
-    [SerializeField] Transform placeholderObject;
+    public Transform activeObject;
+    public Transform placeholderObject;
 
-    public int cost = 10;
+    void Awake()
+    {
+        activeObject = transform.Find("ActiveObject");
+        placeholderObject = transform.Find("Placeholder");
+    }
 
     private void Start()
     {
@@ -47,17 +51,5 @@ public class Placeholder : MonoBehaviour
     public void setBlockedLayers(LayerMask newBlockedLayers)
     {
         blockedLayers = newBlockedLayers;
-    }
-
-    public void ConvertToActiveTower()
-    {
-        // Enable the tower script and object
-        Tower tower = GetComponent<Tower>();
-        tower.enabled = true;
-        activeObject.gameObject.SetActive(true);
-
-        // Disabled palceholder script and object
-        placeholderObject.gameObject.SetActive(false);
-        enabled = false;
     }
 }

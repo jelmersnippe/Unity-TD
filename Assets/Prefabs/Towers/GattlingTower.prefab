@@ -252,9 +252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3fd460c0fc43584aa36537909fe6129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeObject: {fileID: 6291663383211102822}
-  placeholderObject: {fileID: 3701474632446767301}
-  cost: 250
 --- !u!114 &4892974316575252893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,14 +337,13 @@ MonoBehaviour:
   damage: 50
   roundsPerMinute: 60
   range: 3
-  projectileSpeed: 45
+  cost: 200
+  projectileSpeed: 20
   projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
   monsterLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  currentTimeToFire: 0
   currentState: 0
-  isTesting: 0
   upgrades:
   - {fileID: 11400000, guid: 63ced3a66deef9a42aa49bf47aca6d05, type: 2}
   - {fileID: 11400000, guid: 3ff74c5c15de59f47b4c24460b80c000, type: 2}

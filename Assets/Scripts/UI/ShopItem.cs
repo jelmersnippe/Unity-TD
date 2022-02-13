@@ -21,7 +21,7 @@ public class ShopItem : MonoBehaviour
     public void SetItem(Tower itemToSet)
     {
         item = itemToSet;
-        cost = itemToSet.GetComponent<Placeholder>().cost;
+        cost = itemToSet.cost;
         button.onClick.AddListener(delegate { BuildingManager.instance.SetTowerToPlace(item); });
         costDisplay.text = "$" + cost;
         spriteDisplay.sprite = item.uiSprite;
