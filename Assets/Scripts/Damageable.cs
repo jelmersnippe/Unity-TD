@@ -4,37 +4,34 @@ using UnityEngine;
 
 public class Damageable : MonoBehaviour
 {
-    [SerializeField]
-    [Min(1)]
-    int startingHealth = 1;
+    [SerializeField] int startingHealth;
+    [SerializeField] int health;
 
-    [SerializeField]
-    int health;
+    [SerializeField] DamagePopup damagePopup;
+    [SerializeField] HealthBar healthBar;
 
-    [SerializeField]
-    HealthBar healthBar;
-
-    [SerializeField]
-    DamagePopup damagePopup;
-
-    [SerializeField]
-    int currencyToDrop;
+    HealthBar activeHealthBar;
 
     public bool hasDied = false;
 
-    void Start()
+    public void SetStartingHealth(int healthToSet)
     {
-        health = startingHealth;
-        healthBar = Instantiate(healthBar, transform);
+        startingHealth = healthToSet;
+        health = healthToSet;
+        if (activeHealthBar != null)
+        {
+            Destroy(activeHealthBar.gameObject);
+        }
+        activeHealthBar = Instantiate(healthBar, transform);
     }
 
     public void TakeDamage(int damage)
     {
         health -= damage;
-        if (healthBar)
+        if (activeHealthBar)
         {
-            healthBar.setHealthPercentage((float)health / (float)startingHealth);
-            DamagePopup createdDamagePopup = Instantiate(damagePopup, healthBar.transform.position + new Vector3(Random.Range(-0.5f, 0.5f), 1), Quaternion.identity);
+            activeHealthBar.setHealthPercentage((float)health / (float)startingHealth);
+            DamagePopup createdDamagePopup = Instantiate(damagePopup, activeHealthBar.transform.position + new Vector3(Random.Range(-0.5f, 0.5f), 1), Quaternion.identity);
             createdDamagePopup.setDamage(damage);
         }
 
@@ -51,9 +48,14 @@ public class Damageable : MonoBehaviour
             return;
         }
 
-        GameManager.instance.purchaseCurrency += currencyToDrop;
-        Destroy(this.gameObject);
-        Spawner.instance.ReduceCurrentMonstersAlive();
+        Monster monster = GetComponent<Monster>();
+        if (monster != null)
+        {
+            GameManager.instance.purchaseCurrency += monster.currencyToDrop;
+            Spawner.instance.ReduceCurrentMonstersAlive();
+        }
+
+        Destroy(gameObject);
         hasDied = true;
     }
 }

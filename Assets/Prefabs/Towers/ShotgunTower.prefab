@@ -272,7 +272,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 54cfc3e62fba5cf4a8a199906f5fb46d, type: 2}
   unlockedUpgrades: []
   pelletsToFire: 6
-  spread: 20
+  spread: 45
   lowestSpeed: 0.3
   timeToLowestSpeed: 0.4
 --- !u!114 &404057427222198897
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeObject: {fileID: 6291663383211102822}
   placeholderObject: {fileID: 3701474632446767301}
-  cost: 150
+  cost: 200
 --- !u!114 &4892974316575252893
 MonoBehaviour:
   m_ObjectHideFlags: 0

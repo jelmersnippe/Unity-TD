@@ -2484,92 +2484,93 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - monsters:
-    - monsterType: {fileID: 7583179868431459592, guid: c727af82f4769f24f8e8f9af598f96fb, type: 3}
-      count: 15
-      initialDelay: 10
-      delayBetweenSpawns: 1
+    - monsterType: {fileID: 11400000, guid: 0b4078faaf8c5174d8e45f3d6a93dbf1, type: 2}
+      count: 3
+      initialDelay: 0
+      delayBetweenSpawns: 5
   - monsters:
-    - monsterType: {fileID: 7583179868431459592, guid: c727af82f4769f24f8e8f9af598f96fb, type: 3}
+    - monsterType: {fileID: 11400000, guid: 16393a42a3b77704da925e7c6f1c9fc1, type: 2}
       count: 30
       initialDelay: 0
       delayBetweenSpawns: 0.75
   - monsters:
-    - monsterType: {fileID: 7583179868431459592, guid: c727af82f4769f24f8e8f9af598f96fb, type: 3}
+    - monsterType: {fileID: 11400000, guid: 16393a42a3b77704da925e7c6f1c9fc1, type: 2}
       count: 20
       initialDelay: 0
       delayBetweenSpawns: 0.75
-    - monsterType: {fileID: 7583179868431459592, guid: 05d12ea7c376746408beb3621e008a9f, type: 3}
+    - monsterType: {fileID: 11400000, guid: d89f96ba3d471b54e95ce8d187b3ec2c, type: 2}
       count: 5
       initialDelay: 3
       delayBetweenSpawns: 3
   - monsters:
-    - monsterType: {fileID: 7583179868431459592, guid: 05d12ea7c376746408beb3621e008a9f, type: 3}
+    - monsterType: {fileID: 11400000, guid: d89f96ba3d471b54e95ce8d187b3ec2c, type: 2}
       count: 25
       initialDelay: 0
       delayBetweenSpawns: 0.5
-    - monsterType: {fileID: 7583179868431459592, guid: c727af82f4769f24f8e8f9af598f96fb, type: 3}
+    - monsterType: {fileID: 11400000, guid: 16393a42a3b77704da925e7c6f1c9fc1, type: 2}
       count: 10
       initialDelay: 5
       delayBetweenSpawns: 1
   - monsters:
-    - monsterType: {fileID: 7583179868431459592, guid: 05d12ea7c376746408beb3621e008a9f, type: 3}
+    - monsterType: {fileID: 11400000, guid: d89f96ba3d471b54e95ce8d187b3ec2c, type: 2}
       count: 30
       initialDelay: 0
       delayBetweenSpawns: 0.2
-    - monsterType: {fileID: 7583179868431459592, guid: c727af82f4769f24f8e8f9af598f96fb, type: 3}
+    - monsterType: {fileID: 11400000, guid: 16393a42a3b77704da925e7c6f1c9fc1, type: 2}
       count: 10
       initialDelay: 2
       delayBetweenSpawns: 1
   - monsters:
-    - monsterType: {fileID: 7583179868431459592, guid: 05d12ea7c376746408beb3621e008a9f, type: 3}
+    - monsterType: {fileID: 11400000, guid: d89f96ba3d471b54e95ce8d187b3ec2c, type: 2}
       count: 20
       initialDelay: 0
       delayBetweenSpawns: 0.1
-    - monsterType: {fileID: 7583179868431459592, guid: c727af82f4769f24f8e8f9af598f96fb, type: 3}
+    - monsterType: {fileID: 11400000, guid: 16393a42a3b77704da925e7c6f1c9fc1, type: 2}
       count: 20
       initialDelay: 0
       delayBetweenSpawns: 0.6
   - monsters:
-    - monsterType: {fileID: 7583179868431459592, guid: c727af82f4769f24f8e8f9af598f96fb, type: 3}
+    - monsterType: {fileID: 11400000, guid: 16393a42a3b77704da925e7c6f1c9fc1, type: 2}
       count: 30
       initialDelay: 0
       delayBetweenSpawns: 0.5
-    - monsterType: {fileID: 7583179868431459592, guid: 05d12ea7c376746408beb3621e008a9f, type: 3}
+    - monsterType: {fileID: 11400000, guid: d89f96ba3d471b54e95ce8d187b3ec2c, type: 2}
       count: 15
       initialDelay: 2
       delayBetweenSpawns: 0.2
   - monsters:
-    - monsterType: {fileID: 7583179868431459592, guid: e583beb63383eb3448ab86186afe4dcb, type: 3}
+    - monsterType: {fileID: 11400000, guid: 3aeda2ca38047ef4190ee5e1e48bbf4a, type: 2}
       count: 15
       initialDelay: 0
       delayBetweenSpawns: 1
-    - monsterType: {fileID: 7583179868431459592, guid: 05d12ea7c376746408beb3621e008a9f, type: 3}
+    - monsterType: {fileID: 11400000, guid: 16393a42a3b77704da925e7c6f1c9fc1, type: 2}
       count: 25
       initialDelay: 2
       delayBetweenSpawns: 0.5
   - monsters:
-    - monsterType: {fileID: 7583179868431459592, guid: e583beb63383eb3448ab86186afe4dcb, type: 3}
+    - monsterType: {fileID: 11400000, guid: c3a022bbbb6834d41a87a846fd4a6962, type: 2}
       count: 20
       initialDelay: 0
       delayBetweenSpawns: 1.5
-    - monsterType: {fileID: 7583179868431459592, guid: c727af82f4769f24f8e8f9af598f96fb, type: 3}
+    - monsterType: {fileID: 11400000, guid: 16393a42a3b77704da925e7c6f1c9fc1, type: 2}
       count: 25
       initialDelay: 2
       delayBetweenSpawns: 0.75
   - monsters:
-    - monsterType: {fileID: 7583179868431459592, guid: f24838b9ff80c744ea2ea85a63a286b2, type: 3}
+    - monsterType: {fileID: 11400000, guid: 0b4078faaf8c5174d8e45f3d6a93dbf1, type: 2}
       count: 1
       initialDelay: 10
       delayBetweenSpawns: 0
-    - monsterType: {fileID: 7583179868431459592, guid: e583beb63383eb3448ab86186afe4dcb, type: 3}
+    - monsterType: {fileID: 11400000, guid: 3aeda2ca38047ef4190ee5e1e48bbf4a, type: 2}
       count: 15
       initialDelay: 2.5
       delayBetweenSpawns: 2
-    - monsterType: {fileID: 7583179868431459592, guid: 05d12ea7c376746408beb3621e008a9f, type: 3}
+    - monsterType: {fileID: 11400000, guid: 16393a42a3b77704da925e7c6f1c9fc1, type: 2}
       count: 30
       initialDelay: 0
       delayBetweenSpawns: 1
   currentWaveIndex: 0
+  monsterPrefab: {fileID: 6165686953972062724, guid: 151f245105d4c434dae61c0710650467, type: 3}
 --- !u!4 &640113349
 Transform:
   m_ObjectHideFlags: 0

@@ -9,15 +9,18 @@ public class Monster : MonoBehaviour
 
     [SerializeField]
     [Range(1,10)]
-    int speed = 2;
+    float speed = 1f;
+    [SerializeField] float speedMultiplier = 2f;
 
-    [SerializeField]
-    int damage = 1;
+    [SerializeField] int damage = 1;
+
+    public int currencyToDrop = 1;
+
 
 
     void Update()
     {
-        if (waypoints.Length <= 0)
+        if (waypoints == null || waypoints.Length <= 0)
         {
             return;
         }
@@ -39,7 +42,7 @@ public class Monster : MonoBehaviour
         }
 
         Transform target = waypoints[currentWaypointIndex];
-        transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, target.position, (speed * speedMultiplier) * Time.deltaTime);
 
         if (Vector2.Distance(transform.position, target.position) == 0)
         {
@@ -54,8 +57,13 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public void setWaypoints(Transform[] newWaypoints)
+    public void Setup(Sprite sprite, int initialHealth, float initialSpeed, int initialDamage, int initialCurrencyToDrop, Transform[] newWaypoints)
     {
+        GetComponent<SpriteRenderer>().sprite = sprite;
+        GetComponent<Damageable>().SetStartingHealth(initialHealth);
+        speed = initialSpeed;
+        damage = initialDamage;
         waypoints = newWaypoints;
+        currencyToDrop = initialCurrencyToDrop;
     }
 }

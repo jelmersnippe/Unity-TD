@@ -11,7 +11,7 @@ public class GattlingTower : Tower
     [SerializeField]
     int shotsToReachLowestTimeToFire = 6;
     [SerializeField]
-    float lowestTimeToFire = 0.1f;
+    int maxRoundsPerMinute = 450;
     [SerializeField]
     float unwindTime = 0.5f;
 
@@ -36,6 +36,7 @@ public class GattlingTower : Tower
     override protected void ResetTimeToFire()
     {
         consecutiveShots++;
+        float lowestTimeToFire = 60f / maxRoundsPerMinute;
         // The fire rate exponentially increases
         // Speeding up from the first shot to the last shot
         // Finishing at the lowest timeToFire possible after the required shots
@@ -59,7 +60,7 @@ public class GattlingTower : Tower
                 damagePerConsecutiveShot += 5;
                 break;
             case "gattling_increased_max_firerate":
-                lowestTimeToFire /= 2f;
+                maxRoundsPerMinute = 600;
                 break;
             case "quicker_windup":
                 shotsToReachLowestTimeToFire /= 2;

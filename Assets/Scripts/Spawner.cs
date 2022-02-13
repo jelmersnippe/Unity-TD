@@ -9,10 +9,10 @@ public class Spawner : MonoBehaviour
     Transform[] waypoints;
 
     [SerializeField] Wave[] waves;
-
-
     [SerializeField] int currentWaveIndex = 0;
     int currentWaveEnemiesAlive = 0;
+
+    [SerializeField] Monster monsterPrefab;
 
     void Awake()
     {
@@ -66,10 +66,10 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    void SpawnMonster(Monster monster)
+    void SpawnMonster(MonsterBlueprint monster)
     {
-        Monster spawnedMonster = Instantiate(monster, transform.position, Quaternion.Euler(0, 0, 0));
-        spawnedMonster.setWaypoints(waypoints);
+        Monster spawnedMonster = Instantiate(monsterPrefab, transform.position, Quaternion.Euler(0, 0, 0));
+        spawnedMonster.Setup(monster.sprite, monster.health, monster.speed, monster.damage, monster.currencyToDrop, waypoints);
     }
 
     public void ReduceCurrentMonstersAlive()
@@ -81,7 +81,7 @@ public class Spawner : MonoBehaviour
 [System.Serializable]
 public class MonsterSet
 {
-    public Monster monsterType;
+    public MonsterBlueprint monsterType;
     public int count;
     public float initialDelay;
     public float delayBetweenSpawns;

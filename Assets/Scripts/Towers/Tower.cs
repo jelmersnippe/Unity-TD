@@ -57,8 +57,6 @@ public class Tower : MonoBehaviour
             case "default_firerate_up":
                 roundsPerMinute += 30;
                 break;
-                GetComponent<RangeIndicator>().SetRange(range);
-                break;
         }
         unlockedUpgrades.Add(upgradeToActivate);
         GameManager.instance.purchaseCurrency -= upgradeToActivate.cost;
