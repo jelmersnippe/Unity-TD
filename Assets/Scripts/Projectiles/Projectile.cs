@@ -7,24 +7,23 @@ public class Projectile : MonoBehaviour
     protected int damage;
     protected float speed;
     protected LayerMask targetMask;
-
-    protected bool isTargeted = false;
+    [SerializeField] protected float rotationSpeed = 10f;
     protected Transform target;
+
+    float timeToLive = 2f;
+
+    protected void Start()
+    {
+        Destroy(gameObject, timeToLive);
+    }
 
     protected virtual void Update()
     {
-        if (isTargeted && target == null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         RotateTowardsTarget();
-        //TravelTowardsTarget();
         TravelForward();
     }
 
-    void RotateTowardsTarget()
+    protected void RotateTowardsTarget()
     {
         if (target == null)
         {
@@ -34,13 +33,7 @@ public class Projectile : MonoBehaviour
         Vector3 targetDirection = target.position - transform.position;
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         Quaternion desiredRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = desiredRotation;
-    }
-
-    protected virtual void TravelTowardsTarget()
-    {
-        float distance = speed * Time.deltaTime;
-        transform.position = target ? Vector2.MoveTowards(transform.position, target.position, distance) : transform.position + transform.right * distance;
+        transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
     }
 
     protected virtual void TravelForward()
@@ -49,13 +42,13 @@ public class Projectile : MonoBehaviour
         transform.position = transform.position + transform.right * distance;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
         // If we have a target and we've hit it
         // Or we don't have a target and we've hit something in our targetmask
         Damageable damageable = GetDamageableFromCollider(collision.collider);
 
-        if (damageable != null && (!isTargeted || damageable.gameObject == target.gameObject))
+        if (damageable != null && (target == null || damageable.gameObject == target.gameObject))
         {
             DealDamage(damageable);
         }
@@ -87,12 +80,5 @@ public class Projectile : MonoBehaviour
         speed = initialSpeed;
         target = initialTarget;
         targetMask = monsterLayerMask;
-
-        isTargeted = target != null;
-
-        if (!isTargeted)
-        {
-            Destroy(gameObject, 1f);
-        }
     }
 }

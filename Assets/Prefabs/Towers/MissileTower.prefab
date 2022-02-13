@@ -272,8 +272,8 @@ MonoBehaviour:
   uiSprite: {fileID: 21300000, guid: a322c180889e90448a7fb3b31e422565, type: 3}
   damage: 50
   roundsPerMinute: 30
-  range: 3
-  projectileSpeed: 15
+  range: 8
+  projectileSpeed: 5
   projectile: {fileID: -5528355144540975155, guid: 8a06951b494fad14d86b0a525cf872c4, type: 3}
   monsterLayerMask:
     serializedVersion: 2

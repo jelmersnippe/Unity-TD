@@ -14,11 +14,11 @@ public class ShotgunProjectile : Projectile
         base.Update();
     }
 
-    protected override void TravelTowardsTarget()
+    protected override void TravelForward()
     {
         float reducedSpeed = speed - (speed - lowestSpeed) * Mathf.Sqrt(Mathf.Min(timeAlive / timeToLowestSpeed, 1));
         float distance = reducedSpeed * Time.deltaTime;
-        transform.position = target ? Vector2.MoveTowards(transform.position, target.position, distance) : transform.position + transform.right * distance;
+        transform.position = transform.position + transform.right * distance;
     }
 
     public void setValues(int initialDamage, float initialSpeed, Transform initialTarget, LayerMask monsterLayerMask, float initialLowestSpeed, float initialTimeToLowestSpeed)

@@ -273,7 +273,7 @@ MonoBehaviour:
   damage: 100
   roundsPerMinute: 60
   range: 3
-  projectileSpeed: 45
+  projectileSpeed: 3
   projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
   monsterLayerMask:
     serializedVersion: 2

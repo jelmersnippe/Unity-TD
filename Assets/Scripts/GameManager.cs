@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] Canvas gameOverUI;
     [SerializeField] Canvas gameWonUI;
+    int gameSpeed = 1;
 
     void Awake()
     {
@@ -59,7 +60,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
 
-        Time.timeScale = 1;
+        Time.timeScale = gameSpeed;
     }
 
     private void Start()
@@ -105,5 +106,11 @@ public class GameManager : MonoBehaviour
         gameWon = true;
         gameWonUI.gameObject.SetActive(true);
         Time.timeScale = 0;
+    }
+
+    public void SwitchGameSpeed()
+    {
+        gameSpeed = gameSpeed == 1 ? 2 : 1;
+        Time.timeScale = gameSpeed;
     }
 }
