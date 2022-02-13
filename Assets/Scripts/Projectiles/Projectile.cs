@@ -7,10 +7,13 @@ public class Projectile : MonoBehaviour
     protected int damage;
     protected float speed;
     protected LayerMask targetMask;
+    protected int maxMonsterHits = 1;
+    protected List<int> monstersHit = new List<int>();
     [SerializeField] protected float rotationSpeed = 10f;
     protected Transform target;
 
     float timeToLive = 2f;
+    bool isDestroyed = false;
 
     protected void Start()
     {
@@ -70,15 +73,29 @@ public class Projectile : MonoBehaviour
 
     protected virtual void DealDamage(Damageable damageable)
     {
+        // If we've already hit the max amount we do nothing
+        if (monstersHit.Count >= maxMonsterHits) return;
+
+        int damageableInstanceId = damageable.GetInstanceID();
+
+        // If we've already hit the damageable we do nothing
+        if (monstersHit.Contains(damageableInstanceId)) return;
+
         damageable.TakeDamage(damage);
-        Destroy(gameObject);
+        monstersHit.Add(damageableInstanceId);
+
+        if (monstersHit.Count >= maxMonsterHits)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public virtual void setValues(int initialDamage, float initialSpeed, Transform initialTarget, LayerMask monsterLayerMask)
+    public virtual void setValues(int initialDamage, float initialSpeed, Transform initialTarget, LayerMask monsterLayerMask, int initialEnemiesToHit = 1)
     {
         damage = initialDamage;
         speed = initialSpeed;
         target = initialTarget;
         targetMask = monsterLayerMask;
+        maxMonsterHits = initialEnemiesToHit;
     }
 }

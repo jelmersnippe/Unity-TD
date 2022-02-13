@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bc4ba6f90963a3478fd0a5feb7f966a, type: 3}
-  m_Name: Default_FireRateUp
+  m_Name: Basic_TripleShot
   m_EditorClassIdentifier: 
-  type: default_firerate_up
-  display: +30 rpm
-  cost: 50
+  type: basic_triple_shot
+  display: Triple shot
+  cost: 200

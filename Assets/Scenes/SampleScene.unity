@@ -2165,7 +2165,7 @@ MonoBehaviour:
   healthUI: {fileID: 1593727636}
   startingHealth: 10
   currencyUI: {fileID: 232230852}
-  startingCurrency: 200
+  startingCurrency: 1000
   roundsUI: {fileID: 721467028}
   gameOverUI: {fileID: 1234734371}
   gameWonUI: {fileID: 1679144421}
