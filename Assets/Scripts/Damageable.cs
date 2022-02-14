@@ -10,9 +10,16 @@ public class Damageable : MonoBehaviour
     [SerializeField] DamagePopup damagePopup;
     [SerializeField] HealthBar healthBar;
 
+    float offset = 0.2f;
+    Bounds bounds;
     HealthBar activeHealthBar;
 
     public bool hasDied = false;
+
+    private void Awake()
+    {
+        bounds = GetComponent<Collider2D>().bounds;
+    }
 
     public void SetStartingHealth(int healthToSet)
     {
@@ -22,7 +29,7 @@ public class Damageable : MonoBehaviour
         {
             Destroy(activeHealthBar.gameObject);
         }
-        activeHealthBar = Instantiate(healthBar, transform);
+        activeHealthBar = Instantiate(healthBar, transform.position + new Vector3(0, (bounds.size.y / 2) + offset), Quaternion.identity, transform);
     }
 
     public void TakeDamage(int damage)

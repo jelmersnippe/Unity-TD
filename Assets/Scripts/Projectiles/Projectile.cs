@@ -13,7 +13,6 @@ public class Projectile : MonoBehaviour
     protected Transform target;
 
     float timeToLive = 2f;
-    bool isDestroyed = false;
 
     protected void Start()
     {
