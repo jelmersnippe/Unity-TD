@@ -106,7 +106,7 @@ public class BuildingManager : MonoBehaviour
         towerToPlace.ConvertToActive();
         towerToPlace.gameObject.layer = towerLayer;
 
-        SetSelectedTower(towerToPlace.GetComponent<Tower>());
+        SetSelectedTower(towerToPlace);
 
         towerToPlace = null;
     }

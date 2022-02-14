@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    public enum State { Seeking, Firing }
+    public enum TowerState { Idle, Firing, Placing }
 
     [SerializeField]
     protected Transform towerGun;
@@ -34,7 +34,7 @@ public class Tower : MonoBehaviour
 
     protected Transform currentTarget;
     [SerializeField]
-    protected State currentState = State.Seeking;
+    protected TowerState currentTowerState = TowerState.Idle;
 
     public List<Upgrade> upgrades = new List<Upgrade>();
     public List<Upgrade> unlockedUpgrades = new List<Upgrade>();
@@ -63,23 +63,23 @@ public class Tower : MonoBehaviour
     private void Start()
     {
         timeToFire = (float)60 / (float)roundsPerMinute;
-
-        EnterSeekingState();
     }
 
     void Update()
     {
-        currentTimeToFire -= Time.deltaTime;
-
-        switch (currentState)
+        switch (currentTowerState)
         {
-            case State.Seeking:
+            case TowerState.Placing:
+                return;
+            case TowerState.Idle:
                 SeekingBehaviour();
                 break;
-            case State.Firing:
+            case TowerState.Firing:
                 FiringBehaviour();
                 break;
         }
+
+        currentTimeToFire -= Time.deltaTime;
     }
 
     protected virtual void SeekingBehaviour()
@@ -90,7 +90,7 @@ public class Tower : MonoBehaviour
     {
         if (currentTarget == null || isTargetOutOfRange())
         {
-            EnterSeekingState();
+            EnterIdleState();
             return;
         }
 
@@ -98,18 +98,18 @@ public class Tower : MonoBehaviour
         FireProjectile();
     }
 
-    protected virtual void EnterSeekingState()
+    public virtual void EnterIdleState()
     {
         currentTarget = null;
         InvokeRepeating("CheckRange", 0, 0.5f);
-        currentState = State.Seeking;
+        currentTowerState = TowerState.Idle;
     }
 
     protected virtual void EnterFiringState(Transform newTarget)
     {
         CancelInvoke();
         currentTarget = newTarget;
-        currentState = State.Firing;
+        currentTowerState = TowerState.Firing;
     }
 
     protected virtual void CheckRange()
@@ -178,8 +178,8 @@ public class Tower : MonoBehaviour
         placeholder.enabled = false;
         placeholder.placeholderObject.gameObject.SetActive(false);
 
-        // Enable the tower script and object
+        // Enable the tower and object
         placeholder.activeObject.gameObject.SetActive(true);
-        enabled = true;
+        EnterIdleState();
     }
 }

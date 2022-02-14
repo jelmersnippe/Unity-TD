@@ -247,7 +247,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7865072308819311275}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7cd9c33583a3a2042b11a887fd377357, type: 3}
   m_Name: 
@@ -264,7 +264,7 @@ MonoBehaviour:
   monsterLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  currentState: 0
+  currentTowerState: 2
   upgrades:
   - {fileID: 11400000, guid: 66f3e968d266f2644bcaafa35f2f7310, type: 2}
   - {fileID: 11400000, guid: 19afbb6e4f61765479c675229ca7b71e, type: 2}
