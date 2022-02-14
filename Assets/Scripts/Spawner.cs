@@ -53,6 +53,9 @@ public class Spawner : MonoBehaviour
             return;
         }
 
+        // TODO: move this gold distribution to an event trigger upon clearing a wave
+        GameManager.instance.purchaseCurrency += 100 + currentWaveIndex;
+
         SpawnWave(waves[currentWaveIndex]);
     }
 
