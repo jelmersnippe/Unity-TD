@@ -14,7 +14,7 @@ public class BuyPanel : MonoBehaviour
         for (int i = 0; i < items.Length; i++)
         {
             Tower item = items[i];
-            ShopItem createdShopItem = Instantiate(purchaseButton, transform.position - new Vector3((panelWidth / 2) - (itemWidth / 2) - (itemWidth * i), 0), Quaternion.identity, transform);
+            ShopItem createdShopItem = Instantiate(purchaseButton, transform);
             createdShopItem.SetItem(item);
         }
     }
