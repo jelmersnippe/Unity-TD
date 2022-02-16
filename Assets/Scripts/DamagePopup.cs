@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(TextMeshPro))]
 public class DamagePopup : MonoBehaviour
 {
     TextMeshPro textMesh;

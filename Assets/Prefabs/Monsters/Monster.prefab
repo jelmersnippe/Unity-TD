@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6165686953972062722}
   - component: {fileID: 6165686953972062725}
   - component: {fileID: 6165686953972062724}
-  - component: {fileID: 6165686953972062727}
   - component: {fileID: 8963516453022965905}
   - component: {fileID: 1084294775001035834}
   m_Layer: 9
@@ -102,22 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   speedMultiplier: 2
-  damage: 1
   currencyToDrop: 0
---- !u!114 &6165686953972062727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6165686953972062726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 115164310d18b70418512c964619772a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 1
-  health: 1
+  startingHealth: 0
+  health: 0
   damagePopup: {fileID: 2554061730682212963, guid: 51c8665ac6fe79e499be75eb5392eec2, type: 3}
   healthBar: {fileID: 9154944995485845216, guid: ca058f3153110214e93b2613016020cd, type: 3}
   hasDied: 0

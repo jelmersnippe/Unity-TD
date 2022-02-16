@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
     public static Spawner instance;
+
+    public static event Action<int> OnWaveCleared;
+    public static event Action OnLastWaveCleared;
 
     Transform[] waypoints;
 
@@ -14,6 +17,20 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] Monster monsterPrefab;
     Transform monsterHolder;
+
+    private void OnEnable()
+    {
+        // Subscribe to events
+        Monster.OnMonsterDied += ReduceCurrentMonstersAlive;
+        Monster.OnMonsterReachedFinalWaypoint += ReduceCurrentMonstersAlive;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe from events
+        Monster.OnMonsterDied -= ReduceCurrentMonstersAlive;
+        Monster.OnMonsterReachedFinalWaypoint -= ReduceCurrentMonstersAlive;
+    }
 
     void Awake()
     {
@@ -49,12 +66,9 @@ public class Spawner : MonoBehaviour
 
         if (currentWaveIndex >= waves.Length)
         {
-            GameManager.instance.WinGame();
+            OnLastWaveCleared?.Invoke();
             return;
         }
-
-        // TODO: move this gold distribution to an event trigger upon clearing a wave
-        GameManager.instance.purchaseCurrency += 100 + currentWaveIndex;
 
         SpawnWave(waves[currentWaveIndex]);
     }
@@ -68,7 +82,6 @@ public class Spawner : MonoBehaviour
             StartCoroutine(SpawnMonsterSet(monsterSet));
         }
         currentWaveIndex++;
-        GameManager.instance.currentRound = currentWaveIndex;
     }
 
     IEnumerator SpawnMonsterSet(MonsterSet monsterSet)
@@ -87,23 +100,13 @@ public class Spawner : MonoBehaviour
         spawnedMonster.Setup(monster.sprite, monster.health, monster.speed, monster.damage, monster.currencyToDrop, waypoints);
     }
 
-    public void ReduceCurrentMonstersAlive()
+    void ReduceCurrentMonstersAlive(Monster monster)
     {
         currentWaveEnemiesAlive--;
+
+        if (currentWaveEnemiesAlive <= 0)
+        {
+            OnWaveCleared?.Invoke(currentWaveIndex);
+        }
     }
-}
-
-[System.Serializable]
-public class MonsterSet
-{
-    public MonsterBlueprint monsterType;
-    public int count;
-    public float initialDelay;
-    public float delayBetweenSpawns;
-}
-
-[System.Serializable]
-public class Wave
-{
-    public List<MonsterSet> monsters = new List<MonsterSet>();
 }

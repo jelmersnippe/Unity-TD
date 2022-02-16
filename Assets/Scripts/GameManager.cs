@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -8,50 +7,73 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [SerializeField] public TextMeshProUGUI healthUI;
+    public static event Action<int> OnHealthUpdate;
+    public static event Action<int> OnRoundUpdate;
+    public static event Action<int> OnCurrencyUpdate;
+
+    public static event Action OnGameStart;
+    public static event Action OnGameOver;
+
     [SerializeField] int startingHealth = 10;
     private int _health;
     public int health
     {
         get => _health;
-        set
+        private set
         {
             _health = value;
-            healthUI.text = "Health: " + _health.ToString();
+            OnHealthUpdate?.Invoke(_health);
         }
     }
 
-    [SerializeField] public TextMeshProUGUI currencyUI;
     [SerializeField] int startingCurrency = 100;
     private int _purchaseCurrency;
     public int purchaseCurrency
     {
         get => _purchaseCurrency;
-        set
+        private set
         {
             _purchaseCurrency = value;
-            currencyUI.text = "Currency: " + _purchaseCurrency.ToString();
+            OnCurrencyUpdate?.Invoke(_purchaseCurrency);
         }
     }
 
-    [SerializeField] public TextMeshProUGUI roundsUI;
-    private int _currentRound;
+    private int _currentRound = 1;
     public int currentRound
     {
         get => _currentRound;
-        set
+        private set
         {
             _currentRound = value;
-            roundsUI.text = "Round: " + _currentRound.ToString();
+            OnRoundUpdate?.Invoke(_currentRound);
         }
     }
 
     bool gameOver = false;
     bool gameWon = false;
-
-    [SerializeField] Canvas gameOverUI;
-    [SerializeField] Canvas gameWonUI;
     int gameSpeed = 1;
+
+    private void OnEnable()
+    {
+        // Subscribe to events
+        Monster.OnMonsterDied += (Monster monster) => purchaseCurrency += monster.currencyToDrop;
+        Monster.OnMonsterReachedFinalWaypoint += (Monster monster) => TakeDamage(monster.damage);
+        Spawner.OnWaveCleared += WaveCleared;
+        Spawner.OnLastWaveCleared += WinGame;
+        Tower.OnUpgradeActivated += (Upgrade upgrade) => purchaseCurrency -= upgrade.cost;
+        OnGameOver += LoseGame;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe from events
+        Monster.OnMonsterDied -= (Monster monster) => purchaseCurrency += monster.currencyToDrop;
+        Monster.OnMonsterReachedFinalWaypoint -= (Monster monster) => TakeDamage(monster.damage);
+        Spawner.OnWaveCleared -= WaveCleared;
+        Spawner.OnLastWaveCleared -= WinGame;
+        Tower.OnUpgradeActivated -= (Upgrade upgrade) => purchaseCurrency -= upgrade.cost;
+        OnGameOver -= LoseGame;
+    }
 
     void Awake()
     {
@@ -59,58 +81,65 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-
-        Time.timeScale = gameSpeed;
     }
 
     private void Start()
     {
+        OnGameStart?.Invoke();
+        Time.timeScale = gameSpeed;
+
         health = startingHealth;
         purchaseCurrency = startingCurrency;
+
+        // Emit all the starting values
+        OnHealthUpdate?.Invoke(startingHealth);
+        OnCurrencyUpdate?.Invoke(startingCurrency);
+        OnRoundUpdate?.Invoke(currentRound);
     }
 
     private void Update()
     {
-        if (gameOver || gameWon)
+        if ((gameOver || gameWon) && Input.anyKey)
         {
-            if (Input.anyKey)
-            {
-                gameOverUI.gameObject.SetActive(false);
-                gameWonUI.gameObject.SetActive(false);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-            return;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
-    public void takeDamage(int damage)
+    void TakeDamage(int damage)
     {
         health = Mathf.Max(health -= damage, 0);
-        healthUI.text = "Health: " + health.ToString();
 
         if (health <= 0)
         {
-            LoseGame();
+            OnGameOver?.Invoke();
         }
     }
 
-    public void LoseGame()
+    void LoseGame()
     {
         gameOver = true;
-        gameOverUI.gameObject.SetActive(true);
         Time.timeScale = 0;
     }
 
-    public void WinGame()
+    void WinGame()
     {
         gameWon = true;
-        gameWonUI.gameObject.SetActive(true);
         Time.timeScale = 0;
     }
 
+    // TODO: Make this private and invokeable through an event
     public void SwitchGameSpeed()
     {
         gameSpeed = gameSpeed == 1 ? 2 : 1;
         Time.timeScale = gameSpeed;
+    }
+
+    void WaveCleared(int roundCleared)
+    {
+        purchaseCurrency += 100 + roundCleared;
+        // TODO: Should not be keeping track of current round in GameManager and Spawner.
+        // Either wave all this into the Spawner, or find a way to keep track of the actual round in the GameManager while having the spawner just do the actual Spawning
+        // That would mean we have to keep track of the waves in the GameManager.
+        currentRound = roundCleared + 1;
     }
 }

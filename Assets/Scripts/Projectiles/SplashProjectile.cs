@@ -18,7 +18,7 @@ public class SplashProjectile : Projectile
         maxTargetCount = initialMaxTargetCount;
     }
 
-    protected override void DealDamage(Damageable target)
+    protected override void DealDamage(Monster target)
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, splashRadius, targetMask);
 
@@ -26,10 +26,10 @@ public class SplashProjectile : Projectile
         {
             Collider2D collider = colliders[i];
 
-            Damageable damageable = GetDamageableFromCollider(collider);
-            if (damageable != null)
+            Monster monster = GetMonsterFromCollider(collider);
+            if (monster != null)
             {
-                DealSplashDamage(damageable);
+                DealSplashDamage(monster);
             }
 
             if (targetsHit >= maxTargetCount)
@@ -41,9 +41,9 @@ public class SplashProjectile : Projectile
         Destroy(gameObject);
     }
 
-    void DealSplashDamage(Damageable damageable)
+    void DealSplashDamage(Monster monster)
     {
-        damageable.TakeDamage(splashDamage);
+        monster.TakeDamage(splashDamage);
         targetsHit++;
     }
 

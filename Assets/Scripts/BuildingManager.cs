@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
     public static BuildingManager instance;
 
+    public static event Action<Tower> OnTowerPlaced;
+
     public Tower selectedTower;
 
     public Tower towerToPlace;
 
-    [SerializeField]
-    LayerMask blockedLayers;
-
-    [SerializeField] int towerLayer;
+    [SerializeField] LayerMask blockedLayers;
 
     void Awake()
     {
@@ -101,10 +99,11 @@ public class BuildingManager : MonoBehaviour
             return;
         }
 
-        GameManager.instance.purchaseCurrency -= towerToPlace.cost;
-        GameManager.instance.currencyUI.text = "Currency: " + GameManager.instance.purchaseCurrency.ToString();
+        OnTowerPlaced?.Invoke(towerToPlace);
+        //GameManager.instance.purchaseCurrency -= towerToPlace.cost;
+        //GameManager.instance.currencyUI.text = "Currency: " + GameManager.instance.purchaseCurrency.ToString();
         towerToPlace.ConvertToActive();
-        towerToPlace.gameObject.layer = towerLayer;
+        towerToPlace.gameObject.layer = LayerMask.NameToLayer("Tower");
 
         SetSelectedTower(towerToPlace);
 

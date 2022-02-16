@@ -48,15 +48,15 @@ public class Projectile : MonoBehaviour
     {
         // If we have a target and we've hit it
         // Or we don't have a target and we've hit something in our targetmask
-        Damageable damageable = GetDamageableFromCollider(collision.collider);
+        Monster monster = GetMonsterFromCollider(collision.collider);
 
-        if (damageable != null && (target == null || damageable.gameObject == target.gameObject))
+        if (monster != null && (target == null || monster.gameObject == target.gameObject))
         {
-            DealDamage(damageable);
+            DealDamage(monster);
         }
     }
 
-    protected Damageable GetDamageableFromCollider(Collider2D collider) 
+    protected Monster GetMonsterFromCollider(Collider2D collider) 
     {
         bool isValidTarget = ((1 << collider.gameObject.layer) & targetMask) != 0;
         if (!isValidTarget)
@@ -64,24 +64,24 @@ public class Projectile : MonoBehaviour
             return null;
         }
 
-        Damageable damageable = collider.gameObject.GetComponent<Damageable>();
-        bool isDamageableAndNotDead = damageable != null && !damageable.hasDied;
+        Monster monster = collider.gameObject.GetComponent<Monster>();
+        bool isMonsterAndNotDead = monster != null && !monster.hasDied;
 
-        return isDamageableAndNotDead ? damageable : null;
+        return isMonsterAndNotDead ? monster : null;
     }
 
-    protected virtual void DealDamage(Damageable damageable)
+    protected virtual void DealDamage(Monster monster)
     {
         // If we've already hit the max amount we do nothing
         if (monstersHit.Count >= maxMonsterHits) return;
 
-        int damageableInstanceId = damageable.GetInstanceID();
+        int monsterInstanceId = monster.GetInstanceID();
 
         // If we've already hit the damageable we do nothing
-        if (monstersHit.Contains(damageableInstanceId)) return;
+        if (monstersHit.Contains(monsterInstanceId)) return;
 
-        damageable.TakeDamage(damage);
-        monstersHit.Add(damageableInstanceId);
+        monster.TakeDamage(damage);
+        monstersHit.Add(monsterInstanceId);
 
         if (monstersHit.Count >= maxMonsterHits)
         {

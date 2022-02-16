@@ -1,9 +1,10 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+    public static event Action<Upgrade> OnUpgradeActivated;
     public enum TowerState { Idle, Firing, Placing }
 
     [SerializeField]
@@ -57,7 +58,7 @@ public class Tower : MonoBehaviour
                 break;
         }
         unlockedUpgrades.Add(upgradeToActivate);
-        GameManager.instance.purchaseCurrency -= upgradeToActivate.cost;
+        OnUpgradeActivated?.Invoke(upgradeToActivate);
     }
 
     private void Start()
