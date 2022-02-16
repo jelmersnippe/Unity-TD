@@ -2821,7 +2821,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2059659038}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: SwitchGameSpeed
         m_Mode: 1
@@ -5161,9 +5161,6 @@ MonoBehaviour:
   blockedLayers:
     serializedVersion: 2
     m_Bits: 3072
-  towerLayer:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!4 &2059659040
 Transform:
   m_ObjectHideFlags: 0

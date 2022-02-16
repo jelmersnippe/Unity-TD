@@ -22,6 +22,7 @@ public class UpgradeItem : MonoBehaviour
     {
         item = itemToSet;
         cost = itemToSet.cost;
+        // TODO: Use an actual event
         button.onClick.AddListener(delegate {
             BuildingManager.instance.selectedTower.ActivateUpgrade(itemToSet);
             InfoPanel.instance.UpdateInfo();

@@ -4,31 +4,19 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(RectTransform))]
 public class InfoPanel : MonoBehaviour
 {
     public static InfoPanel instance;
 
-    [SerializeField]
-    Tower selectedTower;
+    [SerializeField] Tower selectedTower;
+    [SerializeField] Image image;
+    [SerializeField] TextMeshProUGUI damageText;
+    [SerializeField] TextMeshProUGUI rangeText;
+    [SerializeField] TextMeshProUGUI fireRateText;
 
-    [SerializeField]
-    Image image;
-
-    [SerializeField]
-    TextMeshProUGUI damageText;
-
-    [SerializeField]
-    TextMeshProUGUI rangeText;
-
-    [SerializeField]
-    TextMeshProUGUI fireRateText;
-
-    [SerializeField]
-    GameObject infoSection;
-
-    [SerializeField]
-    Transform upgradeSection;
-
+    [SerializeField] GameObject infoSection;
+    [SerializeField] Transform upgradeSection;
     [SerializeField] UpgradeItem purchaseButton;
 
     void Awake()

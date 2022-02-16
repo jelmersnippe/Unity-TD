@@ -22,6 +22,7 @@ public class ShopItem : MonoBehaviour
     {
         item = itemToSet;
         cost = itemToSet.cost;
+        // TODO: Use a actual event
         button.onClick.AddListener(delegate { BuildingManager.instance.SetTowerToPlace(item); });
         costDisplay.text = "$" + cost;
         spriteDisplay.sprite = item.uiSprite;

@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(RangeIndicator))]
+[RequireComponent(typeof(Placeholder))]
 public class Tower : MonoBehaviour
 {
     public static event Action<Upgrade> OnUpgradeActivated;
