@@ -18,6 +18,8 @@ public class UIController : MonoBehaviour
     [SerializeField] Button startNextWaveButton;
     [SerializeField] Button switchGameSpeedButton;
 
+    [SerializeField] InfoPanel infoPanel;
+
     private void OnEnable()
     {
         // Subscribe to events
@@ -32,6 +34,9 @@ public class UIController : MonoBehaviour
         Spawner.OnLastWaveCleared += ShowGameWonUI;
         Spawner.OnWaveSpawned += () => ToggleStartNextWaveButton(false);
         Spawner.OnWaveCleared += (wave) => ToggleStartNextWaveButton(true);
+
+        BuildingManager.OnTowerPlaced += infoPanel.SetSelectedTower;
+        BuildingManager.OnDeselectTower += infoPanel.DeselectSelectedTower;
     }
 
     private void OnDisable()
@@ -48,6 +53,9 @@ public class UIController : MonoBehaviour
         Spawner.OnLastWaveCleared -= ShowGameWonUI;
         Spawner.OnWaveSpawned -= () => ToggleStartNextWaveButton(false);
         Spawner.OnWaveCleared -= (wave) => ToggleStartNextWaveButton(true);
+
+        BuildingManager.OnTowerPlaced -= infoPanel.SetSelectedTower;
+        BuildingManager.OnDeselectTower -= infoPanel.DeselectSelectedTower;
     }
 
     void Setup()

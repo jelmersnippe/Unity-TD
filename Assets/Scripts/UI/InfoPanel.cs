@@ -79,7 +79,7 @@ public class InfoPanel : MonoBehaviour
                 continue;
             }
 
-            UpgradeItem createdUpgradeItem = Instantiate(purchaseButton, transform.position + new Vector3(0, (panelHeight / 2) - (itemHeight / 2) - (itemHeight * i)), Quaternion.identity, upgradeSection);
+            UpgradeItem createdUpgradeItem = Instantiate(purchaseButton, upgradeSection);
             createdUpgradeItem.SetItem(item);
         }
     }

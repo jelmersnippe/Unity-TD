@@ -6,6 +6,7 @@ public class BuildingManager : MonoBehaviour
     public static BuildingManager instance;
 
     public static event Action<Tower> OnTowerPlaced;
+    public static event Action OnDeselectTower;
 
     public Tower selectedTower;
 
@@ -25,6 +26,7 @@ public class BuildingManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            OnDeselectTower?.Invoke();
             if (selectedTower != null)
             {
                 DeselectCurrentTower();
