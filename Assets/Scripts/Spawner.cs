@@ -7,6 +7,7 @@ public class Spawner : MonoBehaviour
     public static Spawner instance;
 
     public static event Action<int> OnWaveCleared;
+    public static event Action OnWaveSpawned;
     public static event Action OnLastWaveCleared;
 
     Transform[] waypoints;
@@ -23,6 +24,8 @@ public class Spawner : MonoBehaviour
         // Subscribe to events
         Monster.OnMonsterDied += ReduceCurrentMonstersAlive;
         Monster.OnMonsterReachedFinalWaypoint += ReduceCurrentMonstersAlive;
+
+        UIController.OnStartNextWaveButtonPressed += SpawnNextWave;
     }
 
     private void OnDisable()
@@ -30,6 +33,8 @@ public class Spawner : MonoBehaviour
         // Unsubscribe from events
         Monster.OnMonsterDied -= ReduceCurrentMonstersAlive;
         Monster.OnMonsterReachedFinalWaypoint -= ReduceCurrentMonstersAlive;
+
+        UIController.OnStartNextWaveButtonPressed -= SpawnNextWave;
     }
 
     void Awake()
@@ -59,11 +64,14 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        if (currentWaveEnemiesAlive > 0)
+        if (currentWaveIndex >= waves.Length && currentWaveEnemiesAlive <= 0)
         {
-            return;
+            OnLastWaveCleared?.Invoke();
         }
+    }
 
+    public void SpawnNextWave()
+    {
         if (currentWaveIndex >= waves.Length)
         {
             OnLastWaveCleared?.Invoke();
@@ -81,6 +89,7 @@ public class Spawner : MonoBehaviour
             currentWaveEnemiesAlive += monsterSet.count;
             StartCoroutine(SpawnMonsterSet(monsterSet));
         }
+        OnWaveSpawned?.Invoke();
         currentWaveIndex++;
     }
 

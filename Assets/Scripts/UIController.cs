@@ -1,16 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public static event Action OnStartNextWaveButtonPressed;
+    public static event Action OnToggleGameSpeedButtonPressed;
+
     [SerializeField] TextMeshProUGUI healthUI;
     [SerializeField] TextMeshProUGUI currencyUI;
     [SerializeField] TextMeshProUGUI roundsUI;
 
     [SerializeField] Canvas gameOverUI;
     [SerializeField] Canvas gameWonUI;
+
+    [SerializeField] Button startNextWaveButton;
+    [SerializeField] Button switchGameSpeedButton;
 
     private void OnEnable()
     {
@@ -21,7 +27,11 @@ public class UIController : MonoBehaviour
 
         GameManager.OnGameStart += Setup;
         GameManager.OnGameOver += ShowGameOverUI;
+        GameManager.OnSwitchGameSpeed += SetSwitchGameSpeedButtonState;
+
         Spawner.OnLastWaveCleared += ShowGameWonUI;
+        Spawner.OnWaveSpawned += () => ToggleStartNextWaveButton(false);
+        Spawner.OnWaveCleared += (wave) => ToggleStartNextWaveButton(true);
     }
 
     private void OnDisable()
@@ -33,7 +43,11 @@ public class UIController : MonoBehaviour
 
         GameManager.OnGameStart -= Setup;
         GameManager.OnGameOver -= ShowGameOverUI;
+        GameManager.OnSwitchGameSpeed -= SetSwitchGameSpeedButtonState;
+
         Spawner.OnLastWaveCleared -= ShowGameWonUI;
+        Spawner.OnWaveSpawned -= () => ToggleStartNextWaveButton(false);
+        Spawner.OnWaveCleared -= (wave) => ToggleStartNextWaveButton(true);
     }
 
     void Setup()
@@ -65,5 +79,33 @@ public class UIController : MonoBehaviour
     void ShowGameWonUI()
     {
         gameWonUI.gameObject.SetActive(true);
+    }
+
+    public void StartNextWave()
+    {
+        OnStartNextWaveButtonPressed?.Invoke();
+    }
+
+    public void SwitchGameSpeed()
+    {
+        OnToggleGameSpeedButtonPressed?.Invoke();
+    }
+
+    void ToggleStartNextWaveButton(bool active)
+    {
+        startNextWaveButton.gameObject.SetActive(active);
+        switchGameSpeedButton.gameObject.SetActive(!active);
+    }
+
+    void SetSwitchGameSpeedButtonState(int gameSpeed)
+    {
+        if (gameSpeed > 1)
+        {
+            switchGameSpeedButton.GetComponent<Image>().color = Color.white;
+        } 
+        else
+        {
+            switchGameSpeedButton.GetComponent<Image>().color = Color.gray;
+        }
     }
 }

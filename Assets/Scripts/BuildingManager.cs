@@ -100,8 +100,6 @@ public class BuildingManager : MonoBehaviour
         }
 
         OnTowerPlaced?.Invoke(towerToPlace);
-        //GameManager.instance.purchaseCurrency -= towerToPlace.cost;
-        //GameManager.instance.currencyUI.text = "Currency: " + GameManager.instance.purchaseCurrency.ToString();
         towerToPlace.ConvertToActive();
         towerToPlace.gameObject.layer = LayerMask.NameToLayer("Tower");
 

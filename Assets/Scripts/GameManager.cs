@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static event Action<int> OnHealthUpdate;
     public static event Action<int> OnRoundUpdate;
     public static event Action<int> OnCurrencyUpdate;
+    public static event Action<int> OnSwitchGameSpeed;
 
     public static event Action OnGameStart;
     public static event Action OnGameOver;
@@ -58,10 +59,16 @@ public class GameManager : MonoBehaviour
         // Subscribe to events
         Monster.OnMonsterDied += (Monster monster) => purchaseCurrency += monster.currencyToDrop;
         Monster.OnMonsterReachedFinalWaypoint += (Monster monster) => TakeDamage(monster.damage);
+
         Spawner.OnWaveCleared += WaveCleared;
         Spawner.OnLastWaveCleared += WinGame;
+
+        BuildingManager.OnTowerPlaced += (Tower tower) => purchaseCurrency -= tower.cost;
         Tower.OnUpgradeActivated += (Upgrade upgrade) => purchaseCurrency -= upgrade.cost;
+
         OnGameOver += LoseGame;
+
+        UIController.OnToggleGameSpeedButtonPressed += SwitchGameSpeed;
     }
 
     private void OnDisable()
@@ -69,10 +76,16 @@ public class GameManager : MonoBehaviour
         // Unsubscribe from events
         Monster.OnMonsterDied -= (Monster monster) => purchaseCurrency += monster.currencyToDrop;
         Monster.OnMonsterReachedFinalWaypoint -= (Monster monster) => TakeDamage(monster.damage);
+
         Spawner.OnWaveCleared -= WaveCleared;
         Spawner.OnLastWaveCleared -= WinGame;
+
+        BuildingManager.OnTowerPlaced -= (Tower tower) => purchaseCurrency -= tower.cost;
         Tower.OnUpgradeActivated -= (Upgrade upgrade) => purchaseCurrency -= upgrade.cost;
+
         OnGameOver -= LoseGame;
+
+        UIController.OnToggleGameSpeedButtonPressed -= SwitchGameSpeed;
     }
 
     void Awake()
@@ -85,13 +98,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        OnGameStart?.Invoke();
         Time.timeScale = gameSpeed;
 
         health = startingHealth;
         purchaseCurrency = startingCurrency;
 
         // Emit all the starting values
+        OnGameStart?.Invoke();
+        OnSwitchGameSpeed?.Invoke(gameSpeed);
         OnHealthUpdate?.Invoke(startingHealth);
         OnCurrencyUpdate?.Invoke(startingCurrency);
         OnRoundUpdate?.Invoke(currentRound);
@@ -127,11 +141,11 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    // TODO: Make this private and invokeable through an event
-    public void SwitchGameSpeed()
+    void SwitchGameSpeed()
     {
         gameSpeed = gameSpeed == 1 ? 2 : 1;
         Time.timeScale = gameSpeed;
+        OnSwitchGameSpeed?.Invoke(gameSpeed);
     }
 
     void WaveCleared(int roundCleared)
