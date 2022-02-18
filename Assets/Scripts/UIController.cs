@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public static event Action OnToggleAutoSpawnButtonPressed;
     public static event Action OnStartNextWaveButtonPressed;
     public static event Action OnToggleGameSpeedButtonPressed;
 
@@ -15,8 +16,9 @@ public class UIController : MonoBehaviour
     [SerializeField] Canvas gameOverUI;
     [SerializeField] Canvas gameWonUI;
 
+    [SerializeField] Button toggleAutoSpawnButton;
     [SerializeField] Button startNextWaveButton;
-    [SerializeField] Button switchGameSpeedButton;
+    [SerializeField] Button toggleGameSpeedButton;
 
     [SerializeField] InfoPanel infoPanel;
 
@@ -29,11 +31,12 @@ public class UIController : MonoBehaviour
 
         GameManager.OnGameStart += Setup;
         GameManager.OnGameOver += ShowGameOverUI;
-        GameManager.OnSwitchGameSpeed += SetSwitchGameSpeedButtonState;
+        GameManager.OnSwitchGameSpeed += SetToggleGameSpeedButtonState;
 
         Spawner.OnLastWaveCleared += ShowGameWonUI;
         Spawner.OnWaveSpawned += () => ToggleStartNextWaveButton(false);
         Spawner.OnWaveCleared += (wave) => ToggleStartNextWaveButton(true);
+        Spawner.OnToggleAutoSpawn += SetToggleAutoSpawnButtonState;
 
         BuildingManager.OnTowerPlaced += infoPanel.SetSelectedTower;
         BuildingManager.OnDeselectTower += infoPanel.DeselectSelectedTower;
@@ -48,11 +51,12 @@ public class UIController : MonoBehaviour
 
         GameManager.OnGameStart -= Setup;
         GameManager.OnGameOver -= ShowGameOverUI;
-        GameManager.OnSwitchGameSpeed -= SetSwitchGameSpeedButtonState;
+        GameManager.OnSwitchGameSpeed -= SetToggleGameSpeedButtonState;
 
         Spawner.OnLastWaveCleared -= ShowGameWonUI;
         Spawner.OnWaveSpawned -= () => ToggleStartNextWaveButton(false);
         Spawner.OnWaveCleared -= (wave) => ToggleStartNextWaveButton(true);
+        Spawner.OnToggleAutoSpawn -= SetToggleAutoSpawnButtonState;
 
         BuildingManager.OnTowerPlaced -= infoPanel.SetSelectedTower;
         BuildingManager.OnDeselectTower -= infoPanel.DeselectSelectedTower;
@@ -89,31 +93,34 @@ public class UIController : MonoBehaviour
         gameWonUI.gameObject.SetActive(true);
     }
 
+    public void ToggleAutoPlay()
+    {
+        OnToggleAutoSpawnButtonPressed?.Invoke();
+    }
+
     public void StartNextWave()
     {
         OnStartNextWaveButtonPressed?.Invoke();
     }
 
-    public void SwitchGameSpeed()
+    public void ToggleGameSpeed()
     {
         OnToggleGameSpeedButtonPressed?.Invoke();
     }
 
-    void ToggleStartNextWaveButton(bool active)
+    public void ToggleStartNextWaveButton(bool active)
     {
         startNextWaveButton.gameObject.SetActive(active);
-        switchGameSpeedButton.gameObject.SetActive(!active);
+        toggleGameSpeedButton.gameObject.SetActive(!active);
     }
 
-    void SetSwitchGameSpeedButtonState(int gameSpeed)
+    void SetToggleGameSpeedButtonState(int gameSpeed)
     {
-        if (gameSpeed > 1)
-        {
-            switchGameSpeedButton.GetComponent<Image>().color = Color.white;
-        } 
-        else
-        {
-            switchGameSpeedButton.GetComponent<Image>().color = Color.gray;
-        }
+        toggleGameSpeedButton.GetComponent<Image>().color = gameSpeed > 1 ? Color.white : Color.gray;
+    }
+
+    void SetToggleAutoSpawnButtonState(bool active)
+    {
+        toggleAutoSpawnButton.GetComponent<Image>().color = active ? Color.white : Color.gray;
     }
 }

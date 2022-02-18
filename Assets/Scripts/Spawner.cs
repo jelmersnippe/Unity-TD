@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour
     public static event Action<int> OnWaveCleared;
     public static event Action OnWaveSpawned;
     public static event Action OnLastWaveCleared;
+    public static event Action<bool> OnToggleAutoSpawn;
 
     Transform[] waypoints;
 
@@ -19,22 +20,30 @@ public class Spawner : MonoBehaviour
     [SerializeField] Monster monsterPrefab;
     Transform monsterHolder;
 
+    [SerializeField] bool autoSpawnEnabled = false;
+
     private void OnEnable()
     {
         // Subscribe to events
+        OnWaveCleared += AttemptToAutoSpawnNextWave;
+
         Monster.OnMonsterDied += ReduceCurrentMonstersAlive;
         Monster.OnMonsterReachedFinalWaypoint += ReduceCurrentMonstersAlive;
 
         UIController.OnStartNextWaveButtonPressed += SpawnNextWave;
+        UIController.OnToggleAutoSpawnButtonPressed += ToggleAutoSpawn;
     }
 
     private void OnDisable()
     {
         // Unsubscribe from events
+        OnWaveCleared -= AttemptToAutoSpawnNextWave;
+
         Monster.OnMonsterDied -= ReduceCurrentMonstersAlive;
         Monster.OnMonsterReachedFinalWaypoint -= ReduceCurrentMonstersAlive;
 
         UIController.OnStartNextWaveButtonPressed -= SpawnNextWave;
+        UIController.OnToggleAutoSpawnButtonPressed -= ToggleAutoSpawn;
     }
 
     void Awake()
@@ -62,6 +71,11 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        OnToggleAutoSpawn?.Invoke(autoSpawnEnabled);
+    }
+
     private void Update()
     {
         if (currentWaveIndex >= waves.Length && currentWaveEnemiesAlive <= 0)
@@ -70,11 +84,23 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    void AttemptToAutoSpawnNextWave(int previousWaveIndex)
+    {
+        if (!autoSpawnEnabled) return;
+
+        SpawnNextWave();
+    }
+
     public void SpawnNextWave()
     {
         if (currentWaveIndex >= waves.Length)
         {
             OnLastWaveCleared?.Invoke();
+            return;
+        }
+
+        if (currentWaveEnemiesAlive > 0)
+        {
             return;
         }
 
@@ -117,5 +143,11 @@ public class Spawner : MonoBehaviour
         {
             OnWaveCleared?.Invoke(currentWaveIndex);
         }
+    }
+
+    void ToggleAutoSpawn()
+    {
+        autoSpawnEnabled = !autoSpawnEnabled;
+        OnToggleAutoSpawn?.Invoke(autoSpawnEnabled);
     }
 }
