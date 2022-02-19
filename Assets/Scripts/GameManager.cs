@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         // Subscribe to events
-        Monster.OnMonsterDied += (Monster monster) => purchaseCurrency += monster.currencyToDrop;
-        Monster.OnMonsterReachedFinalWaypoint += (Monster monster) => TakeDamage(monster.damage);
+        MonsterController.OnMonsterDied += (MonsterController monster) => purchaseCurrency += monster.currencyToDrop;
+        MonsterController.OnMonsterReachedFinalWaypoint += (MonsterController monster) => TakeDamage(monster.damage);
 
         Spawner.OnWaveCleared += WaveCleared;
         Spawner.OnLastWaveCleared += WinGame;
@@ -74,8 +74,8 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         // Unsubscribe from events
-        Monster.OnMonsterDied -= (Monster monster) => purchaseCurrency += monster.currencyToDrop;
-        Monster.OnMonsterReachedFinalWaypoint -= (Monster monster) => TakeDamage(monster.damage);
+        MonsterController.OnMonsterDied -= (MonsterController monster) => purchaseCurrency += monster.currencyToDrop;
+        MonsterController.OnMonsterReachedFinalWaypoint -= (MonsterController monster) => TakeDamage(monster.damage);
 
         Spawner.OnWaveCleared -= WaveCleared;
         Spawner.OnLastWaveCleared -= WinGame;

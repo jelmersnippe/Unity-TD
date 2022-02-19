@@ -2,10 +2,10 @@ using UnityEngine.Events;
 using UnityEngine;
 using System;
 
-public class Monster : MonoBehaviour
+public class MonsterController : MonoBehaviour
 {
-    public static event Action<Monster> OnMonsterDied;
-    public static event Action<Monster> OnMonsterReachedFinalWaypoint;
+    public static event Action<MonsterController> OnMonsterDied;
+    public static event Action<MonsterController> OnMonsterReachedFinalWaypoint;
 
     Transform[] waypoints;
     int currentWaypointIndex = -1;

@@ -48,7 +48,7 @@ public class Projectile : MonoBehaviour
     {
         // If we have a target and we've hit it
         // Or we don't have a target and we've hit something in our targetmask
-        Monster monster = GetMonsterFromCollider(collision.collider);
+        MonsterController monster = GetMonsterFromCollider(collision.collider);
 
         if (monster != null && (target == null || monster.gameObject == target.gameObject))
         {
@@ -56,7 +56,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    protected Monster GetMonsterFromCollider(Collider2D collider) 
+    protected MonsterController GetMonsterFromCollider(Collider2D collider) 
     {
         bool isValidTarget = ((1 << collider.gameObject.layer) & targetMask) != 0;
         if (!isValidTarget)
@@ -64,13 +64,13 @@ public class Projectile : MonoBehaviour
             return null;
         }
 
-        Monster monster = collider.gameObject.GetComponent<Monster>();
+        MonsterController monster = collider.gameObject.GetComponent<MonsterController>();
         bool isMonsterAndNotDead = monster != null && !monster.hasDied;
 
         return isMonsterAndNotDead ? monster : null;
     }
 
-    protected virtual void DealDamage(Monster monster)
+    protected virtual void DealDamage(MonsterController monster)
     {
         // If we've already hit the max amount we do nothing
         if (monstersHit.Count >= maxMonsterHits) return;

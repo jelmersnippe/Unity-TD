@@ -117,6 +117,7 @@ public class UIController : MonoBehaviour
     {
         // Don't show the start next wave button if auto spawn is enabled
         if (Spawner.instance.autoSpawnEnabled)
+
         {
             showStartNextWaveButton = false;
         }

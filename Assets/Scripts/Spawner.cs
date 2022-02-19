@@ -17,7 +17,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] int currentWaveIndex = 0;
     int currentWaveEnemiesAlive = 0;
 
-    [SerializeField] Monster monsterPrefab;
+    [SerializeField] MonsterController monsterPrefab;
     Transform monsterHolder;
 
     public bool autoSpawnEnabled { get; private set; } = false;
@@ -27,8 +27,8 @@ public class Spawner : MonoBehaviour
         // Subscribe to events
         OnWaveCleared += AttemptToAutoSpawnNextWave;
 
-        Monster.OnMonsterDied += ReduceCurrentMonstersAlive;
-        Monster.OnMonsterReachedFinalWaypoint += ReduceCurrentMonstersAlive;
+        MonsterController.OnMonsterDied += ReduceCurrentMonstersAlive;
+        MonsterController.OnMonsterReachedFinalWaypoint += ReduceCurrentMonstersAlive;
 
         UIController.OnStartNextWaveButtonPressed += SpawnNextWave;
         UIController.OnToggleAutoSpawnButtonPressed += ToggleAutoSpawn;
@@ -39,8 +39,8 @@ public class Spawner : MonoBehaviour
         // Unsubscribe from events
         OnWaveCleared -= AttemptToAutoSpawnNextWave;
 
-        Monster.OnMonsterDied -= ReduceCurrentMonstersAlive;
-        Monster.OnMonsterReachedFinalWaypoint -= ReduceCurrentMonstersAlive;
+        MonsterController.OnMonsterDied -= ReduceCurrentMonstersAlive;
+        MonsterController.OnMonsterReachedFinalWaypoint -= ReduceCurrentMonstersAlive;
 
         UIController.OnStartNextWaveButtonPressed -= SpawnNextWave;
         UIController.OnToggleAutoSpawnButtonPressed -= ToggleAutoSpawn;
@@ -133,11 +133,11 @@ public class Spawner : MonoBehaviour
 
     void SpawnMonster(MonsterBlueprint monster)
     {
-        Monster spawnedMonster = Instantiate(monsterPrefab, transform.position, Quaternion.Euler(0, 0, 0), monsterHolder);
+        MonsterController spawnedMonster = Instantiate(monsterPrefab, transform.position, Quaternion.Euler(0, 0, 0), monsterHolder);
         spawnedMonster.Setup(monster.sprite, monster.health, monster.speed, monster.damage, monster.currencyToDrop, waypoints);
     }
 
-    void ReduceCurrentMonstersAlive(Monster monster)
+    void ReduceCurrentMonstersAlive(MonsterController monster)
     {
         currentWaveEnemiesAlive--;
 
