@@ -267,10 +267,18 @@ MonoBehaviour:
     m_Bits: 512
   currentTowerState: 2
   upgrades:
-  - {fileID: 11400000, guid: 66f3e968d266f2644bcaafa35f2f7310, type: 2}
-  - {fileID: 11400000, guid: 19afbb6e4f61765479c675229ca7b71e, type: 2}
-  - {fileID: 11400000, guid: 9c54db9c1cc3f1c4585738fb4e3c8550, type: 2}
-  unlockedUpgrades: []
+  - upgrade: {fileID: 11400000, guid: 66f3e968d266f2644bcaafa35f2f7310, type: 2}
+    cost: 300
+    children:
+    - upgrade: {fileID: 11400000, guid: 9c54db9c1cc3f1c4585738fb4e3c8550, type: 2}
+      cost: 300
+      children: []
+      conflictingUpgrade: {fileID: 11400000, guid: 19afbb6e4f61765479c675229ca7b71e, type: 2}
+    - upgrade: {fileID: 11400000, guid: 19afbb6e4f61765479c675229ca7b71e, type: 2}
+      cost: 300
+      children: []
+      conflictingUpgrade: {fileID: 11400000, guid: 9c54db9c1cc3f1c4585738fb4e3c8550, type: 2}
+    conflictingUpgrade: {fileID: 0}
   splashRadius: 1.5
   maxSplashTargetCount: 4
 --- !u!114 &404057427222198897

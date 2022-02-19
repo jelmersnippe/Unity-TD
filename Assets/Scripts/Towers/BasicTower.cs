@@ -33,17 +33,17 @@ public class BasicTower : TowerController
         }
     }
 
-    override public void ActivateUpgrade(Upgrade upgradeToActivate)
+    override public void ActivateUpgrade(Upgrade upgrade)
     {
-        base.ActivateUpgrade(upgradeToActivate);
+        base.ActivateUpgrade(upgrade);
 
-        switch (upgradeToActivate.type)
+        switch (upgrade.type)
         {
-            case "basic_triple_shot":
+            case Upgrade.Type.Basic_TripleShot:
                 hasTripleShot = true;
                 roundsPerMinute -= 15;
                 break;
-            case "basic_pierce_up":
+            case Upgrade.Type.Default_PierceUp:
                 hasPierce = true;
                 break;
         }

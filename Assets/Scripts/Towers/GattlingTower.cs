@@ -51,19 +51,19 @@ public class GattlingTower : TowerController
         spawnedProjectile.setValues(damage + (damagePerConsecutiveShot * consecutiveShots), projectileSpeed, currentTarget.transform, monsterLayerMask);
     }
 
-    override public void ActivateUpgrade(Upgrade upgradeToActivate)
+    override public void ActivateUpgrade(Upgrade upgrade)
     {
-        base.ActivateUpgrade(upgradeToActivate);
+        base.ActivateUpgrade(upgrade);
 
-        switch (upgradeToActivate.type)
+        switch (upgrade.type)
         {
-            case "gattling_consecutive_damage_up":
+            case Upgrade.Type.Gattling_ConsecutiveDamageUp:
                 damagePerConsecutiveShot += 5;
                 break;
-            case "gattling_increased_max_firerate":
+            case Upgrade.Type.Gattling_MaxFireRateUp:
                 maxRoundsPerMinute = 600;
                 break;
-            case "quicker_windup":
+            case Upgrade.Type.Gattling_QuickerWindup:
                 shotsToReachLowestTimeToFire /= 2;
                 break;
         }

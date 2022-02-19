@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bc4ba6f90963a3478fd0a5feb7f966a, type: 3}
   m_Name: Gattling_IncreasedMaxFireRate
   m_EditorClassIdentifier: 
-  type: gattling_increased_max_firerate
-  display: 2x peak firerate
-  cost: 300
+  type: 8
+  sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  displayName: Max RPM up
+  description: 
+  cost: 100
+  depth: 0
+  parentUpgrade: 0

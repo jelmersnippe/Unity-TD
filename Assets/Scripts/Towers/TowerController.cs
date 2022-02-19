@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(RangeIndicator))]
 [RequireComponent(typeof(Placeholder))]
+[RequireComponent(typeof(UpgradeTree))]
 public class TowerController : MonoBehaviour
 {
     public static event Action<Upgrade> OnUpgradeActivated;
@@ -40,28 +41,34 @@ public class TowerController : MonoBehaviour
     [SerializeField]
     protected TowerState currentTowerState = TowerState.Idle;
 
-    public List<Upgrade> upgrades = new List<Upgrade>();
-    public List<Upgrade> unlockedUpgrades = new List<Upgrade>();
+    public UpgradeTree upgradeTree;
+    List<Upgrade.Type> unlockedUpgrades = new List<Upgrade.Type>();
 
-    public virtual void ActivateUpgrade(Upgrade upgradeToActivate)
+    public virtual void ActivateUpgrade(Upgrade upgradeTreeItem)
     {
-        if (unlockedUpgrades.Contains(upgradeToActivate))
+        if (unlockedUpgrades.Contains(upgradeTreeItem.type))
         {
             Debug.LogWarning("Can only upgrade once");
             return;
         }
 
-        switch (upgradeToActivate.type)
+        unlockedUpgrades.Add(upgradeTreeItem.type);
+        OnUpgradeActivated?.Invoke(upgradeTreeItem);
+
+        switch (upgradeTreeItem.type)
         {
-            case "default_damage_up":
+            case Upgrade.Type.Default_DamageUp:
                 damage += 50;
                 break;
-            case "default_firerate_up":
+            case Upgrade.Type.Default_FireRateUp:
                 roundsPerMinute += 30;
                 break;
         }
-        unlockedUpgrades.Add(upgradeToActivate);
-        OnUpgradeActivated?.Invoke(upgradeToActivate);
+    }
+
+    private void Awake()
+    {
+        upgradeTree = GetComponent<UpgradeTree>();
     }
 
     private void Start()
@@ -185,5 +192,10 @@ public class TowerController : MonoBehaviour
         // Enable the tower and object
         placeholder.activeObject.gameObject.SetActive(true);
         EnterIdleState();
+    }
+
+    public bool HasUnlockedUpgrade(Upgrade.Type upgrade)
+    {
+        return unlockedUpgrades.Contains(upgrade);
     }
 }

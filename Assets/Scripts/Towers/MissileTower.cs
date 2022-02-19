@@ -13,19 +13,19 @@ public class MissileTower : TowerController
         spawnedProjectile.setValues(damage, projectileSpeed, currentTarget.transform, monsterLayerMask, splashRadius, damage, maxSplashTargetCount);
     }
 
-    override public void ActivateUpgrade(Upgrade upgradeToActivate)
+    override public void ActivateUpgrade(Upgrade upgrade)
     {
-        base.ActivateUpgrade(upgradeToActivate);
+        base.ActivateUpgrade(upgrade);
 
-        switch (upgradeToActivate.type)
+        switch (upgrade.type)
         {
-            case "missile_damage_up":
+            case Upgrade.Type.Default_DamageUp:
                 damage += 50;
                 break;
-            case "missile_splash_radius_up":
+            case Upgrade.Type.Splash_RadiusUp:
                 splashRadius += 1;
                 break;
-            case "missile_target_count_up":
+            case Upgrade.Type.Splash_TargetCountUp:
                 maxSplashTargetCount += 2;
                 break;
         }

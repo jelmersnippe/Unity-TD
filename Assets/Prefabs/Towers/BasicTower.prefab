@@ -216,6 +216,7 @@ GameObject:
   - component: {fileID: 975187778779203633}
   - component: {fileID: 984244770244561392}
   - component: {fileID: 3810513887205513429}
+  - component: {fileID: 4316734924952822411}
   m_Layer: 0
   m_Name: BasicTower
   m_TagString: Untagged
@@ -266,10 +267,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   currentTowerState: 2
-  upgrades:
-  - {fileID: 11400000, guid: 01b79ce86dad4064584bc82cd79f9591, type: 2}
-  - {fileID: 11400000, guid: cb84054be1b2c5849ae971b9360f6b08, type: 2}
-  unlockedUpgrades: []
+  upgradeTree: {fileID: 0}
   degreesBetweenShots: 30
 --- !u!114 &404057427222198897
 MonoBehaviour:
@@ -387,6 +385,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4316734924952822411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7865072308819311275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d6807200a4901941ab2fcaffc9cd7e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treeName: Basic Tower tree
+  serializableUpgradeTreeItems:
+  - {fileID: 11400000, guid: e687bb9b34600ec449de1d7ad6439ccb, type: 2}
+  - {fileID: 11400000, guid: 8e48f238a6156a148b474403ef177cc8, type: 2}
+  - {fileID: 11400000, guid: 83d9078189be6904bad60b9d3f301f3d, type: 2}
+  - {fileID: 11400000, guid: 032a66843119a8c44b42aaa5c5032647, type: 2}
+  - {fileID: 11400000, guid: b6784e3058240bb4ab450b85e891d68e, type: 2}
+  - {fileID: 11400000, guid: f9ccf7cb6bf5a4949acdf9e748dd0863, type: 2}
+  - {fileID: 11400000, guid: 985d781ac4ba0684e90140d907555cb9, type: 2}
+  - {fileID: 11400000, guid: 9cce5903424e1214892cd97167fdc968, type: 2}
 --- !u!1 &7865072308831243786
 GameObject:
   m_ObjectHideFlags: 0

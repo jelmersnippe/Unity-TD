@@ -28,24 +28,21 @@ public class ShotgunTower : TowerController
         }
     }
 
-    override public void ActivateUpgrade(Upgrade upgradeToActivate)
+    override public void ActivateUpgrade(Upgrade upgrade)
     {
-        base.ActivateUpgrade(upgradeToActivate);
+        base.ActivateUpgrade(upgrade);
 
-        switch (upgradeToActivate.type)
+        switch (upgrade.type)
         {
-            case "shotgun_concentrated_pellets":
+            case Upgrade.Type.Shotgun_ConcentratedPellets:
                 concentratedPellets = true;
-                unlockedUpgrades.Add(upgradeToActivate);
                 break;
-            case "shotgun_more_pellets":
+            case Upgrade.Type.Shotgun_MorePellets:
                 pelletsToFire += 4;
                 spread += 30f;
-                unlockedUpgrades.Add(upgradeToActivate);
                 break;
-            case "shotgun_reduce_spread":
+            case Upgrade.Type.Shotgun_ReduceSpread:
                 spread -= 15f;
-                unlockedUpgrades.Add(upgradeToActivate);
                 break;
         }
     }

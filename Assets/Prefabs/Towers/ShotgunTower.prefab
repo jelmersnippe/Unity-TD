@@ -267,10 +267,18 @@ MonoBehaviour:
     m_Bits: 512
   currentTowerState: 2
   upgrades:
-  - {fileID: 11400000, guid: 4bd3145eecbc3964ca98bc793cf9a3aa, type: 2}
-  - {fileID: 11400000, guid: 9bde31d8a68f230449f6503e1d613639, type: 2}
-  - {fileID: 11400000, guid: 54cfc3e62fba5cf4a8a199906f5fb46d, type: 2}
-  unlockedUpgrades: []
+  - upgrade: {fileID: 11400000, guid: 9bde31d8a68f230449f6503e1d613639, type: 2}
+    cost: 100
+    children:
+    - upgrade: {fileID: 11400000, guid: 54cfc3e62fba5cf4a8a199906f5fb46d, type: 2}
+      cost: 200
+      children:
+      - upgrade: {fileID: 11400000, guid: 4bd3145eecbc3964ca98bc793cf9a3aa, type: 2}
+        cost: 300
+        children: []
+        conflictingUpgrade: {fileID: 0}
+      conflictingUpgrade: {fileID: 0}
+    conflictingUpgrade: {fileID: 0}
   pelletsToFire: 6
   spread: 45
   lowestSpeed: 0.3

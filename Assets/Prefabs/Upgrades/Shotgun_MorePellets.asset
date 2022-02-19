@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bc4ba6f90963a3478fd0a5feb7f966a, type: 3}
   m_Name: Shotgun_MorePellets
   m_EditorClassIdentifier: 
-  type: shotgun_more_pellets
-  display: +4 pellets, +30 spread
-  cost: 150
+  type: 11
+  sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  displayName: More pellets
+  description: 
+  cost: 100
+  depth: 0
+  parentUpgrade: 0

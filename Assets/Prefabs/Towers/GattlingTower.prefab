@@ -264,10 +264,18 @@ MonoBehaviour:
     m_Bits: 512
   currentTowerState: 2
   upgrades:
-  - {fileID: 11400000, guid: 63ced3a66deef9a42aa49bf47aca6d05, type: 2}
-  - {fileID: 11400000, guid: 3ff74c5c15de59f47b4c24460b80c000, type: 2}
-  - {fileID: 11400000, guid: 9c89ee4a09e1f87428a7fd7e659a1626, type: 2}
-  unlockedUpgrades: []
+  - upgrade: {fileID: 11400000, guid: 9c89ee4a09e1f87428a7fd7e659a1626, type: 2}
+    cost: 200
+    children:
+    - upgrade: {fileID: 11400000, guid: 3ff74c5c15de59f47b4c24460b80c000, type: 2}
+      cost: 250
+      children:
+      - upgrade: {fileID: 11400000, guid: 63ced3a66deef9a42aa49bf47aca6d05, type: 2}
+        cost: 500
+        children: []
+        conflictingUpgrade: {fileID: 0}
+      conflictingUpgrade: {fileID: 0}
+    conflictingUpgrade: {fileID: 0}
   consecutiveShots: 0
   damagePerConsecutiveShot: 0
   shotsToReachLowestTimeToFire: 6

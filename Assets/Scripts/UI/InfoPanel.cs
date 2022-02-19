@@ -63,23 +63,24 @@ public class InfoPanel : MonoBehaviour
     }
     public void ShowUpgrades()
     {
-        foreach (Transform child in upgradeSection)
+        foreach (Transform depth in upgradeSection)
         {
-            Destroy(child.gameObject);
+            foreach (Transform child in depth)
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         float panelHeight = GetComponent<RectTransform>().sizeDelta.y;
-        List<Upgrade> items = selectedTower.upgrades;
+        List<Upgrade> items = selectedTower.upgradeTree.serializableUpgradeTreeItems;
         float itemHeight = purchaseButton.GetComponent<RectTransform>().sizeDelta.y;
         for (int i = 0; i < items.Count; i++)
         {
             Upgrade item = items[i];
-            if (selectedTower.unlockedUpgrades.Contains(item))
-            {
-                continue;
-            }
 
-            UpgradeItem createdUpgradeItem = Instantiate(purchaseButton, upgradeSection);
+            Transform parent = upgradeSection.Find("Depth " + item.depth.ToString());
+
+            UpgradeItem createdUpgradeItem = Instantiate(purchaseButton, parent);
             createdUpgradeItem.SetItem(item);
         }
     }

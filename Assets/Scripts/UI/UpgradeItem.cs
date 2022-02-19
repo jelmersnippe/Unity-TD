@@ -10,6 +10,7 @@ public class UpgradeItem : MonoBehaviour
     [SerializeField] int cost;
     [SerializeField] TextMeshProUGUI costDisplay;
     [SerializeField] TextMeshProUGUI nameDisplay;
+    [SerializeField] Image spriteDisplay;
     [SerializeField] Color unpurchaseableColor = new Color(255, 120, 120, 0.6f);
     Button button;
 
@@ -27,8 +28,10 @@ public class UpgradeItem : MonoBehaviour
             BuildingManager.instance.selectedTower.ActivateUpgrade(itemToSet);
             InfoPanel.instance.UpdateInfo();
         });
+
         costDisplay.text = "$" + cost;
-        nameDisplay.text = item.display;
+        nameDisplay.text = item.displayName;
+        spriteDisplay.sprite = item.sprite;
     }
 
     private void Update()
@@ -41,7 +44,7 @@ public class UpgradeItem : MonoBehaviour
         if (cost > GameManager.instance.purchaseCurrency)
         {
             costDisplay.color = Color.red;
-            nameDisplay.color = unpurchaseableColor;
+            spriteDisplay.color = unpurchaseableColor;
             button.enabled = false;
             return;
         }
@@ -49,7 +52,7 @@ public class UpgradeItem : MonoBehaviour
         if (cost <= GameManager.instance.purchaseCurrency)
         {
             costDisplay.color = Color.white;
-            nameDisplay.color = Color.white;
+            spriteDisplay.color = Color.white;
             button.enabled = true;
             return;
         }
