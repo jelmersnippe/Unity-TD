@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(RangeIndicator))]
 [RequireComponent(typeof(Placeholder))]
-public class Tower : MonoBehaviour
+public class TowerController : MonoBehaviour
 {
     public static event Action<Upgrade> OnUpgradeActivated;
     public enum TowerState { Idle, Firing, Placing }

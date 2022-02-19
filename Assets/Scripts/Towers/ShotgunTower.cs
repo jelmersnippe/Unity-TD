@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotgunTower : Tower
+public class ShotgunTower : TowerController
 {
     [SerializeField] int pelletsToFire = 6;
     [SerializeField] float spread = 45f;

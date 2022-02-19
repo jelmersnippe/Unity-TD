@@ -63,8 +63,8 @@ public class GameManager : MonoBehaviour
         Spawner.OnWaveCleared += WaveCleared;
         Spawner.OnLastWaveCleared += WinGame;
 
-        BuildingManager.OnTowerPlaced += (Tower tower) => purchaseCurrency -= tower.cost;
-        Tower.OnUpgradeActivated += (Upgrade upgrade) => purchaseCurrency -= upgrade.cost;
+        BuildingManager.OnTowerPlaced += (TowerController tower) => purchaseCurrency -= tower.cost;
+        TowerController.OnUpgradeActivated += (Upgrade upgrade) => purchaseCurrency -= upgrade.cost;
 
         OnGameOver += LoseGame;
 
@@ -80,8 +80,8 @@ public class GameManager : MonoBehaviour
         Spawner.OnWaveCleared -= WaveCleared;
         Spawner.OnLastWaveCleared -= WinGame;
 
-        BuildingManager.OnTowerPlaced -= (Tower tower) => purchaseCurrency -= tower.cost;
-        Tower.OnUpgradeActivated -= (Upgrade upgrade) => purchaseCurrency -= upgrade.cost;
+        BuildingManager.OnTowerPlaced -= (TowerController tower) => purchaseCurrency -= tower.cost;
+        TowerController.OnUpgradeActivated -= (Upgrade upgrade) => purchaseCurrency -= upgrade.cost;
 
         OnGameOver -= LoseGame;
 

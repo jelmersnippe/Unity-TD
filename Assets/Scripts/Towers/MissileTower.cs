@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissileTower : Tower
+public class MissileTower : TowerController
 {
     [SerializeField] float splashRadius = 3f;
     [SerializeField] int maxSplashTargetCount = 4;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicTower : Tower
+public class BasicTower : TowerController
 {
     [SerializeField] float degreesBetweenShots = 45f;
     bool hasTripleShot = false;

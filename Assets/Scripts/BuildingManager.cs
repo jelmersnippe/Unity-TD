@@ -5,12 +5,12 @@ public class BuildingManager : MonoBehaviour
 {
     public static BuildingManager instance;
 
-    public static event Action<Tower> OnTowerPlaced;
+    public static event Action<TowerController> OnTowerPlaced;
     public static event Action OnDeselectTower;
 
-    public Tower selectedTower;
+    public TowerController selectedTower;
 
-    public Tower towerToPlace;
+    public TowerController towerToPlace;
 
     [SerializeField] LayerMask blockedLayers;
 
@@ -49,15 +49,15 @@ public class BuildingManager : MonoBehaviour
                 Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
                 RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-                if (hit.collider != null && hit.collider.gameObject.GetComponent<Tower>() != null)
+                if (hit.collider != null && hit.collider.gameObject.GetComponent<TowerController>() != null)
                 {
-                    SetSelectedTower(hit.collider.gameObject.GetComponent<Tower>());
+                    SetSelectedTower(hit.collider.gameObject.GetComponent<TowerController>());
                 }
             }
         }
     }
 
-    public void SetSelectedTower(Tower tower)
+    public void SetSelectedTower(TowerController tower)
     {
         DeselectCurrentTower();
         selectedTower = tower;
@@ -65,7 +65,7 @@ public class BuildingManager : MonoBehaviour
         InfoPanel.instance.SetSelectedTower(selectedTower);
     }
 
-    public void SetTowerToPlace(Tower tower)
+    public void SetTowerToPlace(TowerController tower)
     {
         CancelPlacingTower();
         DeselectCurrentTower();

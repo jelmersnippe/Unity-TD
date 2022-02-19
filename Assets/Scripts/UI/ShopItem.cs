@@ -6,7 +6,7 @@ using TMPro;
 
 public class ShopItem : MonoBehaviour
 {
-    [SerializeField] Tower item;
+    [SerializeField] TowerController item;
     [SerializeField] int cost;
     [SerializeField] TextMeshProUGUI costDisplay;
     [SerializeField] Image spriteDisplay;
@@ -18,7 +18,7 @@ public class ShopItem : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    public void SetItem(Tower itemToSet)
+    public void SetItem(TowerController itemToSet)
     {
         item = itemToSet;
         cost = itemToSet.cost;

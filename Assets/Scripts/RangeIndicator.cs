@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Tower))]
+[RequireComponent(typeof(TowerController))]
 public class RangeIndicator : MonoBehaviour
 {
     public Transform rangeIndicator;
-    Tower tower;
+    TowerController tower;
 
     private void Awake()
     {
-        tower = GetComponent<Tower>();
+        tower = GetComponent<TowerController>();
         SetRange(tower.range);
     }
 

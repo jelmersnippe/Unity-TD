@@ -9,7 +9,7 @@ public class InfoPanel : MonoBehaviour
 {
     public static InfoPanel instance;
 
-    [SerializeField] Tower selectedTower;
+    [SerializeField] TowerController selectedTower;
     [SerializeField] Image image;
     [SerializeField] TextMeshProUGUI damageText;
     [SerializeField] TextMeshProUGUI rangeText;
@@ -27,7 +27,7 @@ public class InfoPanel : MonoBehaviour
         }
     }
 
-    public void SetSelectedTower(Tower tower)
+    public void SetSelectedTower(TowerController tower)
     {
         selectedTower = tower;
         UpdateInfo();

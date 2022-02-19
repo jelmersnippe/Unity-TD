@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GattlingTower : Tower
+public class GattlingTower : TowerController
 {
     [SerializeField]
     int consecutiveShots = 0;

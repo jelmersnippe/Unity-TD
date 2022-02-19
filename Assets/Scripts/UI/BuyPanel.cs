@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(RectTransform))]
 public class BuyPanel : MonoBehaviour
 {
-    [SerializeField] Tower[] items;
+    [SerializeField] TowerController[] items;
     [SerializeField] ShopItem purchaseButton;
 
     void Awake()
@@ -14,7 +14,7 @@ public class BuyPanel : MonoBehaviour
         float itemWidth = purchaseButton.GetComponent<RectTransform>().sizeDelta.x;
         for (int i = 0; i < items.Length; i++)
         {
-            Tower item = items[i];
+            TowerController item = items[i];
             ShopItem createdShopItem = Instantiate(purchaseButton, transform);
             createdShopItem.SetItem(item);
         }
