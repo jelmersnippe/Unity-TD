@@ -47,7 +47,7 @@ public class Tower : MonoBehaviour
     {
         if (unlockedUpgrades.Contains(upgradeToActivate))
         {
-            Debug.Log("Can only upgrade once");
+            Debug.LogWarning("Can only upgrade once");
             return;
         }
 

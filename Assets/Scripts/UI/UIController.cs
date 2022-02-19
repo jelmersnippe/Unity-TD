@@ -37,9 +37,9 @@ public class UIController : MonoBehaviour
         GameManager.OnSwitchGameSpeed += SetToggleGameSpeedButtonState;
 
         Spawner.OnLastWaveCleared += ShowGameWonUI;
-        Spawner.OnWaveSpawned += () => ToggleStartNextWaveButton(false);
-        Spawner.OnWaveCleared += (wave) => ToggleStartNextWaveButton(true);
         Spawner.OnToggleAutoSpawn += SetToggleAutoSpawnButtonState;
+        Spawner.OnWaveCleared += (wave) => ToggleStartNextWaveButton(true);
+        Spawner.OnWaveSpawned += () => ToggleStartNextWaveButton(false);
 
         BuildingManager.OnTowerPlaced += infoPanel.SetSelectedTower;
         BuildingManager.OnDeselectTower += infoPanel.DeselectSelectedTower;
@@ -57,9 +57,9 @@ public class UIController : MonoBehaviour
         GameManager.OnSwitchGameSpeed -= SetToggleGameSpeedButtonState;
 
         Spawner.OnLastWaveCleared -= ShowGameWonUI;
-        Spawner.OnWaveSpawned -= () => ToggleStartNextWaveButton(false);
-        Spawner.OnWaveCleared -= (wave) => ToggleStartNextWaveButton(true);
         Spawner.OnToggleAutoSpawn -= SetToggleAutoSpawnButtonState;
+        Spawner.OnWaveCleared -= (wave) => ToggleStartNextWaveButton(true);
+        Spawner.OnWaveSpawned -= () => ToggleStartNextWaveButton(false);
 
         BuildingManager.OnTowerPlaced -= infoPanel.SetSelectedTower;
         BuildingManager.OnDeselectTower -= infoPanel.DeselectSelectedTower;
@@ -113,10 +113,16 @@ public class UIController : MonoBehaviour
         OnToggleGameSpeedButtonPressed?.Invoke();
     }
 
-    public void ToggleStartNextWaveButton(bool active)
+    public void ToggleStartNextWaveButton(bool showStartNextWaveButton)
     {
-        startNextWaveButton.gameObject.SetActive(active);
-        toggleGameSpeedButton.gameObject.SetActive(!active);
+        // Don't show the start next wave button if auto spawn is enabled
+        if (Spawner.instance.autoSpawnEnabled)
+        {
+            showStartNextWaveButton = false;
+        }
+
+        startNextWaveButton.gameObject.SetActive(showStartNextWaveButton);
+        toggleGameSpeedButton.gameObject.SetActive(!showStartNextWaveButton);
     }
 
     void SetToggleGameSpeedButtonState(int gameSpeed)

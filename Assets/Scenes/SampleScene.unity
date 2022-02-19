@@ -2551,9 +2551,9 @@ MonoBehaviour:
   waves:
   - monsters:
     - monsterType: {fileID: 11400000, guid: d89f96ba3d471b54e95ce8d187b3ec2c, type: 2}
-      count: 300
+      count: 10
       initialDelay: 0
-      delayBetweenSpawns: 0.1
+      delayBetweenSpawns: 0.5
   - monsters:
     - monsterType: {fileID: 11400000, guid: 16393a42a3b77704da925e7c6f1c9fc1, type: 2}
       count: 30
@@ -2637,7 +2637,6 @@ MonoBehaviour:
       delayBetweenSpawns: 1
   currentWaveIndex: 0
   monsterPrefab: {fileID: 6165686953972062724, guid: 151f245105d4c434dae61c0710650467, type: 3}
-  autoSpawnEnabled: 0
 --- !u!4 &640113349
 Transform:
   m_ObjectHideFlags: 0

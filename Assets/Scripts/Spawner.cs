@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] Monster monsterPrefab;
     Transform monsterHolder;
 
-    [SerializeField] bool autoSpawnEnabled = false;
+    public bool autoSpawnEnabled { get; private set; } = false;
 
     private void OnEnable()
     {
@@ -93,14 +93,14 @@ public class Spawner : MonoBehaviour
 
     public void SpawnNextWave()
     {
-        if (currentWaveIndex >= waves.Length)
+        if (currentWaveEnemiesAlive > 0)
         {
-            OnLastWaveCleared?.Invoke();
             return;
         }
 
-        if (currentWaveEnemiesAlive > 0)
+        if (currentWaveIndex >= waves.Length)
         {
+            OnLastWaveCleared?.Invoke();
             return;
         }
 
