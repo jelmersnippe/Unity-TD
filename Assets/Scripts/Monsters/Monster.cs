@@ -29,11 +29,17 @@ public class Monster : MonoBehaviour
     [SerializeField] DamagePopup damagePopup;
     [SerializeField] HealthBar healthBar;
 
-    float offset = 0.2f;
+    float healthbarOffset = 0.2f;
     Bounds bounds;
     HealthBar activeHealthBar;
 
-    public bool hasDied = false;
+    private bool _hasDied;
+    public bool hasDied
+    {
+        get => _hasDied;
+        private set => _hasDied = value;
+    }
+
     private void Awake()
     {
         bounds = GetComponent<Collider2D>().bounds;
@@ -59,6 +65,7 @@ public class Monster : MonoBehaviour
         if (currentWaypointIndex < 0 || currentWaypointIndex >= waypoints.Length)
         {
             Debug.LogWarning("No path set or end reached");
+            Destroy(gameObject);
             return;
         }
 
@@ -73,6 +80,7 @@ public class Monster : MonoBehaviour
         if (currentWaypointIndex >= waypoints.Length)
         {
             OnMonsterReachedFinalWaypoint?.Invoke(this);
+            AudioManager.instance.Play(Sound.Name.Escape);
             Destroy(gameObject);
         }
     }
@@ -96,7 +104,7 @@ public class Monster : MonoBehaviour
         {
             Destroy(activeHealthBar.gameObject);
         }
-        activeHealthBar = Instantiate(healthBar, transform.position + new Vector3(0, (bounds.size.y / 2) + offset), Quaternion.identity, transform);
+        activeHealthBar = Instantiate(healthBar, transform.position + new Vector3(0, (bounds.size.y / 2) + healthbarOffset), Quaternion.identity, transform);
     }
 
     public void TakeDamage(int damage)
@@ -122,8 +130,7 @@ public class Monster : MonoBehaviour
             return;
         }
 
-        Monster monster = GetComponent<Monster>();
-        Monster.OnMonsterDied?.Invoke(monster);
+        OnMonsterDied?.Invoke(this);
 
         Destroy(gameObject);
         hasDied = true;

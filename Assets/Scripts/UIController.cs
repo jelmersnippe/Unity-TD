@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour
     public static event Action OnToggleAutoSpawnButtonPressed;
     public static event Action OnStartNextWaveButtonPressed;
     public static event Action OnToggleGameSpeedButtonPressed;
+    public static event Action<float> OnVolumeChanged;
 
     [SerializeField] TextMeshProUGUI healthUI;
     [SerializeField] TextMeshProUGUI currencyUI;
@@ -21,6 +22,8 @@ public class UIController : MonoBehaviour
     [SerializeField] Button toggleGameSpeedButton;
 
     [SerializeField] InfoPanel infoPanel;
+
+    [SerializeField] Slider volumeControl;
 
     private void OnEnable()
     {
@@ -66,6 +69,8 @@ public class UIController : MonoBehaviour
     {
         gameOverUI.gameObject.SetActive(false);
         gameWonUI.gameObject.SetActive(false);
+
+        OnVolumeChanged?.Invoke(volumeControl.value);
     }
 
     void UpdateHealthUI(int health)
@@ -122,5 +127,10 @@ public class UIController : MonoBehaviour
     void SetToggleAutoSpawnButtonState(bool active)
     {
         toggleAutoSpawnButton.GetComponent<Image>().color = active ? Color.white : Color.gray;
+    }
+
+    public void UpdateVolume()
+    {
+        OnVolumeChanged?.Invoke(volumeControl.value);
     }
 }

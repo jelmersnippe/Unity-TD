@@ -10,6 +10,8 @@ public class BasicTower : Tower
 
     protected override void SpawnProjectile()
     {
+        AudioManager.instance.Play(Sound.Name.Shoot);
+
         if (!hasTripleShot && !hasPierce)
         {
             base.SpawnProjectile();

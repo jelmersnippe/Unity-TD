@@ -13,6 +13,8 @@ public class ShotgunTower : Tower
 
     protected override void SpawnProjectile()
     {
+        AudioManager.instance.Play(Sound.Name.Shotgun);
+
         int pelletCount = concentratedPellets ? pelletsToFire / 2 : pelletsToFire;
         int damagePerPellet = concentratedPellets ? damage * 2 : damage;
         for (int i = 0; i < pelletCount; i++)

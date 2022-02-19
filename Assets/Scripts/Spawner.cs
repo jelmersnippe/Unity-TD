@@ -109,6 +109,8 @@ public class Spawner : MonoBehaviour
 
     void SpawnWave(Wave wave)
     {
+        AudioManager.instance.Play(Sound.Name.WaveChange);
+
         for (int i = 0; i < wave.monsters.Count; i++)
         {
             MonsterSet monsterSet = wave.monsters[i];

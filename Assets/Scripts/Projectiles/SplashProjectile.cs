@@ -22,6 +22,8 @@ public class SplashProjectile : Projectile
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, splashRadius, targetMask);
 
+        AudioManager.instance.Play(Sound.Name.Explosion);
+
         for (int i = 0; i < colliders.Length; i++)
         {
             Collider2D collider = colliders[i];

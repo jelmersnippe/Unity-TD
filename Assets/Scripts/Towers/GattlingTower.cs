@@ -46,6 +46,7 @@ public class GattlingTower : Tower
 
     protected override void SpawnProjectile()
     {
+        AudioManager.instance.Play(Sound.Name.Shoot);
         Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation, transform);
         spawnedProjectile.setValues(damage + (damagePerConsecutiveShot * consecutiveShots), projectileSpeed, currentTarget.transform, monsterLayerMask);
     }
