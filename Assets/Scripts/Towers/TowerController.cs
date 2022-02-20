@@ -21,11 +21,11 @@ public class TowerController : MonoBehaviour
 
     public int damage = 100;
     public int roundsPerMinute = 30;
-    public int range = 3;
+    public int range = 2;
     public int cost = 100;
 
     [Range(1, 100)]
-    public int projectileSpeed = 60;
+    public int projectileSpeed = 20;
     public Projectile projectile;
 
     // TOD: Set as a global reference somewhere

@@ -20,6 +20,8 @@ public class UpgradePanel : MonoBehaviour
 
     public void ShowUpgrades(TowerController tower)
     {
+        if (tower == null || !tower.isActiveAndEnabled) return;
+
         ResetView();
 
         float panelWidth = transform.parent.GetComponent<RectTransform>().sizeDelta.x - (padding * 2);

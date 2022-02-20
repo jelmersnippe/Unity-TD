@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 7865072308819311278}
   - component: {fileID: 3810513887205513429}
   - component: {fileID: 975187778779203633}
-  - component: {fileID: 9147961463677388057}
+  - component: {fileID: 4614452518589920404}
   - component: {fileID: 3976399298662639175}
   - component: {fileID: 8637234159275814890}
   - component: {fileID: 8681330502235078675}
   - component: {fileID: 3450444784475815761}
   - component: {fileID: 4892974316575252893}
+  - component: {fileID: 3684461426873661251}
   m_Layer: 0
   m_Name: GattlingTower
   m_TagString: Untagged
@@ -83,12 +84,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2c712fe2a3d1c8f48ab2431eb84bf960, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 325a745cb4417a44aad6c5d177af4c2d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -115,8 +116,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &9147961463677388057
-PolygonCollider2D:
+--- !u!61 &4614452518589920404
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -128,26 +129,19 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.02985531, y: -0.05828893}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.28125, y: 0.15625, z: 0.1875, w: 0.1875}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.37530497, y: 0.88072646}
-      - {x: -0.3680851, y: 0.8837332}
-      - {x: -0.8767145, y: 0.37463546}
-      - {x: -0.8837027, y: -0.36541742}
-      - {x: -0.37698323, y: -0.8773371}
-      - {x: 0.37792984, y: -0.88058454}
-      - {x: 0.88112926, y: -0.37116727}
-      - {x: 0.8687629, y: 0.37337744}
+  serializedVersion: 2
+  m_Size: {x: 0.8104584, y: 1.2483363}
+  m_EdgeRadius: 0
 --- !u!114 &3976399298662639175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,17 +154,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc569eab57f857d4baf84b8cdd598cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
   towerGunSpriteRenderer: {fileID: 0}
   towerBaseSpriteRenderer: {fileID: 0}
   towerBase: {fileID: 7865072309352129997}
   towerGun: {fileID: 7865072308831243787}
   firePoint: {fileID: 7865072309213478940}
-  damage: 100
-  roundsPerMinute: 30
-  range: 5
-  cost: 100
-  projectileSpeed: 60
+  damage: 50
+  roundsPerMinute: 45
+  range: 2
+  cost: 250
+  projectileSpeed: 20
   projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
   monsterLayerMask:
     serializedVersion: 2
@@ -234,6 +227,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeIndicator: {fileID: 5993949321915928427}
+--- !u!114 &3684461426873661251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7865072308819311275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d6807200a4901941ab2fcaffc9cd7e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  depth0Upgrades: []
+  depth1Upgrades: []
+  depth2Upgrades: []
+  depth3Upgrades: []
+  depth4Upgrades: []
 --- !u!1 &7865072308831243786
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +270,7 @@ Transform:
   m_GameObject: {fileID: 7865072308831243786}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7865072309213478940}
@@ -308,7 +318,7 @@ SpriteRenderer:
   m_SortingLayerID: 148469433
   m_SortingLayer: 1
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 7409533c529dbaa45a1c51b0bc19b569, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 325a745cb4417a44aad6c5d177af4c2d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -343,7 +353,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7865072309213478939}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.051, y: 0, z: 0}
+  m_LocalPosition: {x: 0.316, y: 0.129, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -423,7 +433,7 @@ SpriteRenderer:
   m_SortingLayerID: 148469433
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 29967babf5385fd4296385704cdebc78, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -431,7 +441,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &7254468634873099593

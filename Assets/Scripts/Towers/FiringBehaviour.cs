@@ -55,6 +55,8 @@ public class FiringBehaviour : MonoBehaviour
 
     void RotateToTarget()
     {
+        transform.rotation = Quaternion.Euler(0, currentTarget.transform.position.x < transform.position.x ? -180 : 0, 0);
+        return;
         Vector3 targetDirection = currentTarget.position - transform.position;
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         Quaternion desiredRotation = Quaternion.AngleAxis(angle, Vector3.forward);

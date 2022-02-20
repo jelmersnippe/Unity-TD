@@ -21,11 +21,13 @@ public class InfoPanel : MonoBehaviour
     private void OnEnable()
     {
         UpgradeTree.OnUpgradeActivated += (UpgradeTreeItem item) => upgradeSection.ShowUpgrades(selectedTower);
+        GameManager.OnCurrencyUpdate += (int currency) => upgradeSection.ShowUpgrades(selectedTower);
     }
 
     private void OnDisable()
     {
         UpgradeTree.OnUpgradeActivated -= (UpgradeTreeItem item) => upgradeSection.ShowUpgrades(selectedTower);
+        GameManager.OnCurrencyUpdate -= (int currency) => upgradeSection.ShowUpgrades(selectedTower);
     }
 
     void Awake()
@@ -64,10 +66,7 @@ public class InfoPanel : MonoBehaviour
         infoSection.SetActive(true);
         upgradeSection.gameObject.SetActive(selectedTower.isActiveAndEnabled);
 
-        if (selectedTower.isActiveAndEnabled)
-        {
-            upgradeSection.ShowUpgrades(selectedTower);
-        }
+        upgradeSection.ShowUpgrades(selectedTower);
     }
     
 }

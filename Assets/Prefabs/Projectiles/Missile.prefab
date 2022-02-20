@@ -99,9 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c0fb58ba12c5d48be028aad3e87269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  splashRadius: 0
-  splashDamage: 0
-  maxSplashTargetCount: 0
+  rotationSpeed: 20
 --- !u!50 &4983368779626934462
 Rigidbody2D:
   serializedVersion: 4
