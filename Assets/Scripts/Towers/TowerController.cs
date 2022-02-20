@@ -11,9 +11,12 @@ public class TowerController : MonoBehaviour
 {
     public enum TowerState { Idle, Firing, Placing }
 
+    [HideInInspector] public SpriteRenderer towerGunSpriteRenderer;
+    [HideInInspector] public SpriteRenderer towerBaseSpriteRenderer;
+
+    public Transform towerBase;
     public Transform towerGun;
     public Transform firePoint;
-    public Sprite sprite;
 
     public int damage = 100;
     public int roundsPerMinute = 30;
@@ -36,21 +39,17 @@ public class TowerController : MonoBehaviour
     IdleBehaviour idleBehaviour;
     FiringBehaviour firingBehaviour;
     PlacingBehaviour placingBehaviour;
-
-    public enum DefaultUpgradeType
-    {
-        Default_DamageUp,
-        Default_PierceUp,
-        Default_FireRateUp,
-        Basic_TripleShot,
-    }
+    RangeIndicator rangeIndicator;
 
     private void Awake()
     {
+        towerGunSpriteRenderer = towerGun.GetComponent<SpriteRenderer>();
+        towerBaseSpriteRenderer = towerBase.GetComponent<SpriteRenderer>();
+
         idleBehaviour = GetComponent<IdleBehaviour>();
         firingBehaviour = GetComponent<FiringBehaviour>();
         placingBehaviour = GetComponent<PlacingBehaviour>();
-        sprite = GetComponent<SpriteRenderer>().sprite;
+        rangeIndicator = GetComponent<RangeIndicator>();
     }
 
     private void Start()
@@ -74,6 +73,11 @@ public class TowerController : MonoBehaviour
         }
     }
 
+    private void OnMouseDown()
+    {
+        BuildingManager.instance.AttemptToSetSelectedTower(this);
+    }
+
     public virtual void EnterIdleState()
     {
         currentTowerState = TowerState.Idle;
@@ -88,6 +92,6 @@ public class TowerController : MonoBehaviour
 
     public void ShowRange(bool showRange)
     {
-        GetComponent<RangeIndicator>().rangeIndicator.gameObject.SetActive(showRange);
+        rangeIndicator.SetActive(showRange);
     }
 }

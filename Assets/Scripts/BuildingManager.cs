@@ -37,27 +37,21 @@ public class BuildingManager : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && towerToPlace != null && !Physics2D.IsTouchingLayers(towerToPlace.GetComponent<Collider2D>(), blockedLayers))
         {
-            if (towerToPlace != null && !Physics2D.IsTouchingLayers(towerToPlace.GetComponent<Collider2D>(), blockedLayers))
-            {
-                PlaceTower();
-            }
-            else if (towerToPlace == null)
-            {
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-
-                RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-                if (hit.collider != null && hit.collider.gameObject.GetComponent<TowerController>() != null)
-                {
-                    SetSelectedTower(hit.collider.gameObject.GetComponent<TowerController>());
-                }
-            }
+            PlaceTower();
         }
     }
 
-    public void SetSelectedTower(TowerController tower)
+    public void AttemptToSetSelectedTower(TowerController tower)
+    {
+        if (towerToPlace == null)
+        {
+            SetSelectedTower(tower);
+        }
+    }
+
+    void SetSelectedTower(TowerController tower)
     {
         DeselectCurrentTower();
         selectedTower = tower;

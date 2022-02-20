@@ -5,13 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(TowerController))]
 public class RangeIndicator : MonoBehaviour
 {
-    public Transform rangeIndicator;
-    TowerController tower;
+    [SerializeField] Transform rangeIndicator;
+    TowerController towerController;
 
     private void Awake()
     {
-        tower = GetComponent<TowerController>();
-        SetRange(tower.range);
+        towerController = GetComponent<TowerController>();
+        SetRange(towerController.range);
     }
 
     public void SetRange(float range)
@@ -20,13 +20,18 @@ public class RangeIndicator : MonoBehaviour
         rangeIndicator.localScale = new Vector3(scale, scale, 0);
     } 
 
+    public void SetActive(bool active)
+    {
+        rangeIndicator.gameObject.SetActive(active);
+    }
+
     void OnDrawGizmosSelected()
     {
-        if (tower == null)
+        if (towerController == null)
         {
             return;
         }
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, tower.range);
+        Gizmos.DrawWireSphere(transform.position, towerController.range);
     }
 }

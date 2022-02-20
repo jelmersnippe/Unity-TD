@@ -6,7 +6,7 @@ public class PlacingBehaviour : MonoBehaviour
 {
     Color initialColor;
     SpriteRenderer spriteRenderer;
-    LayerMask blockedLayers;
+    public LayerMask blockedLayers;
 
     TowerController towerController;
 
@@ -35,7 +35,8 @@ public class PlacingBehaviour : MonoBehaviour
 
         if (((1 << collider.gameObject.layer) & blockedLayers) != 0)
         {
-            spriteRenderer.color = Color.red;
+            towerController.towerBaseSpriteRenderer.color = Color.red;
+            towerController.towerGunSpriteRenderer.color = Color.red;
         }
     }
 
@@ -43,7 +44,8 @@ public class PlacingBehaviour : MonoBehaviour
     {
         if (towerController.currentTowerState != TowerController.TowerState.Placing) return;
 
-        spriteRenderer.color = initialColor;
+        towerController.towerBaseSpriteRenderer.color = initialColor;
+        towerController.towerGunSpriteRenderer.color = initialColor;
     }
 
     public void setBlockedLayers(LayerMask newBlockedLayers)

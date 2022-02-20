@@ -160,9 +160,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc569eab57f857d4baf84b8cdd598cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  towerGunSpriteRenderer: {fileID: 0}
+  towerBaseSpriteRenderer: {fileID: 0}
+  towerBase: {fileID: 7865072309352129997}
   towerGun: {fileID: 7865072308831243787}
   firePoint: {fileID: 7865072309213478940}
-  uiSprite: {fileID: 0}
   damage: 100
   roundsPerMinute: 30
   range: 5
@@ -215,6 +218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dc5cd99e5127b4b8b9d7e02a432051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blockedLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &4892974316575252893
 MonoBehaviour:
   m_ObjectHideFlags: 0
