@@ -2,29 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-public class Placeholder : MonoBehaviour
+public class PlacingBehaviour : MonoBehaviour
 {
     Color initialColor;
     SpriteRenderer spriteRenderer;
     LayerMask blockedLayers;
 
-    public Transform activeObject;
-    public Transform placeholderObject;
-
-    void Awake()
-    {
-        activeObject = transform.Find("ActiveObject");
-        placeholderObject = transform.Find("Placeholder");
-    }
+    TowerController towerController;
 
     private void Start()
     {
-        spriteRenderer = placeholderObject.GetComponent<SpriteRenderer>();
+        towerController = GetComponent<TowerController>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         initialColor = spriteRenderer.color;
     }
 
-    void Update()
+    public void Execute()
     {
         if (BuildingManager.instance.towerToPlace == null)
         {
@@ -38,6 +31,8 @@ public class Placeholder : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collider)
     {
+        if (towerController.currentTowerState != TowerController.TowerState.Placing) return;
+
         if (((1 << collider.gameObject.layer) & blockedLayers) != 0)
         {
             spriteRenderer.color = Color.red;
@@ -46,6 +41,8 @@ public class Placeholder : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collider)
     {
+        if (towerController.currentTowerState != TowerController.TowerState.Placing) return;
+
         spriteRenderer.color = initialColor;
     }
 

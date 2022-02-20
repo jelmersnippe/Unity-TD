@@ -18,4 +18,5 @@ MonoBehaviour:
   description: Pierce +1
   cost: 100
   depth: 2
+  spot: 3
   parentUpgrade: 1

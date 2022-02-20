@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Upgrade", order = 1)]
-public class Upgrade : ScriptableObject
+public class Upgrade<T> : ScriptableObject
 {
     public enum Type
     {
@@ -27,11 +27,14 @@ public class Upgrade : ScriptableObject
         Shotgun_ReduceSpread,
     }
 
-    public Type type;
+    public T type;
     public Sprite sprite;
     public string displayName;
     public string description;
     public int cost;
+    [Range(0,4)]
     public int depth;
+    [Range(0, 4)]
+    public int spot;
     public Type parentUpgrade;
 }

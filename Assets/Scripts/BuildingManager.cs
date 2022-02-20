@@ -73,7 +73,7 @@ public class BuildingManager : MonoBehaviour
         InfoPanel.instance.SetSelectedTower(tower);
 
         towerToPlace = Instantiate(tower, transform);
-        towerToPlace.GetComponent<Placeholder>().setBlockedLayers(blockedLayers);
+        towerToPlace.GetComponent<PlacingBehaviour>().setBlockedLayers(blockedLayers);
     }
 
     void DeselectCurrentTower()
@@ -102,7 +102,7 @@ public class BuildingManager : MonoBehaviour
         }
 
         OnTowerPlaced?.Invoke(towerToPlace);
-        towerToPlace.ConvertToActive();
+        towerToPlace.EnterIdleState();;
         towerToPlace.gameObject.layer = LayerMask.NameToLayer("Tower");
 
         SetSelectedTower(towerToPlace);

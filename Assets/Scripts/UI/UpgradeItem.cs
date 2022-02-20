@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UpgradeItem : MonoBehaviour
+public class UpgradeItem<T> : MonoBehaviour
 {
-    [SerializeField] Upgrade item;
+    public Upgrade<T> item { get; private set; }
     [SerializeField] int cost;
     [SerializeField] TextMeshProUGUI costDisplay;
     [SerializeField] TextMeshProUGUI nameDisplay;
     [SerializeField] Image spriteDisplay;
     [SerializeField] Color unpurchaseableColor = new Color(255, 120, 120, 0.6f);
+    [SerializeField] public UILineRenderer lineRenderer;
     Button button;
 
     void Awake()
@@ -19,13 +20,14 @@ public class UpgradeItem : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    public void SetItem(Upgrade itemToSet)
+    public void SetItem(Upgrade<T> itemToSet)
     {
         item = itemToSet;
         cost = itemToSet.cost;
         // TODO: Use an actual event
         button.onClick.AddListener(delegate {
-            BuildingManager.instance.selectedTower.ActivateUpgrade(itemToSet);
+            // TODO: Fix
+            //BuildingManager.instance.selectedTower.ActivateUpgrade(itemToSet);
             InfoPanel.instance.UpdateInfo();
         });
 

@@ -4,19 +4,16 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(RangeIndicator))]
-[RequireComponent(typeof(Placeholder))]
-[RequireComponent(typeof(UpgradeTree))]
+[RequireComponent(typeof(PlacingBehaviour))]
+[RequireComponent(typeof(UpgradeTree<DefaultUpgradeType>))]
+[RequireComponent(typeof(IdleBehaviour))]
+[RequireComponent(typeof(FiringBehaviour))]
 public class TowerController : MonoBehaviour
 {
-    public static event Action<Upgrade> OnUpgradeActivated;
     public enum TowerState { Idle, Firing, Placing }
 
-    [SerializeField]
-    protected Transform towerGun;
-    [SerializeField]
-    protected Transform firePoint;
-
-    [SerializeField]
+    public Transform towerGun;
+    public Transform firePoint;
     public Sprite uiSprite;
 
     public int damage = 100;
@@ -24,51 +21,36 @@ public class TowerController : MonoBehaviour
     public int range = 5;
     public int cost = 100;
 
-    [SerializeField]
     [Range(1, 100)]
-    protected int projectileSpeed = 60;
+    public int projectileSpeed = 60;
+    public Projectile projectile;
+
+    // TOD: Set as a global reference somewhere
+    [SerializeField]
+    public LayerMask monsterLayerMask;
+
+    public float timeToFire;
 
     [SerializeField]
-    protected Projectile projectile;
+    public TowerState currentTowerState = TowerState.Idle;
 
-    [SerializeField]
-    protected LayerMask monsterLayerMask;
+    IdleBehaviour idleBehaviour;
+    FiringBehaviour firingBehaviour;
+    PlacingBehaviour placingBehaviour;
 
-    protected float timeToFire;
-    protected float currentTimeToFire = 0;
-
-    protected Transform currentTarget;
-    [SerializeField]
-    protected TowerState currentTowerState = TowerState.Idle;
-
-    public UpgradeTree upgradeTree;
-    List<Upgrade.Type> unlockedUpgrades = new List<Upgrade.Type>();
-
-    public virtual void ActivateUpgrade(Upgrade upgradeTreeItem)
+    public enum DefaultUpgradeType
     {
-        if (unlockedUpgrades.Contains(upgradeTreeItem.type))
-        {
-            Debug.LogWarning("Can only upgrade once");
-            return;
-        }
-
-        unlockedUpgrades.Add(upgradeTreeItem.type);
-        OnUpgradeActivated?.Invoke(upgradeTreeItem);
-
-        switch (upgradeTreeItem.type)
-        {
-            case Upgrade.Type.Default_DamageUp:
-                damage += 50;
-                break;
-            case Upgrade.Type.Default_FireRateUp:
-                roundsPerMinute += 30;
-                break;
-        }
+        Default_DamageUp,
+        Default_PierceUp,
+        Default_FireRateUp,
+        Basic_TripleShot,
     }
 
     private void Awake()
     {
-        upgradeTree = GetComponent<UpgradeTree>();
+        idleBehaviour = GetComponent<IdleBehaviour>();
+        firingBehaviour = GetComponent<FiringBehaviour>();
+        placingBehaviour = GetComponent<PlacingBehaviour>();
     }
 
     private void Start()
@@ -81,121 +63,31 @@ public class TowerController : MonoBehaviour
         switch (currentTowerState)
         {
             case TowerState.Placing:
+                placingBehaviour.Execute();
                 return;
             case TowerState.Idle:
-                SeekingBehaviour();
+                idleBehaviour.Execute();
                 break;
             case TowerState.Firing:
-                FiringBehaviour();
+                firingBehaviour.Execute();
                 break;
         }
-
-        currentTimeToFire -= Time.deltaTime;
-    }
-
-    protected virtual void SeekingBehaviour()
-    {
-    }
-
-    void FiringBehaviour()
-    {
-        if (currentTarget == null || isTargetOutOfRange())
-        {
-            EnterIdleState();
-            return;
-        }
-
-        RotateToTarget();
-        FireProjectile();
     }
 
     public virtual void EnterIdleState()
     {
-        currentTarget = null;
-        InvokeRepeating("CheckRange", 0, 0.5f);
         currentTowerState = TowerState.Idle;
+        idleBehaviour.OnEnter();
     }
 
-    protected virtual void EnterFiringState(Transform newTarget)
+    public virtual void EnterFiringState(Transform newTarget)
     {
-        CancelInvoke();
-        currentTarget = newTarget;
         currentTowerState = TowerState.Firing;
-    }
-
-    protected virtual void CheckRange()
-    {
-        Collider2D hit = Physics2D.OverlapCircle(transform.position, range, monsterLayerMask);
-
-        if (hit)
-        {
-            EnterFiringState(hit.transform);
-        }
-    }
-
-    bool isTargetOutOfRange()
-    {
-        return Vector2.Distance(transform.position, currentTarget.position) > range;
-    }
-
-    void RotateToMouse()
-    {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 targetDirection = mousePosition - transform.position;
-        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        Quaternion desiredRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        towerGun.rotation = desiredRotation;
-    }
-
-    void RotateToTarget()
-    {
-        Vector3 targetDirection = currentTarget.position - transform.position;
-        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        Quaternion desiredRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        towerGun.rotation = desiredRotation;
-    }
-
-    protected virtual void FireProjectile()
-    {
-        if (currentTimeToFire > 0)
-        {
-            return;
-        }
-
-        SpawnProjectile();
-        ResetTimeToFire();
-    }
-
-    protected virtual void SpawnProjectile()
-    {
-        Projectile spawnedProjectile = Instantiate(projectile, firePoint.position, firePoint.rotation, transform);
-        spawnedProjectile.setValues(damage, projectileSpeed, currentTarget.transform, monsterLayerMask);
-    }
-
-    protected virtual void ResetTimeToFire()
-    {
-        currentTimeToFire = timeToFire;
+        firingBehaviour.OnEnter(newTarget);
     }
 
     public void ShowRange(bool showRange)
     {
         GetComponent<RangeIndicator>().rangeIndicator.gameObject.SetActive(showRange);
-    }
-
-    public void ConvertToActive()
-    {
-        // Disable the placeholder script and object
-        Placeholder placeholder = GetComponent<Placeholder>();
-        placeholder.enabled = false;
-        placeholder.placeholderObject.gameObject.SetActive(false);
-
-        // Enable the tower and object
-        placeholder.activeObject.gameObject.SetActive(true);
-        EnterIdleState();
-    }
-
-    public bool HasUnlockedUpgrade(Upgrade.Type upgrade)
-    {
-        return unlockedUpgrades.Contains(upgrade);
     }
 }
