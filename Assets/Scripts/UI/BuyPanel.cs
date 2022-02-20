@@ -8,7 +8,7 @@ public class BuyPanel : MonoBehaviour
     [SerializeField] TowerController[] items;
     [SerializeField] ShopItem purchaseButton;
 
-    void Awake()
+    void Start()
     {
         float panelWidth = GetComponent<RectTransform>().sizeDelta.x;
         float itemWidth = purchaseButton.GetComponent<RectTransform>().sizeDelta.x;

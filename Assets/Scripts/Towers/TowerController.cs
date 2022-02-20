@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-[RequireComponent(typeof(RangeIndicator))]
-[RequireComponent(typeof(PlacingBehaviour))]
-[RequireComponent(typeof(UpgradeTree<DefaultUpgradeType>))]
 [RequireComponent(typeof(IdleBehaviour))]
 [RequireComponent(typeof(FiringBehaviour))]
+[RequireComponent(typeof(PlacingBehaviour))]
+[RequireComponent(typeof(RangeIndicator))]
 public class TowerController : MonoBehaviour
 {
     public enum TowerState { Idle, Firing, Placing }
 
     public Transform towerGun;
     public Transform firePoint;
-    public Sprite uiSprite;
+    public Sprite sprite;
 
     public int damage = 100;
     public int roundsPerMinute = 30;
-    public int range = 5;
+    public int range = 3;
     public int cost = 100;
 
     [Range(1, 100)]
@@ -32,7 +31,7 @@ public class TowerController : MonoBehaviour
     public float timeToFire;
 
     [SerializeField]
-    public TowerState currentTowerState = TowerState.Idle;
+    public TowerState currentTowerState = TowerState.Placing;
 
     IdleBehaviour idleBehaviour;
     FiringBehaviour firingBehaviour;
@@ -51,6 +50,7 @@ public class TowerController : MonoBehaviour
         idleBehaviour = GetComponent<IdleBehaviour>();
         firingBehaviour = GetComponent<FiringBehaviour>();
         placingBehaviour = GetComponent<PlacingBehaviour>();
+        sprite = GetComponent<SpriteRenderer>().sprite;
     }
 
     private void Start()

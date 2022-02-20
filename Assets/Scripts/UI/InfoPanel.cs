@@ -48,7 +48,7 @@ public class InfoPanel : MonoBehaviour
             return;
         }
 
-        image.sprite = selectedTower.uiSprite;
+        image.sprite = selectedTower.sprite;
         damageText.text = selectedTower.damage.ToString();
         fireRateText.text = selectedTower.roundsPerMinute.ToString();
 
