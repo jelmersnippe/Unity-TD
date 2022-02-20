@@ -6272,5 +6272,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc5b26b46ef45c346b57196114d9f8bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  purchaseButton: {fileID: 4668399005826041042, guid: 2797b2618bfc4fc45b07617e9f520dcc, type: 3}
+  upgradeButton: {fileID: 4668399005826041042, guid: 2797b2618bfc4fc45b07617e9f520dcc, type: 3}
   padding: 10

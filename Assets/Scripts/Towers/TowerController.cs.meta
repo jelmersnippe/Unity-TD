@@ -3,7 +3,13 @@ guid: fc569eab57f857d4baf84b8cdd598cdc
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - towerGunSpriteRenderer: {instanceID: 0}
+  - towerBaseSpriteRenderer: {instanceID: 0}
+  - towerBase: {instanceID: 0}
+  - towerGun: {instanceID: 0}
+  - firePoint: {instanceID: 0}
+  - projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

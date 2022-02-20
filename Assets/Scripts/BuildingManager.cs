@@ -9,7 +9,6 @@ public class BuildingManager : MonoBehaviour
     public static event Action OnDeselectTower;
 
     public TowerController selectedTower;
-
     public TowerController towerToPlace;
 
     [SerializeField] LayerMask blockedLayers;

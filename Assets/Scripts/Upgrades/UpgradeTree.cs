@@ -2,45 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UpgradeType
-{
-    None,
-    Upgrade1,
-    Upgrade2,
-    Upgrade3,
-    Upgrade4,
-    Upgrade5,
-    Upgrade6,
-    Upgrade7,
-    Upgrade8,
-    Upgrade9,
-    Upgrade10,
-}
-
-[System.Serializable]
-public class UpgradeTreeItem
-{
-    public enum Status
-    {
-        Locked,
-        Unlocked,
-        Blocked,
-        Purchased,
-    }
-
-    public Upgrade upgrade;
-    public int cost;
-    [Range(0,4)]
-    public int spot;
-    public UpgradeType parentUpgrade;
-    public Status status = Status.Locked;
-} 
-
 public class UpgradeTree : MonoBehaviour
 {
     public static event Action<UpgradeTreeItem> OnUpgradeActivated;
 
-    public string treeName;
     public List<UpgradeTreeItem> depth0Upgrades = new List<UpgradeTreeItem>();
     public List<UpgradeTreeItem> depth1Upgrades = new List<UpgradeTreeItem>();
     public List<UpgradeTreeItem> depth2Upgrades = new List<UpgradeTreeItem>();
@@ -66,13 +31,13 @@ public class UpgradeTree : MonoBehaviour
 
     public virtual void ActivateUpgrade(UpgradeTreeItem upgradeTreeItem)
     {
-        if (unlockedUpgrades.Contains(upgradeTreeItem.upgrade.type))
+        if (unlockedUpgrades.Contains(upgradeTreeItem.blueprint.type))
         {
             Debug.LogWarning("Can only upgrade once");
             return;
         }
 
-        unlockedUpgrades.Add(upgradeTreeItem.upgrade.type);
+        unlockedUpgrades.Add(upgradeTreeItem.blueprint.type);
         UpdateUpgradesTree(upgradeTreeItem);
 
         OnUpgradeActivated?.Invoke(upgradeTreeItem);
@@ -87,35 +52,26 @@ public class UpgradeTree : MonoBehaviour
     {
         for (int depth = 0; depth < upgrades.Count; depth++)
         {
-            Debug.Log("Depth: " + depth);
             List<UpgradeTreeItem> depthUpgrades = upgrades[depth];
-            UpgradeTreeItem isPurchasedItemInDepth = depthUpgrades.Find((u) => u.upgrade.type == purchasedUpgrade.upgrade.type);
-            Debug.Log("Found item in current depth: " + isPurchasedItemInDepth);
+            UpgradeTreeItem isPurchasedItemInDepth = depthUpgrades.Find((u) => u.blueprint.type == purchasedUpgrade.blueprint.type);
 
             foreach (UpgradeTreeItem upgrade in depthUpgrades)
             {
-                Debug.Log("Upgrade: " + upgrade.upgrade.displayName);
                 if (upgrade.status == UpgradeTreeItem.Status.Blocked || upgrade.status == UpgradeTreeItem.Status.Purchased)
                 {
-                    Debug.Log("Already purchased or blocked");
                     continue;
                 }
 
-                Debug.Log("Parent of upgrade: " + upgrade.parentUpgrade);
-                Debug.Log("Purchased upgrade: " + purchasedUpgrade.upgrade.type);
                 if (isPurchasedItemInDepth != null)
                 {
-                    Debug.Log("On same level on current item, setting to: " + (upgrade.upgrade.type == purchasedUpgrade.upgrade.type ? UpgradeTreeItem.Status.Purchased : UpgradeTreeItem.Status.Blocked));
-                    upgrade.status = upgrade.upgrade.type == purchasedUpgrade.upgrade.type ? UpgradeTreeItem.Status.Purchased : UpgradeTreeItem.Status.Blocked;
+                    upgrade.status = upgrade.blueprint.type == purchasedUpgrade.blueprint.type ? UpgradeTreeItem.Status.Purchased : UpgradeTreeItem.Status.Blocked;
                 }
-                else if (upgrade.parentUpgrade == purchasedUpgrade.upgrade.type)
+                else if (upgrade.parentUpgrade == purchasedUpgrade.blueprint.type)
                 {
-                    Debug.Log("Parent is equal to purchased item, setting to Unlocked");
                     upgrade.status = UpgradeTreeItem.Status.Unlocked;
                 }
-                else if (!IsConnected(upgrade, depth, purchasedUpgrade.upgrade.type))
+                else if (!IsConnected(upgrade, depth, purchasedUpgrade.blueprint.type))
                 {
-                    Debug.Log("Not connected to the purchased item in any way");
                     upgrade.status = UpgradeTreeItem.Status.Blocked;
                 }
             }
@@ -124,14 +80,14 @@ public class UpgradeTree : MonoBehaviour
 
     bool IsConnected(UpgradeTreeItem upgrade, int depth, UpgradeType connectedTo)
     {
-        if (upgrade.upgrade.type == connectedTo) return true;
+        if (upgrade.blueprint.type == connectedTo) return true;
         if (upgrade.status == UpgradeTreeItem.Status.Purchased || 
             upgrade.status == UpgradeTreeItem.Status.Blocked || 
-            upgrade.upgrade.type == UpgradeType.None || 
+            upgrade.blueprint.type == UpgradeType.None || 
             depth < 0) return false;
 
         int depthAbove = depth - 1;
-        UpgradeTreeItem parentInDepthAbove = upgrades[depthAbove].Find((u) => u.upgrade.type == upgrade.parentUpgrade);
+        UpgradeTreeItem parentInDepthAbove = upgrades[depthAbove].Find((u) => u.blueprint.type == upgrade.parentUpgrade);
         return parentInDepthAbove != null ? IsConnected(parentInDepthAbove, depthAbove, connectedTo) : false;
     }
 }

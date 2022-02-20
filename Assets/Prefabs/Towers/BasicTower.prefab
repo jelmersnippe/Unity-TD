@@ -227,42 +227,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   treeName: Basic Tower
   depth0Upgrades:
-  - upgrade: {fileID: 11400000, guid: e687bb9b34600ec449de1d7ad6439ccb, type: 2}
+  - blueprint: {fileID: 11400000, guid: e687bb9b34600ec449de1d7ad6439ccb, type: 2}
     cost: 50
     spot: 2
     parentUpgrade: 0
+    status: 0
   depth1Upgrades:
-  - upgrade: {fileID: 11400000, guid: 8e48f238a6156a148b474403ef177cc8, type: 2}
+  - blueprint: {fileID: 11400000, guid: 8e48f238a6156a148b474403ef177cc8, type: 2}
     cost: 100
     spot: 1
     parentUpgrade: 1
-  - upgrade: {fileID: 11400000, guid: 83d9078189be6904bad60b9d3f301f3d, type: 2}
+    status: 0
+  - blueprint: {fileID: 11400000, guid: 83d9078189be6904bad60b9d3f301f3d, type: 2}
     cost: 100
     spot: 3
     parentUpgrade: 1
+    status: 0
   depth2Upgrades:
-  - upgrade: {fileID: 11400000, guid: 032a66843119a8c44b42aaa5c5032647, type: 2}
+  - blueprint: {fileID: 11400000, guid: 032a66843119a8c44b42aaa5c5032647, type: 2}
     cost: 200
     spot: 0
     parentUpgrade: 2
-  - upgrade: {fileID: 11400000, guid: b6784e3058240bb4ab450b85e891d68e, type: 2}
+    status: 0
+  - blueprint: {fileID: 11400000, guid: b6784e3058240bb4ab450b85e891d68e, type: 2}
     cost: 200
     spot: 2
     parentUpgrade: 2
-  - upgrade: {fileID: 11400000, guid: f9ccf7cb6bf5a4949acdf9e748dd0863, type: 2}
+    status: 0
+  - blueprint: {fileID: 11400000, guid: f9ccf7cb6bf5a4949acdf9e748dd0863, type: 2}
     cost: 200
     spot: 3
     parentUpgrade: 3
+    status: 0
   depth3Upgrades:
-  - upgrade: {fileID: 11400000, guid: 985d781ac4ba0684e90140d907555cb9, type: 2}
+  - blueprint: {fileID: 11400000, guid: 985d781ac4ba0684e90140d907555cb9, type: 2}
     cost: 300
     spot: 1
     parentUpgrade: 4
-  - upgrade: {fileID: 11400000, guid: 9cce5903424e1214892cd97167fdc968, type: 2}
+    status: 0
+  - blueprint: {fileID: 11400000, guid: 9cce5903424e1214892cd97167fdc968, type: 2}
     cost: 300
     spot: 3
     parentUpgrade: 6
-  depth4Upgrades: []
+    status: 0
+  depth4Upgrades:
+  - blueprint: {fileID: 11400000, guid: 21ddbc92ae676214784d66517296719c, type: 2}
+    cost: 400
+    spot: 1
+    parentUpgrade: 7
+    status: 0
+  - blueprint: {fileID: 11400000, guid: f57529f0f7fcd2247bda16870166ce2b, type: 2}
+    cost: 450
+    spot: 3
+    parentUpgrade: 8
+    status: 0
 --- !u!1 &7865072308831243786
 GameObject:
   m_ObjectHideFlags: 0

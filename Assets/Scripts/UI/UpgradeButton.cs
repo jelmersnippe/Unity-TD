@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UpgradeItem : MonoBehaviour
+public class UpgradeButton : MonoBehaviour
 {
     public UpgradeTreeItem item { get; private set; }
     [SerializeField] TextMeshProUGUI costDisplay;
@@ -12,7 +12,7 @@ public class UpgradeItem : MonoBehaviour
     [SerializeField] Image blockedDisplay;
     [SerializeField] Image spriteDisplay;
     [SerializeField] Color unpurchaseableColor = new Color(255, 120, 120, 0.6f);
-    [SerializeField] public UILineRenderer lineRenderer;
+    public UILineRenderer lineRenderer;
     Button button;
 
     void Awake()
@@ -30,8 +30,8 @@ public class UpgradeItem : MonoBehaviour
         });
 
         costDisplay.text = "$" + item.cost;
-        nameDisplay.text = item.upgrade.displayName;
-        spriteDisplay.sprite = item.upgrade.sprite;
+        nameDisplay.text = item.blueprint.displayName;
+        spriteDisplay.sprite = item.blueprint.sprite;
 
         SetDisplayStatus();
     }

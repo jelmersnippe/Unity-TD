@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Upgrade : ScriptableObject
+public class UpgradeBlueprint : ScriptableObject
 {
     public UpgradeType type;
     public Sprite sprite;
