@@ -5819,6 +5819,7 @@ MonoBehaviour:
   fireRateText: {fileID: 1813441126}
   infoSection: {fileID: 1869370677}
   upgradeSection: {fileID: 2119732542}
+  purchaseButton: {fileID: 4668399005826041042, guid: 2797b2618bfc4fc45b07617e9f520dcc, type: 3}
 --- !u!114 &1898254972
 MonoBehaviour:
   m_ObjectHideFlags: 0

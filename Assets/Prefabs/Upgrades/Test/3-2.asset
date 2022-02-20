@@ -12,11 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bc4ba6f90963a3478fd0a5feb7f966a, type: 3}
   m_Name: 3-2
   m_EditorClassIdentifier: 
-  type: 9
+  type: 8
   sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  displayName: Pierce up
+  displayName: Upgrade 8
   description: Pierce +1
-  cost: 100
-  depth: 3
-  spot: 3
-  parentUpgrade: 4

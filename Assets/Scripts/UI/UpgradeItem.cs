@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UpgradeItem<T> : MonoBehaviour
+public class UpgradeItem : MonoBehaviour
 {
-    public Upgrade<T> item { get; private set; }
-    [SerializeField] int cost;
+    public UpgradeTreeItem item { get; private set; }
     [SerializeField] TextMeshProUGUI costDisplay;
     [SerializeField] TextMeshProUGUI nameDisplay;
     [SerializeField] Image spriteDisplay;
@@ -20,20 +19,18 @@ public class UpgradeItem<T> : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    public void SetItem(Upgrade<T> itemToSet)
+    public void SetItem(UpgradeTreeItem itemToSet)
     {
         item = itemToSet;
-        cost = itemToSet.cost;
         // TODO: Use an actual event
         button.onClick.AddListener(delegate {
-            // TODO: Fix
-            //BuildingManager.instance.selectedTower.ActivateUpgrade(itemToSet);
+            BuildingManager.instance.selectedTower.ActivateUpgrade(itemToSet);
             InfoPanel.instance.UpdateInfo();
         });
 
-        costDisplay.text = "$" + cost;
-        nameDisplay.text = item.displayName;
-        spriteDisplay.sprite = item.sprite;
+        costDisplay.text = "$" + item.cost;
+        nameDisplay.text = item.upgrade.displayName;
+        spriteDisplay.sprite = item.upgrade.sprite;
     }
 
     private void Update()
@@ -43,7 +40,7 @@ public class UpgradeItem<T> : MonoBehaviour
             return;
         }
 
-        if (cost > GameManager.instance.purchaseCurrency)
+        if (item.cost > GameManager.instance.purchaseCurrency)
         {
             costDisplay.color = Color.red;
             spriteDisplay.color = unpurchaseableColor;
@@ -51,7 +48,7 @@ public class UpgradeItem<T> : MonoBehaviour
             return;
         }
 
-        if (cost <= GameManager.instance.purchaseCurrency)
+        if (item.cost <= GameManager.instance.purchaseCurrency)
         {
             costDisplay.color = Color.white;
             spriteDisplay.color = Color.white;

@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(FiringBehaviour))]
 [RequireComponent(typeof(PlacingBehaviour))]
 [RequireComponent(typeof(RangeIndicator))]
+[RequireComponent(typeof(UpgradeTree))]
 public class TowerController : MonoBehaviour
 {
     public enum TowerState { Idle, Firing, Placing }
@@ -40,6 +41,7 @@ public class TowerController : MonoBehaviour
     FiringBehaviour firingBehaviour;
     PlacingBehaviour placingBehaviour;
     RangeIndicator rangeIndicator;
+    UpgradeTree upgradeTree;
 
     private void Awake()
     {
@@ -50,6 +52,7 @@ public class TowerController : MonoBehaviour
         firingBehaviour = GetComponent<FiringBehaviour>();
         placingBehaviour = GetComponent<PlacingBehaviour>();
         rangeIndicator = GetComponent<RangeIndicator>();
+        upgradeTree = GetComponent<UpgradeTree>();
     }
 
     private void Start()
@@ -93,5 +96,15 @@ public class TowerController : MonoBehaviour
     public void ShowRange(bool showRange)
     {
         rangeIndicator.SetActive(showRange);
+    }
+
+    public Dictionary<int, List<UpgradeTreeItem>> GetUpgrades()
+    {
+        return upgradeTree.upgrades;
+    }
+
+    public void ActivateUpgrade(UpgradeTreeItem upgrade)
+    {
+        upgradeTree.ActivateUpgrade(upgrade);
     }
 }

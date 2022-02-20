@@ -17,7 +17,7 @@ public class InfoPanel : MonoBehaviour
 
     [SerializeField] GameObject infoSection;
     [SerializeField] Transform upgradeSection;
-    //[SerializeField] UpgradeItem purchaseButton;
+    [SerializeField] UpgradeItem purchaseButton;
 
     void Awake()
     {
@@ -55,65 +55,62 @@ public class InfoPanel : MonoBehaviour
         infoSection.SetActive(true);
         upgradeSection.gameObject.SetActive(selectedTower.isActiveAndEnabled);
 
-        //if (selectedTower.isActiveAndEnabled)
-        //{
-        //    ShowUpgrades();
-        //}
+        if (selectedTower.isActiveAndEnabled)
+        {
+            ShowUpgrades();
+        }
     }
-    //public void ShowUpgrades()
-    //{
-    //    foreach (Transform depth in upgradeSection)
-    //    {
-    //        foreach (Transform child in depth)
-    //        {
-    //            Destroy(child.gameObject);
-    //        }
-    //    }
+    public void ShowUpgrades()
+    {
+        foreach (Transform depth in upgradeSection)
+        {
+            foreach (Transform child in depth)
+            {
+                Destroy(child.gameObject);
+            }
+        }
 
-    //    Dictionary<int, List<UpgradeItem>> spawnedUpgrades = new Dictionary<int, List<UpgradeItem>>();
+        float padding = 10f;
 
-    //    float padding = 10f;
+        float panelWidth = GetComponent<RectTransform>().sizeDelta.x - padding * 2;
+        float itemWidth = panelWidth / 5f;
+        Dictionary<int, List<UpgradeTreeItem>> items = selectedTower.GetUpgrades();
+        for (int depth = 0; depth < items.Count; depth++)
+        {
+            List<UpgradeTreeItem> upgrades = items[depth];
 
-    //    float panelWidth = GetComponent<RectTransform>().sizeDelta.x - padding * 2;
-    //    float itemWidth = panelWidth / 5f;
-    //    List<Upgrade> items = selectedTower.upgradeTree.serializableUpgradeTreeItems.OrderBy((upgrade) => upgrade.depth).ToList();
-    //    for (int i = 0; i < items.Count; i++)
-    //    {
-    //        Upgrade item = items[i];
+            Transform parent = upgradeSection.Find("Depth " + depth.ToString());
+            float depthHeight = parent.GetComponent<RectTransform>().sizeDelta.y;
 
-    //        Transform parent = upgradeSection.Find("Depth " + item.depth.ToString());
+            for (int i = 0; i < upgrades.Count; i++)
+            {
+                UpgradeTreeItem currentUpgrade = upgrades[i];
 
-    //        UpgradeItem createdUpgradeItem = Instantiate(purchaseButton, parent);
-    //        createdUpgradeItem.transform.localPosition += new Vector3(padding + (itemWidth * item.spot), 0);
-    //        createdUpgradeItem.SetItem(item);
+                UpgradeItem createdUpgradeItem = Instantiate(purchaseButton, parent);
+                createdUpgradeItem.transform.localPosition += new Vector3(padding + (itemWidth * currentUpgrade.spot), 0);
+                createdUpgradeItem.SetItem(currentUpgrade);
 
-    //        if (!spawnedUpgrades.ContainsKey(item.depth))
-    //        {
-    //            spawnedUpgrades.Add(item.depth, new List<UpgradeItem>());
-    //        }
+                if (currentUpgrade.parentUpgrade != UpgradeType.None)
+                {
+                    UpgradeTreeItem parentItem = items[depth - 1].Find((upgrade) => upgrade.upgrade.type == currentUpgrade.parentUpgrade);
 
-    //        spawnedUpgrades[item.depth].Add(createdUpgradeItem);
+                    if (parentItem == null)
+                    {
+                        Debug.Log("Could not find parent for " + currentUpgrade.upgrade.displayName);
+                        continue;
+                    }
 
-    //        if (item.parentUpgrade != Upgrade.Type.None)
-    //        {
-    //            UpgradeItem parentItem = spawnedUpgrades[item.depth - 1].Find((upgrade) => upgrade.item.type == item.parentUpgrade);
+                    UILineRenderer lineRenderer = createdUpgradeItem.lineRenderer;
+                    List<Vector2> lineRendererPoints = new List<Vector2>();
 
-    //            if (parentItem == null)
-    //            {
-    //                Debug.Log("Could not find parent for " + item.displayName);
-    //                continue;
-    //            }
+                    Vector3 centerOffset = new Vector3(0, createdUpgradeItem.GetComponent<RectTransform>().sizeDelta.y / 2);
 
-    //            UILineRenderer lineRenderer = createdUpgradeItem.lineRenderer;
-    //            List<Vector2> lineRendererPoints = new List<Vector2>();
+                    lineRendererPoints.Add(centerOffset);
+                    lineRendererPoints.Add(new Vector3((parentItem.spot - currentUpgrade.spot) * itemWidth, depthHeight) - centerOffset);
 
-    //            Vector3 centerOffset = new Vector3(0, createdUpgradeItem.GetComponent<RectTransform>().sizeDelta.y / 2);
-
-    //            lineRendererPoints.Add(centerOffset);
-    //            lineRendererPoints.Add(parentItem.transform.position - createdUpgradeItem.transform.position - centerOffset);
-
-    //            lineRenderer.points = lineRendererPoints;
-    //        }
-    //    }
-    //}
+                    lineRenderer.points = lineRendererPoints;
+                }
+            }
+        }
+    }
 }

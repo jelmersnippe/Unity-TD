@@ -14,9 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  displayName: Pierce up
+  displayName: Upgrade 3
   description: Pierce +1
-  cost: 100
-  depth: 1
-  spot: 3
-  parentUpgrade: 2
