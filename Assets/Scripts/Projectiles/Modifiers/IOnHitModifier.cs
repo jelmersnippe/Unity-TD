@@ -1,5 +1,5 @@
 
-public interface OnHitModifier
+public interface IOnHitModifier
 {
     void Execute(MonsterController target);
 }

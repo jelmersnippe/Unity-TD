@@ -30,5 +30,6 @@ public class ArcherFiringBehaviour : FiringBehaviour
 
         base.SetupProjectile(projectile);
         projectile.SetMaxMonstersHit(hasPierce ? 2 : 1);
+        projectile.ApplyOnHitModifier(new SlowModifier(10f, 1f));
     }
 }

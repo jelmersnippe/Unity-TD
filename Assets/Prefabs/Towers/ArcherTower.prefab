@@ -159,7 +159,7 @@ MonoBehaviour:
   towerBase: {fileID: 7865072309352129997}
   towerGun: {fileID: 7865072308831243787}
   firePoint: {fileID: 7865072309213478940}
-  damage: 100
+  damage: 75
   roundsPerMinute: 45
   range: 3
   cost: 100

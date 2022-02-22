@@ -10,8 +10,8 @@ public class Projectile : MonoBehaviour
     protected int _maxMonsterHits = 1;
     protected List<int> _monstersHit = new List<int>();
 
-    List<OnHitModifier> _onHitModifiers = new List<OnHitModifier>();
-    List<OnDestroyModifier> _onDestroyModifiers = new List<OnDestroyModifier>();
+    List<IOnHitModifier> _onHitModifiers = new List<IOnHitModifier>();
+    List<IOnDestroyModifier> _onDestroyModifiers = new List<IOnDestroyModifier>();
 
     public Transform target { get; private set; }
     [SerializeField] float rotationSpeed = 10f;
@@ -81,7 +81,7 @@ public class Projectile : MonoBehaviour
         monster.TakeDamage(_damage);
 
         // Execute all on hit modifiers
-        foreach (OnHitModifier onHitModifier in _onHitModifiers)
+        foreach (IOnHitModifier onHitModifier in _onHitModifiers)
         {
             onHitModifier.Execute(monster);
         }
@@ -91,7 +91,7 @@ public class Projectile : MonoBehaviour
         if (_monstersHit.Count >= _maxMonsterHits)
         {
             // Execute all on destroy modifiers
-            foreach (OnDestroyModifier onDestroyModifier in _onDestroyModifiers)
+            foreach (IOnDestroyModifier onDestroyModifier in _onDestroyModifiers)
             {
                 onDestroyModifier.Execute(transform.position);
             }
@@ -111,12 +111,12 @@ public class Projectile : MonoBehaviour
         _maxMonsterHits = maxMonstersHit;
     }
 
-    public void ApplyOnDestroyModifier(OnDestroyModifier modifier)
+    public void ApplyOnDestroyModifier(IOnDestroyModifier modifier)
     {
         _onDestroyModifiers.Add(modifier);
     }
 
-    public void ApplyOnHitModifier(OnHitModifier modifier)
+    public void ApplyOnHitModifier(IOnHitModifier modifier)
     {
         _onHitModifiers.Add(modifier);
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SplashDamageModifier : OnDestroyModifier
+public class SplashDamageModifier : IOnDestroyModifier
 {
     float radius;
     int damage;

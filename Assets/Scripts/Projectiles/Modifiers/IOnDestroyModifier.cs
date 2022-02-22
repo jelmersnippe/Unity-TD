@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public interface OnDestroyModifier
+public interface IOnDestroyModifier
 {
     void Execute(Vector3 position);
 }

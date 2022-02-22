@@ -1,6 +1,7 @@
 using UnityEngine.Events;
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class MonsterController : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class MonsterController : MonoBehaviour
     [SerializeField]
     [Range(1,10)]
     float speed = 1f;
-    [SerializeField] float speedMultiplier = 2f;
+    [SerializeField] public float speedMultiplier = 2f;
 
     private int _damage;
     public int damage {
@@ -40,6 +41,8 @@ public class MonsterController : MonoBehaviour
         private set => _hasDied = value;
     }
 
+    List<IEffect> effects = new List<IEffect>();
+
     private void Awake()
     {
         bounds = GetComponent<Collider2D>().bounds;
@@ -55,6 +58,21 @@ public class MonsterController : MonoBehaviour
         if (currentWaypointIndex == -1)
         {
             currentWaypointIndex = 0; 
+        }
+
+        List<IEffect> effectsToRemove = new List<IEffect>();
+        foreach (IEffect effect in effects)
+        {
+            effect.Execute(this);
+            if (effect.timeLeft <= 0)
+            {
+                effectsToRemove.Add(effect);
+            }
+        }
+
+        foreach (IEffect effect in effectsToRemove)
+        {
+            RemoveEffect(effect);
         }
 
         MoveTowardsWaypoint();
@@ -134,5 +152,17 @@ public class MonsterController : MonoBehaviour
 
         Destroy(gameObject);
         hasDied = true;
+    }
+
+    public void ApplyEffect(IEffect effect)
+    {
+        effect.OnActivate(this);
+        effects.Add(effect);
+    }
+
+    public void RemoveEffect(IEffect effect)
+    {
+        effect.OnDeactivate(this);
+        effects.Remove(effect);
     }
 }
