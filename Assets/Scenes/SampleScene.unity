@@ -5730,9 +5730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - {fileID: 3976399298662639175, guid: f7c93466cf0fa604a9a1d13490b012a3, type: 3}
-  - {fileID: 3976399298662639175, guid: 378b928e85108a047b1cac63395c11fb, type: 3}
   - {fileID: 3976399298662639175, guid: 77dd78647f536c6498276e791d638e38, type: 3}
-  - {fileID: 3976399298662639175, guid: b6e8a18287e762d46a452c982bd90b73, type: 3}
   purchaseButton: {fileID: 3333888728346772929, guid: 637a48d4d63f1a448987200d14f5c8f8, type: 3}
 --- !u!114 &1875457070
 MonoBehaviour:
@@ -6163,7 +6161,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicProjectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
-  splashProjectile: {fileID: -5528355144540975155, guid: 8a06951b494fad14d86b0a525cf872c4, type: 3}
 --- !u!1 &2060228183
 GameObject:
   m_ObjectHideFlags: 0

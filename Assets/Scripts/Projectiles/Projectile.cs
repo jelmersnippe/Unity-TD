@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    protected int damage;
-    protected float speed;
-    protected LayerMask targetMask;
-    protected int maxMonsterHits = 1;
-    protected List<int> monstersHit = new List<int>();
+    protected int _damage;
+    protected float _speed;
+    protected LayerMask _targetMask;
+    protected int _maxMonsterHits = 1;
+    protected List<int> _monstersHit = new List<int>();
 
-    List<OnHitModifier> onHitModifiers = new List<OnHitModifier>();
-    List<OnDestroyModifier> onDestroyModifiers = new List<OnDestroyModifier>();
+    List<OnHitModifier> _onHitModifiers = new List<OnHitModifier>();
+    List<OnDestroyModifier> _onDestroyModifiers = new List<OnDestroyModifier>();
 
     public Transform target { get; private set; }
     [SerializeField] float rotationSpeed = 10f;
@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void TravelForward()
     {
-        float distance = speed * Time.deltaTime;
+        float distance = _speed * Time.deltaTime;
         transform.position = transform.position + transform.right * distance;
     }
 
@@ -71,27 +71,27 @@ public class Projectile : MonoBehaviour
     protected virtual void DealDamage(MonsterController monster)
     {
         // If we've already hit the max amount we do nothing
-        if (monstersHit.Count >= maxMonsterHits) return;
+        if (_monstersHit.Count >= _maxMonsterHits) return;
 
         int monsterInstanceId = monster.GetInstanceID();
 
         // If we've already hit the damageable we do nothing
-        if (monstersHit.Contains(monsterInstanceId)) return;
+        if (_monstersHit.Contains(monsterInstanceId)) return;
 
-        monster.TakeDamage(damage);
+        monster.TakeDamage(_damage);
 
         // Execute all on hit modifiers
-        foreach (OnHitModifier onHitModifier in onHitModifiers)
+        foreach (OnHitModifier onHitModifier in _onHitModifiers)
         {
             onHitModifier.Execute(monster);
         }
 
-        monstersHit.Add(monsterInstanceId);
+        _monstersHit.Add(monsterInstanceId);
 
-        if (monstersHit.Count >= maxMonsterHits)
+        if (_monstersHit.Count >= _maxMonsterHits)
         {
             // Execute all on destroy modifiers
-            foreach (OnDestroyModifier onDestroyModifier in onDestroyModifiers)
+            foreach (OnDestroyModifier onDestroyModifier in _onDestroyModifiers)
             {
                 onDestroyModifier.Execute(transform.position);
             }
@@ -99,21 +99,25 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public virtual void setValues(int initialDamage, float initialSpeed, LayerMask monsterLayerMask, int initialEnemiesToHit = 1)
+    public virtual void Setup(int damage, float speed, LayerMask targetMask)
     {
-        damage = initialDamage;
-        speed = initialSpeed;
-        targetMask = monsterLayerMask;
-        maxMonsterHits = initialEnemiesToHit;
+        _damage = damage;
+        _speed = speed;
+        _targetMask = targetMask;
+    }
+
+    public void SetMaxMonstersHit(int maxMonstersHit = 1)
+    {
+        _maxMonsterHits = maxMonstersHit;
     }
 
     public void ApplyOnDestroyModifier(OnDestroyModifier modifier)
     {
-        onDestroyModifiers.Add(modifier);
+        _onDestroyModifiers.Add(modifier);
     }
 
     public void ApplyOnHitModifier(OnHitModifier modifier)
     {
-        onHitModifiers.Add(modifier);
+        _onHitModifiers.Add(modifier);
     }
 }

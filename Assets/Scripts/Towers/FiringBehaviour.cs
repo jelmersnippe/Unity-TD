@@ -72,7 +72,7 @@ public class FiringBehaviour : MonoBehaviour
 
     protected virtual void SetupProjectile(Projectile projectile)
     {
-        projectile.setValues(towerController.damage, towerController.projectileSpeed, towerController.monsterLayerMask);
+        projectile.Setup(towerController.damage, towerController.projectileSpeed, towerController.monsterLayerMask);
     }
 
     protected virtual void ResetTimeToFire()

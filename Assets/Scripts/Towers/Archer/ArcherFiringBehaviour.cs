@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicFiringBehaviour : FiringBehaviour
+public class ArcherFiringBehaviour : FiringBehaviour
 {
     [SerializeField] float degreesBetweenShots = 25f;
 
@@ -29,5 +29,6 @@ public class BasicFiringBehaviour : FiringBehaviour
         bool hasReinforcedTips = towerController.HasUnlockedUpgrade(UpgradeType.Archer_ReinforcedTips);
 
         base.SetupProjectile(projectile);
+        projectile.SetMaxMonstersHit(hasPierce ? 2 : 1);
     }
 }

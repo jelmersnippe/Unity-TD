@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(TowerController))]
 public class UpgradeTree : MonoBehaviour
 {
     public static event Action<UpgradeTreeItem> OnUpgradeActivated;
@@ -15,6 +16,13 @@ public class UpgradeTree : MonoBehaviour
     public Dictionary<int, List<UpgradeTreeItem>> upgrades = new Dictionary<int, List<UpgradeTreeItem>>();
 
     List<UpgradeType> unlockedUpgrades = new List<UpgradeType>();
+
+    protected TowerController towerController;
+
+    private void Awake()
+    {
+        towerController = GetComponent<TowerController>();
+    }
 
     private void Start()
     {
