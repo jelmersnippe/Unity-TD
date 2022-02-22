@@ -161,9 +161,9 @@ MonoBehaviour:
   firePoint: {fileID: 7865072309213478940}
   damage: 75
   roundsPerMinute: 45
-  range: 3
+  range: 10
   cost: 100
-  projectileSpeed: 10
+  projectileSpeed: 20
   projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
   monsterLayerMask:
     serializedVersion: 2
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbda6ea0d2de679419012be140854324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  degreesBetweenShots: 45
+  degreesBetweenShots: 15
 --- !u!114 &4892974316575252893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +253,12 @@ MonoBehaviour:
     spot: 2
     parentUpgrade: 3
     status: 0
-  depth3Upgrades: []
+  depth3Upgrades:
+  - blueprint: {fileID: 11400000, guid: 1487e8791a0542a4e85a7a478b152b03, type: 2}
+    cost: 300
+    spot: 2
+    parentUpgrade: 1
+    status: 0
   depth4Upgrades: []
 --- !u!1 &7865072308831243786
 GameObject:

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArcherFiringBehaviour : FiringBehaviour
 {
-    [SerializeField] float degreesBetweenShots = 25f;
+    [SerializeField] float degreesBetweenShots = 10f;
 
     protected override void FireProjectile()
     {
@@ -26,9 +26,10 @@ public class ArcherFiringBehaviour : FiringBehaviour
     protected override void SetupProjectile(Projectile projectile)
     {
         bool hasPierce = towerController.HasUnlockedUpgrade(UpgradeType.Archer_PiercingShot);
-        bool hasReinforcedTips = towerController.HasUnlockedUpgrade(UpgradeType.Archer_ReinforcedTips);
+        bool hasHoming = towerController.HasUnlockedUpgrade(UpgradeType.Archer_HomingShots);
 
         base.SetupProjectile(projectile);
+        projectile.SetHoming(hasHoming);
         projectile.SetMaxMonstersHit(hasPierce ? 2 : 1);
         projectile.ApplyOnHitModifier(new SlowModifier(10f, 1f));
     }

@@ -4,5 +4,6 @@ public enum UpgradeType
 
     Archer_ReinforcedTips,
     Archer_PiercingShot,
-    Archer_SpreadShot
+    Archer_SpreadShot,
+    Archer_HomingShots
 }

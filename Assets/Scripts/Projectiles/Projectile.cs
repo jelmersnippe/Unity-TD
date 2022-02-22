@@ -9,23 +9,17 @@ public class Projectile : MonoBehaviour
     protected LayerMask _targetMask;
     protected int _maxMonsterHits = 1;
     protected List<int> _monstersHit = new List<int>();
+    protected bool _homing = false;
 
     List<IOnHitModifier> _onHitModifiers = new List<IOnHitModifier>();
     List<IOnDestroyModifier> _onDestroyModifiers = new List<IOnDestroyModifier>();
 
     public Transform target { get; private set; }
-    [SerializeField] float rotationSpeed = 10f;
-
-    float timeToLive = 2f;
-
-    protected void Start()
-    {
-        Destroy(gameObject, timeToLive);
-    }
+    [SerializeField] float rotationSpeed = 20f;
 
     protected virtual void Update()
     {
-        RotateTowardsTarget();
+        if (_homing) HomeToTarget();
         TravelForward();
     }
 
@@ -35,17 +29,35 @@ public class Projectile : MonoBehaviour
         transform.position = transform.position + transform.right * distance;
     }
 
-    protected void RotateTowardsTarget()
+    protected void HomeToTarget()
     {
         if (target == null)
         {
-            return;
+            InvokeRepeating("CheckRange", 0, 0.5f);
         }
+
+        RotateTowardsTarget();
+    }
+
+    protected void RotateTowardsTarget()
+    {
+        if (target == null) return;
 
         Vector3 targetDirection = target.position - transform.position;
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         Quaternion desiredRotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    protected void CheckRange()
+    {
+        Collider2D hit = Physics2D.OverlapCircle(transform.position, 5f, _targetMask);
+
+        if (hit)
+        {
+            target = hit.transform;
+            CancelInvoke();
+        }
     }
 
     protected void OnCollisionEnter2D(Collision2D collision)
@@ -99,11 +111,24 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public virtual void Setup(int damage, float speed, LayerMask targetMask)
+    public virtual void Setup(int damage, float speed, LayerMask targetMask, float timeToLive = 2f)
     {
         _damage = damage;
         _speed = speed;
         _targetMask = targetMask;
+
+        SetTimeToLive(timeToLive);
+    }
+
+    void SetTimeToLive(float timeToLive)
+    {
+        Destroy(gameObject, timeToLive);
+    }
+
+    public void SetHoming(bool homing, Transform initialTarget = null)
+    {
+        _homing = homing;
+        target = initialTarget;
     }
 
     public void SetMaxMonstersHit(int maxMonstersHit = 1)
