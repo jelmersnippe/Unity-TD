@@ -6058,6 +6058,7 @@ GameObject:
   - component: {fileID: 2059659039}
   - component: {fileID: 2059659038}
   - component: {fileID: 2059659041}
+  - component: {fileID: 2059659042}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -6149,6 +6150,20 @@ MonoBehaviour:
     volume: 0.15
     pitch: 1
     source: {fileID: 0}
+--- !u!114 &2059659042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059659037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252f7236f44b416499ffb5084fd654a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basicProjectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
+  splashProjectile: {fileID: -5528355144540975155, guid: 8a06951b494fad14d86b0a525cf872c4, type: 3}
 --- !u!1 &2060228183
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,9 +7,9 @@ public class MissileFiringBehaviour : FiringBehaviour
     [SerializeField] float splashRadius = 3f;
     [SerializeField] int maxSplashTargetCount = 4;
 
-    override protected void SpawnProjectile()
+    protected override void SetupProjectile(Projectile projectile)
     {
-        SplashProjectile spawnedProjectile = Instantiate(towerController.projectile, towerController.firePoint.position, towerController.firePoint.rotation, transform) as SplashProjectile;
-        spawnedProjectile.setValues(towerController.damage, towerController.projectileSpeed, currentTarget.transform, towerController.monsterLayerMask, splashRadius, towerController.damage, maxSplashTargetCount);
+        base.SetupProjectile(projectile);
+        projectile.ApplyOnDestroyModifier(new SplashDamageModifier(splashRadius, towerController.damage, towerController.monsterLayerMask, maxSplashTargetCount));
     }
 }

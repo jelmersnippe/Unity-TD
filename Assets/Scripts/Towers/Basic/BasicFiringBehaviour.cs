@@ -4,32 +4,30 @@ using UnityEngine;
 
 public class BasicFiringBehaviour : FiringBehaviour
 {
-    [SerializeField] float degreesBetweenShots = 45f;
-    bool hasTripleShot = false;
-    bool hasPierce = false;
+    [SerializeField] float degreesBetweenShots = 25f;
 
-    protected override void SpawnProjectile()
+    protected override void FireProjectile()
     {
         AudioManager.instance.Play(Sound.Name.Shoot);
-
-        if (!hasTripleShot && !hasPierce)
+        bool hasTripleShot = towerController.HasUnlockedUpgrade(UpgradeType.Archer_SpreadShot);
+        if (!hasTripleShot)
         {
-            base.SpawnProjectile();
+            base.FireProjectile();
             return;
         }
 
-        int shotCount = hasTripleShot ? 3 : 1;
-        for (int i = 0; i < shotCount; i++)
+        for (int i = 0; i < 3; i++)
         {
             // Spawn a new projectile with a rotation based on the space between shots and which shot it is so we get an even distribution with one centered shot
-            Projectile spawnedProjectile = Instantiate(
-                towerController.projectile,
-                towerController.firePoint.position,
-                hasTripleShot
-                    ? Quaternion.Euler(towerController.firePoint.rotation.eulerAngles - new Vector3(0, 0, degreesBetweenShots) + (new Vector3(0, 0, degreesBetweenShots) * i))
-                    : Quaternion.Euler(towerController.firePoint.rotation.eulerAngles),
-                transform);
-            spawnedProjectile.setValues(towerController.damage, towerController.projectileSpeed, null, towerController.monsterLayerMask, hasPierce ? 2 : 1);
+            SpawnProjectile(-degreesBetweenShots + degreesBetweenShots * i);
         }
+    }
+
+    protected override void SetupProjectile(Projectile projectile)
+    {
+        bool hasPierce = towerController.HasUnlockedUpgrade(UpgradeType.Archer_PiercingShot);
+        bool hasReinforcedTips = towerController.HasUnlockedUpgrade(UpgradeType.Archer_ReinforcedTips);
+
+        base.SetupProjectile(projectile);
     }
 }

@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 252f7236f44b416499ffb5084fd654a9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - basicProjectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
+  - splashProjectile: {fileID: -5528355144540975155, guid: 8a06951b494fad14d86b0a525cf872c4, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

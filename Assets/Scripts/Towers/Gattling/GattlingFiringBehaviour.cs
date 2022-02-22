@@ -28,10 +28,8 @@ public class GattlingFiringBehaviour : FiringBehaviour
         currentTimeToFire = calc;
     }
 
-    protected override void SpawnProjectile()
+    protected override void SetupProjectile(Projectile projectile)
     {
-        AudioManager.instance.Play(Sound.Name.Shoot);
-        Projectile spawnedProjectile = Instantiate(towerController.projectile, towerController.firePoint.position, towerController.firePoint.rotation, transform);
-        spawnedProjectile.setValues(towerController.damage + (damagePerConsecutiveShot * consecutiveShots), towerController.projectileSpeed, currentTarget.transform, towerController.monsterLayerMask);
+        projectile.setValues(towerController.damage + (damagePerConsecutiveShot * consecutiveShots), towerController.projectileSpeed, towerController.monsterLayerMask);
     }
 }

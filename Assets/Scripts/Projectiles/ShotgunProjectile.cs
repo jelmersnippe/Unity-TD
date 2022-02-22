@@ -23,7 +23,7 @@ public class ShotgunProjectile : Projectile
 
     public void setValues(int initialDamage, float initialSpeed, Transform initialTarget, LayerMask monsterLayerMask, float initialLowestSpeed, float initialTimeToLowestSpeed)
     {
-        base.setValues(initialDamage, initialSpeed, initialTarget, monsterLayerMask);
+        base.setValues(initialDamage, initialSpeed, monsterLayerMask);
 
         lowestSpeed = initialLowestSpeed;
         timeToLowestSpeed = initialTimeToLowestSpeed;

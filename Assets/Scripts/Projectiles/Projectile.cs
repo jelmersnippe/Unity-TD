@@ -9,8 +9,12 @@ public class Projectile : MonoBehaviour
     protected LayerMask targetMask;
     protected int maxMonsterHits = 1;
     protected List<int> monstersHit = new List<int>();
-    [SerializeField] protected float rotationSpeed = 10f;
-    protected Transform target;
+
+    List<OnHitModifier> onHitModifiers = new List<OnHitModifier>();
+    List<OnDestroyModifier> onDestroyModifiers = new List<OnDestroyModifier>();
+
+    public Transform target { get; private set; }
+    [SerializeField] float rotationSpeed = 10f;
 
     float timeToLive = 2f;
 
@@ -23,6 +27,12 @@ public class Projectile : MonoBehaviour
     {
         RotateTowardsTarget();
         TravelForward();
+    }
+
+    protected virtual void TravelForward()
+    {
+        float distance = speed * Time.deltaTime;
+        transform.position = transform.position + transform.right * distance;
     }
 
     protected void RotateTowardsTarget()
@@ -38,12 +48,6 @@ public class Projectile : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
     }
 
-    protected virtual void TravelForward()
-    {
-        float distance = speed * Time.deltaTime;
-        transform.position = transform.position + transform.right * distance;
-    }
-
     protected void OnCollisionEnter2D(Collision2D collision)
     {
         // If we have a target and we've hit it
@@ -56,14 +60,8 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    protected MonsterController GetMonsterFromCollider(Collider2D collider) 
+    public static MonsterController GetMonsterFromCollider(Collider2D collider) 
     {
-        bool isValidTarget = ((1 << collider.gameObject.layer) & targetMask) != 0;
-        if (!isValidTarget)
-        {
-            return null;
-        }
-
         MonsterController monster = collider.gameObject.GetComponent<MonsterController>();
         bool isMonsterAndNotDead = monster != null && !monster.hasDied;
 
@@ -81,20 +79,41 @@ public class Projectile : MonoBehaviour
         if (monstersHit.Contains(monsterInstanceId)) return;
 
         monster.TakeDamage(damage);
+
+        // Execute all on hit modifiers
+        foreach (OnHitModifier onHitModifier in onHitModifiers)
+        {
+            onHitModifier.Execute(monster);
+        }
+
         monstersHit.Add(monsterInstanceId);
 
         if (monstersHit.Count >= maxMonsterHits)
         {
+            // Execute all on destroy modifiers
+            foreach (OnDestroyModifier onDestroyModifier in onDestroyModifiers)
+            {
+                onDestroyModifier.Execute(transform.position);
+            }
             Destroy(gameObject);
         }
     }
 
-    public virtual void setValues(int initialDamage, float initialSpeed, Transform initialTarget, LayerMask monsterLayerMask, int initialEnemiesToHit = 1)
+    public virtual void setValues(int initialDamage, float initialSpeed, LayerMask monsterLayerMask, int initialEnemiesToHit = 1)
     {
         damage = initialDamage;
         speed = initialSpeed;
-        target = initialTarget;
         targetMask = monsterLayerMask;
         maxMonsterHits = initialEnemiesToHit;
+    }
+
+    public void ApplyOnDestroyModifier(OnDestroyModifier modifier)
+    {
+        onDestroyModifiers.Add(modifier);
+    }
+
+    public void ApplyOnHitModifier(OnHitModifier modifier)
+    {
+        onHitModifiers.Add(modifier);
     }
 }

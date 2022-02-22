@@ -161,9 +161,9 @@ MonoBehaviour:
   firePoint: {fileID: 7865072309213478940}
   damage: 100
   roundsPerMinute: 45
-  range: 2
+  range: 3
   cost: 100
-  projectileSpeed: 20
+  projectileSpeed: 10
   projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
   monsterLayerMask:
     serializedVersion: 2
@@ -236,60 +236,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth0Upgrades:
-  - blueprint: {fileID: 11400000, guid: e687bb9b34600ec449de1d7ad6439ccb, type: 2}
-    cost: 50
+  - blueprint: {fileID: 11400000, guid: 2adfefedf7ec2174b84978107be0ed81, type: 2}
+    cost: 100
     spot: 2
     parentUpgrade: 0
     status: 0
   depth1Upgrades:
-  - blueprint: {fileID: 11400000, guid: 8e48f238a6156a148b474403ef177cc8, type: 2}
-    cost: 100
-    spot: 1
-    parentUpgrade: 1
-    status: 0
-  - blueprint: {fileID: 11400000, guid: 83d9078189be6904bad60b9d3f301f3d, type: 2}
-    cost: 100
-    spot: 3
-    parentUpgrade: 1
-    status: 0
-  depth2Upgrades:
-  - blueprint: {fileID: 11400000, guid: 032a66843119a8c44b42aaa5c5032647, type: 2}
-    cost: 200
-    spot: 0
-    parentUpgrade: 2
-    status: 0
-  - blueprint: {fileID: 11400000, guid: b6784e3058240bb4ab450b85e891d68e, type: 2}
+  - blueprint: {fileID: 11400000, guid: 0f82285e22212934caead0e56e67ee5f, type: 2}
     cost: 200
     spot: 2
     parentUpgrade: 2
     status: 0
-  - blueprint: {fileID: 11400000, guid: f9ccf7cb6bf5a4949acdf9e748dd0863, type: 2}
-    cost: 200
-    spot: 3
+  depth2Upgrades:
+  - blueprint: {fileID: 11400000, guid: 19c27c12b42e03a4088bd6dcd69895ef, type: 2}
+    cost: 400
+    spot: 2
     parentUpgrade: 3
     status: 0
-  depth3Upgrades:
-  - blueprint: {fileID: 11400000, guid: 985d781ac4ba0684e90140d907555cb9, type: 2}
-    cost: 300
-    spot: 1
-    parentUpgrade: 4
-    status: 0
-  - blueprint: {fileID: 11400000, guid: 9cce5903424e1214892cd97167fdc968, type: 2}
-    cost: 300
-    spot: 3
-    parentUpgrade: 6
-    status: 0
-  depth4Upgrades:
-  - blueprint: {fileID: 11400000, guid: 21ddbc92ae676214784d66517296719c, type: 2}
-    cost: 400
-    spot: 1
-    parentUpgrade: 7
-    status: 0
-  - blueprint: {fileID: 11400000, guid: f57529f0f7fcd2247bda16870166ce2b, type: 2}
-    cost: 450
-    spot: 3
-    parentUpgrade: 8
-    status: 0
+  depth3Upgrades: []
+  depth4Upgrades: []
 --- !u!1 &7865072308831243786
 GameObject:
   m_ObjectHideFlags: 0

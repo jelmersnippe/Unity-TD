@@ -36,7 +36,12 @@ public class FiringBehaviour : MonoBehaviour
         }
 
         RotateToTarget();
-        FireProjectile();
+
+        if (currentTimeToFire <= 0)
+        {
+            FireProjectile();
+            ResetTimeToFire();
+        }
     }
 
     bool isTargetOutOfRange()
@@ -44,40 +49,30 @@ public class FiringBehaviour : MonoBehaviour
         return Vector2.Distance(transform.position, currentTarget.position) > towerController.range;
     }
 
-    void RotateToMouse()
-    {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 targetDirection = mousePosition - transform.position;
-        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        Quaternion desiredRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        towerController.towerGun.rotation = desiredRotation;
-    }
-
     void RotateToTarget()
     {
         transform.rotation = Quaternion.Euler(0, currentTarget.transform.position.x < transform.position.x ? -180 : 0, 0);
-        return;
+
         Vector3 targetDirection = currentTarget.position - transform.position;
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         Quaternion desiredRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        towerController.towerGun.rotation = desiredRotation;
+        towerController.firePoint.rotation = desiredRotation;
     }
 
     protected virtual void FireProjectile()
     {
-        if (currentTimeToFire > 0)
-        {
-            return;
-        }
-
         SpawnProjectile();
-        ResetTimeToFire();
     }
 
-    protected virtual void SpawnProjectile()
+    protected virtual void SpawnProjectile(float offset = 0)
     {
-        Projectile spawnedProjectile = Instantiate(towerController.projectile, towerController.firePoint.position, towerController.firePoint.rotation, transform);
-        spawnedProjectile.setValues(towerController.damage, towerController.projectileSpeed, currentTarget.transform, towerController.monsterLayerMask);
+        Projectile spawnedProjectile = Instantiate(towerController.projectile, towerController.firePoint.position, Quaternion.Euler(towerController.firePoint.rotation.eulerAngles + new Vector3(0, 0, offset)));
+        SetupProjectile(spawnedProjectile);
+    }
+
+    protected virtual void SetupProjectile(Projectile projectile)
+    {
+        projectile.setValues(towerController.damage, towerController.projectileSpeed, towerController.monsterLayerMask);
     }
 
     protected virtual void ResetTimeToFire()

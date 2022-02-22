@@ -107,4 +107,9 @@ public class TowerController : MonoBehaviour
     {
         upgradeTree.ActivateUpgrade(upgrade);
     }
+
+    public bool HasUnlockedUpgrade(UpgradeType upgrade)
+    {
+        return upgradeTree.HasUnlockedUpgrade(upgrade);
+    }
 }
