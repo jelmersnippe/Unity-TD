@@ -6,7 +6,7 @@ public interface IEffect
 {
     public float timeLeft {get; set;}
 
-    void OnActivate(MonsterController monster);
+    bool OnActivate(MonsterController monster, List<IEffect> activeEffects);
     void Execute(MonsterController monster);
     void OnDeactivate(MonsterController monster);
 }

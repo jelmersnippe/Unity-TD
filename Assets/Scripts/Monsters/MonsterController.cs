@@ -12,9 +12,10 @@ public class MonsterController : MonoBehaviour
     int currentWaypointIndex = -1;
 
     [SerializeField]
-    [Range(1,10)]
+    [Range(1, 10)]
     float speed = 1f;
-    [SerializeField] public float speedMultiplier = 2f;
+    [SerializeField] float minSpeedMultiplier = 0.1f;
+    public float speedMultiplier { get; private set; } = 2f;
 
     private int _damage;
     public int damage {
@@ -156,13 +157,22 @@ public class MonsterController : MonoBehaviour
 
     public void ApplyEffect(IEffect effect)
     {
-        effect.OnActivate(this);
-        effects.Add(effect);
+        bool activated = effect.OnActivate(this, effects);
+
+        if (activated)
+        {
+            effects.Add(effect);
+        }
     }
 
     public void RemoveEffect(IEffect effect)
     {
         effect.OnDeactivate(this);
         effects.Remove(effect);
+    }
+
+    public void ChangeSpeedModifier(float change)
+    {
+        speedMultiplier = Mathf.Max(speedMultiplier + change, minSpeedMultiplier);
     }
 }

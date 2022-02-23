@@ -5,37 +5,55 @@ using UnityEngine;
 public class SlowEffect : IEffect
 {
     float _totalDuration;
-    float _timeLeft;
-    float _speedReduction;
+    public float _timeLeft { get; private set; }
+    public float timeLeft { get => _timeLeft; set => _timeLeft = value; }
 
-    Color _initialSpriteColor;
+    public float speedReduction { get; private set; }
 
-    public SlowEffect(float duration, float speedReduction)
+    public SlowEffect(float duration, float slow)
     {
         _totalDuration = duration;
-        _timeLeft = duration;
-        _speedReduction = speedReduction;
+        timeLeft = duration;
+        speedReduction = slow;
     }
-
-    public float timeLeft { get => _timeLeft; set => _timeLeft = value; }
 
     public void Execute(MonsterController target)
     {
         timeLeft -= Time.deltaTime;
     }
 
-    public void OnActivate(MonsterController monster)
+    public bool OnActivate(MonsterController monster, List<IEffect> activeEffects)
     {
-        _initialSpriteColor = monster.GetComponent<SpriteRenderer>().color;
-        Color tempColor = _initialSpriteColor;
-        tempColor.a = 0.8f;
-        monster.GetComponent<SpriteRenderer>().color = tempColor;
-        monster.speedMultiplier = Mathf.Max(monster.speedMultiplier - _speedReduction, 0.1f);
+        SlowEffect activeSlowEffect = activeEffects.Find((effect) => effect.GetType() == this.GetType()) as SlowEffect;
+
+        // No slow effect yet, apply new effect
+        if (activeSlowEffect == null)
+        {
+            monster.ChangeSpeedModifier(-speedReduction);
+            return true;
+        }
+
+        // Active slow is stronger than new slow, ignore this new effect
+        if (activeSlowEffect.speedReduction > speedReduction)
+        {
+            return false;
+        }
+        // Active slow is equal, refresh duration
+        if (activeSlowEffect.speedReduction == speedReduction)
+        {
+            activeSlowEffect.timeLeft = _totalDuration;
+            return false;
+        }
+
+        // Active slow is weaker, remove effect and apply new
+        monster.RemoveEffect(activeSlowEffect);
+        monster.ChangeSpeedModifier(-speedReduction);
+
+        return true;
     }
 
     public void OnDeactivate(MonsterController monster)
     {
-        monster.speedMultiplier += _speedReduction;
-        monster.GetComponent<SpriteRenderer>().color = _initialSpriteColor;
+        monster.ChangeSpeedModifier(+speedReduction);
     }
 }
