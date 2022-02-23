@@ -165,11 +165,10 @@ MonoBehaviour:
   cost: 100
   projectileSpeed: 20
   projectile: {fileID: 4464655122205163677, guid: f29deb0cb5f07844caaf8d5c1bb7671e, type: 3}
+  projectileBlueprint: {fileID: 11400000, guid: e1c81e16297e85643886c295ff075be3, type: 2}
   monsterLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  timeToFire: 0
-  currentTowerState: 2
 --- !u!114 &5261724236491270282
 MonoBehaviour:
   m_ObjectHideFlags: 0

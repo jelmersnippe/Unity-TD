@@ -66,13 +66,14 @@ public class FiringBehaviour : MonoBehaviour
 
     protected virtual void SpawnProjectile(float offset = 0)
     {
-        Projectile spawnedProjectile = Instantiate(towerController.projectile, towerController.firePoint.position, Quaternion.Euler(towerController.firePoint.rotation.eulerAngles + new Vector3(0, 0, offset)));
+        Projectile spawnedProjectile = Instantiate(towerController.projectileBlueprint.prefab, towerController.firePoint.position, Quaternion.Euler(towerController.firePoint.rotation.eulerAngles + new Vector3(0, 0, offset)));
         SetupProjectile(spawnedProjectile);
     }
 
     protected virtual void SetupProjectile(Projectile projectile)
     {
-        projectile.Setup(towerController.damage, towerController.projectileSpeed, towerController.monsterLayerMask);
+        projectile.Setup(towerController.projectileBlueprint.sprite, towerController.damage, towerController.projectileBlueprint.speed, towerController.monsterLayerMask);
+        projectile.SetHoming(towerController.projectileBlueprint.homing, currentTarget);
     }
 
     protected virtual void ResetTimeToFire()

@@ -19,23 +19,19 @@ public class TowerController : MonoBehaviour
     public Transform towerGun;
     public Transform firePoint;
 
+    // TODO: struct
     public int damage = 100;
-    public int roundsPerMinute = 30;
-    public int range = 2;
+    public int roundsPerMinute = 45;
+    public float range = 3f;
     public int cost = 100;
+    public float projectileSpeed = 20f;
 
-    [Range(1, 100)]
-    public int projectileSpeed = 20;
-    public Projectile projectile;
+    public ProjectileBlueprint projectileBlueprint;
 
-    // TOD: Set as a global reference somewhere
-    [SerializeField]
     public LayerMask monsterLayerMask;
+    public float timeToFire { get; private set; }
 
-    public float timeToFire;
-
-    [SerializeField]
-    public TowerState currentTowerState = TowerState.Placing;
+    public TowerState currentTowerState { get; private set; } = TowerState.Placing;
 
     IdleBehaviour idleBehaviour;
     FiringBehaviour firingBehaviour;

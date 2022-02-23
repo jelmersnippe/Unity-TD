@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
 {
     protected int _damage;
     protected float _speed;
+    protected float _rotationSpeed;
     protected LayerMask _targetMask;
     protected int _maxMonsterHits = 1;
     protected List<int> _monstersHit = new List<int>();
@@ -15,7 +16,6 @@ public class Projectile : MonoBehaviour
     List<IOnDestroyModifier> _onDestroyModifiers = new List<IOnDestroyModifier>();
 
     public Transform target { get; private set; }
-    [SerializeField] float rotationSpeed = 20f;
 
     protected virtual void Update()
     {
@@ -46,14 +46,14 @@ public class Projectile : MonoBehaviour
         Vector3 targetDirection = target.position - transform.position;
         float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
         Quaternion desiredRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, _rotationSpeed * Time.deltaTime);
     }
 
     protected void CheckRange()
     {
         Collider2D hit = Physics2D.OverlapCircle(transform.position, 5f, _targetMask);
 
-        if (hit)
+        if (hit && !_monstersHit.Contains(hit.gameObject.GetInstanceID()))
         {
             target = hit.transform;
             CancelInvoke();
@@ -82,23 +82,24 @@ public class Projectile : MonoBehaviour
 
     protected virtual void DealDamage(MonsterController monster)
     {
-        // If we've already hit the max amount we do nothing
-        if (_monstersHit.Count >= _maxMonsterHits) return;
-
-        int monsterInstanceId = monster.GetInstanceID();
+        int monsterInstanceId = monster.gameObject.GetInstanceID();
 
         // If we've already hit the damageable we do nothing
-        if (_monstersHit.Contains(monsterInstanceId)) return;
+        if (_monstersHit.Contains(monsterInstanceId))
+        {
+            target = null;
+        };
 
+        // Make the monster take damage and execute all on hit modifiers
         monster.TakeDamage(_damage);
-
-        // Execute all on hit modifiers
         foreach (IOnHitModifier onHitModifier in _onHitModifiers)
         {
             onHitModifier.Execute(monster);
         }
 
+        // Add monster to monsters hit and reset target so homing piercing projectiles can find a new target
         _monstersHit.Add(monsterInstanceId);
+        target = null;
 
         if (_monstersHit.Count >= _maxMonsterHits)
         {
@@ -109,12 +110,15 @@ public class Projectile : MonoBehaviour
             }
             Destroy(gameObject);
         }
+
     }
 
-    public virtual void Setup(int damage, float speed, LayerMask targetMask, float timeToLive = 2f)
+    public virtual void Setup(Sprite sprite, int damage, float speed, LayerMask targetMask, float timeToLive = 2f)
     {
+        GetComponent<SpriteRenderer>().sprite = sprite;
         _damage = damage;
         _speed = speed;
+        _rotationSpeed = speed * 2.5f;
         _targetMask = targetMask;
 
         SetTimeToLive(timeToLive);
