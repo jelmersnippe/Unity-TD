@@ -62,12 +62,14 @@ public class Projectile : MonoBehaviour
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {
-        // If we have a target and we've hit it
-        // Or we don't have a target and we've hit something in our targetmask
         MonsterController monster = GetMonsterFromCollider(collision.collider);
 
-        if (monster != null && (target == null || monster.gameObject == target.gameObject))
+        // We hit a monster
+        if (monster != null)
         {
+            // If projectile is homing and did not hit it's target we don't want to execute
+            if (_homing && target != null && monster.gameObject != target.gameObject) return;
+
             DealDamage(monster);
         }
     }

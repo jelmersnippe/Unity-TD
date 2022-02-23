@@ -79,5 +79,6 @@ public class FiringBehaviour : MonoBehaviour
     protected virtual void ResetTimeToFire()
     {
         currentTimeToFire = towerController.timeToFire;
+        towerController.EnterIdleState();
     }
 }
